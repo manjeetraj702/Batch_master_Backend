@@ -2,6 +2,7 @@ package com.example.batchMaster.controller;
 
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
+import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
 import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ public class StudentController {
 
     // Update student details
     @PutMapping
-    public Student updateStudent(@RequestBody Student student) {
-        return studentService.updateStudent(student);
+    public Student updateStudent(@RequestBody StudentUpdateRequest studentUpdateRequest) {
+        return studentService.updateStudent(studentUpdateRequest);
     }
 
     // Change student status (active/inactive)
