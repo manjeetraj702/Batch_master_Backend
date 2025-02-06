@@ -1,5 +1,7 @@
 package com.example.batchMaster.service;
 
+import com.example.batchMaster.model.Attendance;
+import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
@@ -15,9 +17,9 @@ public interface StudentService {
 
     public Student changeStudentStatus(String studentId) ;
 
-    public List<String> getListOfMarks(String studentId) ;
+    public List<Marks> getListOfMarks(String studentId) ;
 
-    public List<String> getListOfAttendance(String studentId) ;
+    public List<Attendance> getListOfAttendance(String studentId) ;
 
     public Student getStudentById(String studentId);
 }

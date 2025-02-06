@@ -13,5 +13,5 @@ public interface MarksService {
     
     List<Marks> getMarksByStudentId(String studentId);
     
-    List<Marks> getMarksByTopicIdAndBatchId(String topicId, String batchId);
+    List<Marks> getMarksBySubjectTopicAndBatchId(String subject,String topic, String batchId);
 }

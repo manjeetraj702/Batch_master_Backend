@@ -1,10 +1,14 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.exception.BatchMasterException;
+import com.example.batchMaster.model.Attendance;
+import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
+import com.example.batchMaster.repository.MarksRepository;
 import com.example.batchMaster.repository.StudentRepository;
+import com.example.batchMaster.service.AttendanceService;
 import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,12 @@ import java.util.Optional;
 class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    MarksRepository marksRepository;
+
+    @Autowired
+    AttendanceService attendanceService;
 
 
     @Override
@@ -57,13 +67,13 @@ class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<String> getListOfMarks(String studentId) {
-        return List.of();
+    public List<Marks> getListOfMarks(String studentId) {
+        return marksRepository.findAllByStudentId(studentId);
     }
 
     @Override
-    public List<String> getListOfAttendance(String studentId) {
-        return List.of();
+    public List<Attendance> getListOfAttendance(String studentId) {
+        return attendanceService.getAttendanceByStudentId(studentId);
     }
 
     @Override

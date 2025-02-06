@@ -1,5 +1,7 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.model.Attendance;
+import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
@@ -42,13 +44,13 @@ public class StudentController {
 
     // Get list of marks for a student
     @GetMapping("/{studentId}/marks")
-    public List<String> getListOfMarks(@RequestParam String studentId) {
+    public List<Marks> getListOfMarks(@RequestParam String studentId) {
         return studentService.getListOfMarks(studentId);
     }
 
     // Get list of attendance records for a student
     @GetMapping("/{studentId}/attendance")
-    public List<String> getListOfAttendance(@RequestParam String studentId) {
+    public List<Attendance> getListOfAttendance(@RequestParam String studentId) {
         return studentService.getListOfAttendance(studentId);
     }
 }
