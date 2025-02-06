@@ -25,17 +25,9 @@ public class Student {
     private String batchId;
     private String branchId;
     private String startingDate;
-    private List<Marks> resultList;
-    private List<Attendance> attendanceList;
+    private List<String> resultList;
+    private List<String> attendanceList;
     private boolean status;
 }
 
-class Marks {
-    private String subject;
-    private int score;
-}
 
-class Attendance {
-    private String date;
-    private boolean present;
-}
