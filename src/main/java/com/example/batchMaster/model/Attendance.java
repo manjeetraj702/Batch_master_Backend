@@ -1,4 +1,4 @@
-package com.codingAge.Attendance.Model;
+package com.example.batchMaster.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
