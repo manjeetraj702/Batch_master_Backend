@@ -1,6 +1,7 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Student;
+import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.repository.StudentRepository;
 import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,10 @@ class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+
     @Override
-    public Student createStudent(Student student) {
-        return new Student();
+    public Student createStudent(StudentCreateRequest studentCreateRequest) {
+        return null;
     }
 
     @Override
@@ -29,7 +31,7 @@ class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student changeStudentStatus(String studentId, boolean status) {
+    public Student changeStudentStatus(String studentId) {
         return new Student();
     }
 
