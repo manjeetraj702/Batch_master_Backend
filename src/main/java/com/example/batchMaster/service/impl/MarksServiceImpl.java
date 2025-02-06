@@ -38,11 +38,13 @@ public class MarksServiceImpl implements MarksService {
 
     @Override
     public List<Marks> getMarksByStudentId(String studentId) {
-        return List.of();
+        return marksRepository.findAllByStudentId(studentId);
     }
 
     @Override
-    public List<Marks> getMarksByTopicIdAndBatchId(String topicId, String batchId) {
-        return List.of();
+    public List<Marks> getMarksBySubjectTopicAndBatchId(String subject, String topic, String batchId) {
+        return marksRepository.findAllBySubjectAndTopicAndBatchId(subject,topic,batchId);
     }
+
+
 }
