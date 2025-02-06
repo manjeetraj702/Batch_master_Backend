@@ -19,7 +19,9 @@ public class Student {
     private String studentName;
     private String fatherName;
     private String mobileNumber;
+    private String email;
     private String address;
+    private String dob;
     private String degree;
     private String course;
     private String batchId;
