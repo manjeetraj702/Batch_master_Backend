@@ -1,7 +1,7 @@
-package com.codingAge.Attendance.Controller;
+package com.example.batchMaster.controller;
 
-import com.codingAge.Attendance.Model.Attendance;
-import com.codingAge.Attendance.Service.ServiceImpl.AttendanceServiceImpl;
+import com.example.batchMaster.model.Attendance;
+import com.example.batchMaster.service.impl.AttendanceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

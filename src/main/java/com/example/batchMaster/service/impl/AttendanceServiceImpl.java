@@ -1,12 +1,11 @@
-package com.codingAge.Attendance.Service.ServiceImpl;
-import com.codingAge.Attendance.Model.Attendance;
-import com.codingAge.Attendance.Repository.AttendanceRepository;
-import com.codingAge.Attendance.Service.AttendanceService;
+package com.example.batchMaster.service.impl;
+import com.example.batchMaster.model.Attendance;
+import com.example.batchMaster.repository.AttendanceRepository;
+import com.example.batchMaster.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.time.LocalDate;
 
 @Service

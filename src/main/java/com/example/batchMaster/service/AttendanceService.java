@@ -1,6 +1,6 @@
-package com.codingAge.Attendance.Service;
+package com.example.batchMaster.service;
 
-import com.codingAge.Attendance.Model.Attendance;
+import com.example.batchMaster.model.Attendance;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.codingAge.Attendance.Repository;
+package com.example.batchMaster.repository;
 
-import com.codingAge.Attendance.Model.Attendance;
+import com.example.batchMaster.model.Attendance;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
