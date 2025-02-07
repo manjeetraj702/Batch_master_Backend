@@ -6,12 +6,16 @@ import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
 import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 
+import java.util.List;
+
 public interface SubjectService {
 
     Subject createCourse(SubjectCreateRequest subjectCreateRequest);
     Subject updateSubject(SubjectUpdateRequest subjectUpdateRequest);
 
-   public   Subject getSubjectById(String SubjectId);
+     Subject getSubjectById(String SubjectId);
+
+   List<Subject> getAllSubject();
 
 
 }

@@ -11,6 +11,7 @@ import com.example.batchMaster.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,6 +49,11 @@ private SubjectRepository subjectRepository ;
         }
 
         throw  new BatchMasterException("Subject is not present");
+    }
+
+    @Override
+    public List<Subject> getAllSubject() {
+        return subjectRepository.findAll();
     }
 
 }
