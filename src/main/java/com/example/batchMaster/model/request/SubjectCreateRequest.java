@@ -16,6 +16,6 @@ public class SubjectCreateRequest {
 
     private String subjectName;
     private String batchId;
-    private String status;
+    private boolean status;
     private List<String> listOfTopics;
 }

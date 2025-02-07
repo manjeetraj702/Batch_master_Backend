@@ -14,8 +14,8 @@ public interface SubjectService {
     Subject updateSubject(SubjectUpdateRequest subjectUpdateRequest);
 
      Subject getSubjectById(String SubjectId);
-
+     Subject changeSubjectStatus(String SubjectId);
    List<Subject> getAllSubject();
-
+   List<Subject> getbyBatchId(String batchId);
 
 }

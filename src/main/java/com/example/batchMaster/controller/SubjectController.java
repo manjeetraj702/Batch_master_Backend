@@ -29,4 +29,16 @@ public class SubjectController {
       return subjectService.getAllSubject();
    }
 
+   @PatchMapping("/status/active or not ")
+   public Subject changeSubjectStatus(@RequestParam String SubjectId){
+       return subjectService.changeSubjectStatus(SubjectId);
+   }
+
+   @GetMapping("/get/batchid")
+   public List<Subject> getbyBatchId(@RequestParam String batchId){
+      return subjectService.getbyBatchId(batchId);
+   }
+
+
 }
+

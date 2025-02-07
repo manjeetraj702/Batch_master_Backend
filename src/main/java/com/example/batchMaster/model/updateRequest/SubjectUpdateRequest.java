@@ -14,7 +14,7 @@ public class SubjectUpdateRequest {
     private String subjectId;
     private String subjectName;
     private String batchId;
-    private String status;
+    private boolean status;
     private List<String> listOfTopics;
 
 }

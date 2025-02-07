@@ -11,6 +11,7 @@ import com.example.batchMaster.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ private SubjectRepository subjectRepository ;
      Subject subject = new Subject() ;
      subject.setSubjectName(subjectCreateRequest.getSubjectName());
      subject.setBatchId(subjectCreateRequest.getBatchId());
-     subject.setStatus(subjectCreateRequest.getStatus());
+     subject.setStatus(subjectCreateRequest.isStatus());
      subject.setListOfTopics(subjectCreateRequest.getListOfTopics());
         return subjectRepository.save(subject);
     }
@@ -33,10 +34,11 @@ private SubjectRepository subjectRepository ;
     public Subject updateSubject(SubjectUpdateRequest subjectUpdateRequest) {
         getSubjectById(subjectUpdateRequest.getSubjectId());
         Subject subject = new Subject() ;
+        subject.setSubjectId(subjectUpdateRequest.getSubjectId());
          subject.setSubjectName(subjectUpdateRequest.getSubjectName());
          subject.setBatchId(subjectUpdateRequest.getBatchId());
          subject.setListOfTopics(subjectUpdateRequest.getListOfTopics());
-         subject.setStatus(subjectUpdateRequest.getStatus());
+         subject.setStatus(subjectUpdateRequest.isStatus());
         return subjectRepository.save(subject);
     }
 
@@ -52,8 +54,22 @@ private SubjectRepository subjectRepository ;
     }
 
     @Override
+    public Subject changeSubjectStatus(String SubjectId) {
+        Subject subject = getSubjectById(SubjectId);
+        subject.setStatus(!subject.isStatus());
+
+        return subjectRepository.save(subject);
+    }
+
+
+    @Override
     public List<Subject> getAllSubject() {
         return subjectRepository.findAll();
+    }
+
+    @Override
+    public List<Subject> getbyBatchId(String batchId) {
+        return subjectRepository.findAllByBatchId(batchId);
     }
 
 }
