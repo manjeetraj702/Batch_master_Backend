@@ -1,0 +1,38 @@
+package com.example.batchMaster.controller;
+
+import com.example.batchMaster.model.Session;
+import com.example.batchMaster.model.request.SessionCreateRequest;
+import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
+import com.example.batchMaster.service.SessionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/sessions")
+public class SessionController {
+
+    @Autowired
+    private SessionService sessionService;
+
+    @PostMapping("/create")
+    public Session createSession(@RequestBody SessionCreateRequest session) {
+        return sessionService.createSession(session);
+    }
+
+    @PutMapping("/update/{sessionId}")
+    public Session updateSession(@PathVariable String sessionId, @RequestBody SessionUpdateRequest updatedSession) {
+        return sessionService.updateSession( updatedSession);
+    }
+
+    @GetMapping("/batch/{batchId}")
+    public List<Session> getSessionsByBatchId(@PathVariable String batchId) {
+        return sessionService.getSessionsByBatchId(batchId);
+    }
+
+    @GetMapping("/subject/{subject}")
+    public List<Session> getSessionsBySubject(@PathVariable String subject) {
+        return sessionService.getSessionsBySubject(subject);
+    }
+}
