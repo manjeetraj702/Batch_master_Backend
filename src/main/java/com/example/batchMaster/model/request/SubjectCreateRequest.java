@@ -13,8 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubjectCreateRequest {
-    @Id
-    private String subjectId;
+
     private String subjectName;
     private String batchId;
     private String status;

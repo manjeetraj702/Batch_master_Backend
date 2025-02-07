@@ -1,12 +1,19 @@
 package com.example.batchMaster.service.impl;
 
 
+import com.example.batchMaster.exception.BatchMasterException;
+import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
+import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 import com.example.batchMaster.repository.SubjectRepository;
 import com.example.batchMaster.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
 public class SubjectServiceImpl implements SubjectService {
 @Autowired
 private SubjectRepository subjectRepository ;
@@ -14,11 +21,33 @@ private SubjectRepository subjectRepository ;
     @Override
     public Subject createCourse(SubjectCreateRequest subjectCreateRequest) {
      Subject subject = new Subject() ;
-     subject.setSubjectId(subjectCreateRequest.getSubjectId());
      subject.setSubjectName(subjectCreateRequest.getSubjectName());
      subject.setBatchId(subjectCreateRequest.getBatchId());
      subject.setStatus(subjectCreateRequest.getStatus());
      subject.setListOfTopics(subjectCreateRequest.getListOfTopics());
         return subjectRepository.save(subject);
     }
+
+    @Override
+    public Subject updateSubject(SubjectUpdateRequest subjectUpdateRequest) {
+        getSubjectById(subjectUpdateRequest.getSubjectId());
+        Subject subject = new Subject() ;
+         subject.setSubjectName(subjectUpdateRequest.getSubjectName());
+         subject.setBatchId(subjectUpdateRequest.getBatchId());
+         subject.setListOfTopics(subjectUpdateRequest.getListOfTopics());
+         subject.setStatus(subjectUpdateRequest.getStatus());
+        return subjectRepository.save(subject);
+    }
+
+    @Override
+    public Subject getSubjectById(String SubjectId) {
+        Optional<Subject> subject= subjectRepository.findById(SubjectId);
+        if(subject.isPresent())
+        {
+            return subject.get();
+        }
+
+        throw  new BatchMasterException("Subject is not present");
+    }
+
 }

@@ -3,9 +3,11 @@ package com.example.batchMaster.controller;
 
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
+import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 import com.example.batchMaster.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,11 @@ public class SubjectController {
    public Subject createCourse(@RequestBody SubjectCreateRequest subjectCreateRequest)
    {
       return subjectService.createCourse(subjectCreateRequest);
+   }
+
+   @PutMapping("/update/subject")
+  public Subject updateSubject( @RequestBody  SubjectUpdateRequest subjectUpdateRequest){
+     return subjectService.updateSubject(subjectUpdateRequest);
    }
 
 }
