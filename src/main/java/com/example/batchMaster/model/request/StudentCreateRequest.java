@@ -15,8 +15,9 @@ public class StudentCreateRequest {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotNull(message = "Age is required")
-    private Integer age;
+
+    @NotBlank(message = "dob is required")
+    private String dob;
 
     @NotBlank(message = "Course is required")
     private String course;

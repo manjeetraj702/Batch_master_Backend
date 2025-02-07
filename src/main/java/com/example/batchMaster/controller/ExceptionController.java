@@ -7,6 +7,7 @@
 //import org.springframework.web.bind.annotation.ResponseStatus;
 //import org.springframework.web.bind.annotation.RestControllerAdvice;
 //
+//
 //@RestControllerAdvice
 //public class ExceptionController {
 //
@@ -19,6 +20,7 @@
 //    }
 //
 //    @ResponseStatus(HttpStatus.OK)
+//    @ExceptionHandler(BatchMasterException.class)
 //    public ApiResponse<Object> applicationExceptionHandler(BatchMasterException e) {
 //        ApiResponse<Object> response = new ApiResponse<>(HttpStatus.OK);
 //        response.setErrorMessage(e.getMessage());
