@@ -2,7 +2,6 @@ package com.example.batchMaster.controller;
 
 import com.example.batchMaster.model.Branch;
 import com.example.batchMaster.service.BranchService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
