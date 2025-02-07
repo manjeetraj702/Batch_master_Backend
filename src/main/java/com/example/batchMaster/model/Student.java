@@ -1,5 +1,6 @@
 package com.example.batchMaster.model;
 
+
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,7 +27,7 @@ public class Student {
     private String course;
     private String batchId;
     private String branchId;
-    private String startingDate;
+    private String admissionDate;
     private List<String> resultList;
     private List<String> attendanceList;
     private boolean status;
