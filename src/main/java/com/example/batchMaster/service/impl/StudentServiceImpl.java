@@ -96,11 +96,11 @@ class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> getOnlineStudents(String batchId) {
-        return studentRepository.findByBatchIdAndStatusFalse(batchId);
+        return studentRepository.findByBatchIdAndModeFalse(batchId);
     }
 
     @Override
     public List<Student> getOfflineStudents(String batchId) {
-        return studentRepository.findByBatchIdAndStatusTrue(batchId);
+        return studentRepository.findByBatchIdAndModeTrue(batchId);
     }
 }
