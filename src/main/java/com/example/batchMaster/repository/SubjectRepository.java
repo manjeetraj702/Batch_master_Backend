@@ -15,5 +15,5 @@ public interface SubjectRepository extends MongoRepository<Subject,String> {
 
     List<Subject> findAllByBatchIdAndStatusTrue(String batchId);
     List<Subject> findAllByBatchIdAndStatusFalse(String batchId);
-
+    Subject findBySubjectNameAndBatchId(String subjectName, String batchId);
 }

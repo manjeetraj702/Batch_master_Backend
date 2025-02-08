@@ -45,9 +45,15 @@ public class SubjectController {
    }
 
 
-   @GetMapping("/get/batchId")
+   @GetMapping("/getBy/batchId")
    public List<Subject> getByBatchId(@RequestParam String batchId){
       return subjectService.getSubjectByBatchId(batchId);
+   }
+
+
+   @GetMapping("/getBy/subjectName/batchId")
+   public Subject getBySubjectNameAndBatchId(@RequestParam String subjectName ,String batchId){
+      return subjectService.getBySubjectNameAndBatchId(subjectName,batchId);
    }
 
 
