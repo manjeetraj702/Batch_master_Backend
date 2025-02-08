@@ -1,7 +1,5 @@
 package com.example.batchMaster.controller;
 
-import com.example.batchMaster.model.Attendance;
-import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
@@ -42,15 +40,29 @@ public class StudentController {
         return studentService.changeStudentStatus(studentId);
     }
 
-    // Get list of marks for a student
-    @GetMapping("/{studentId}/marks")
-    public List<Marks> getListOfMarks(@RequestParam String studentId) {
-        return studentService.getListOfMarks(studentId);
+
+    @PatchMapping("{studentId}/batchId")
+    Student updateStudentBatchId(String studentId, String batchId) {
+        return studentService.updateStudentBatchId(studentId, batchId);
     }
 
-    // Get list of attendance records for a student
-    @GetMapping("/{studentId}/attendance")
-    public List<Attendance> getListOfAttendance(@RequestParam String studentId) {
-        return studentService.getListOfAttendance(studentId);
+    @PatchMapping("{student")
+    Student removeStudentFromBatch(String studentId) {
+        return studentService.removeStudentFromBatch(studentId);
+    }
+
+    @GetMapping("/{batchId}/students")
+    List<Student> getStudentsByBatchId(String batchId) {
+        return studentService.getStudentsByBatchId(batchId);
+    }
+
+    @GetMapping("/{batchId}/onlineStudents")
+    List<Student> getOnlineStudents(String batchId) {
+        return studentService.getOnlineStudents(batchId);
+    }
+
+    @GetMapping("/{batchId}/onlineStudents")
+    List<Student> getOfflineStudents(String batchId) {
+        return studentService.getOfflineStudents(batchId);
     }
 }
