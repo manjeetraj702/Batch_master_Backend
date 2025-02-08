@@ -1,5 +1,6 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.model.Address;
 import com.example.batchMaster.model.Branch;
 import com.example.batchMaster.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,13 @@ public class BranchController {
     BranchService branchService;
 
     @PostMapping("/createBranch")
-    public String createBranch(Branch branch){
+    public Branch createBranch(@RequestBody Branch branch){
         return branchService.createBranch(branch);
     }
 
     @PutMapping("/updateBranchById")
-    public String updateBranch(@RequestParam String branchId,@RequestParam String branchName,@RequestParam String startingDate,@RequestParam List<String> batchIdList){
-        return  branchService.updateBranch(branchId,branchName,startingDate,batchIdList);
+    public Branch updateBranch(@RequestParam String branchId, @RequestParam String branchName, @RequestParam String startingDate, @RequestParam Address address, @RequestParam List<String> batchIdList){
+        return  branchService.updateBranch(branchId,branchName,startingDate,address,batchIdList);
     }
 
     @GetMapping("/GetBranchByName")

@@ -20,6 +20,7 @@ public class Branch {
     private String branchId;
     private String branchName;
     private String startingDate;
+    private Address address;
     private boolean branchStatus=true;
     private List<String> batchIdList;
 

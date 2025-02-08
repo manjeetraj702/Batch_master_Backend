@@ -1,10 +1,10 @@
 package com.example.batchMaster.service.impl;
 
+import com.example.batchMaster.exception.BatchNotFoundException;
 import com.example.batchMaster.model.*;
 import com.example.batchMaster.repository.BatchRepository;
 import com.example.batchMaster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import  com.example.batchMaster.customException.BatchNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,11 +29,11 @@ public class BatchServiceImpl implements BatchService {
     public Batch createBatch(Batch batch) {
         // Check if a batch with the same name already exists
         if (batchRepository.findByBatchName(batch.getBatchName()) != null) {
-           return  batch;
+            throw new com.example.batchMaster.exception.BatchNotFoundException(("Batch with name " + batch.getBatchName() + " not found."));
         }
         // Check if a batch with the same ID already exists
         if (batchRepository.findById(batch.getBatchId()).isPresent()) {
-            return batch;
+            throw new com.example.batchMaster.exception.BatchNotFoundException(("Batch with name " + batch.getBatchId()+ " not found."));
         }
         // Create a new Batch instance
         Batch newBatch = new Batch();
@@ -62,7 +62,7 @@ public class BatchServiceImpl implements BatchService {
             batchRepository.save(batchToUpdate);
             return updatedBatch;
         } else {
-            return null;
+            throw new com.example.batchMaster.exception.BatchNotFoundException(("Batch with name " + updatedBatch.getBatchName() + " not found."));
         }
     }
 
