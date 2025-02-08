@@ -8,4 +8,8 @@ import java.util.List;
 public interface StudentRepository extends MongoRepository<Student,String> {
 
     List<Student> findAllByBatchId(String batchId);
+    List<Student> findByBatchIdAndStatusFalse(String batchId);
+    List<Student> findByBatchIdAndStatusTrue(String batchId);
+
+
 }
