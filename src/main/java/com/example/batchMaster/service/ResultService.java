@@ -18,5 +18,5 @@ public interface ResultService {
 
     List<Result> getResultByBatchId(String batchId);
 
-    Result getResultByBatchSubjectTopic(String batchId, String subjectId, String topicId);
+    Result getResultByBatchSubjectTopic(String batchId, String subjectId, String topic);
 }

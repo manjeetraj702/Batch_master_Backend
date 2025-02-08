@@ -29,7 +29,7 @@ public class StudentController {
     }
 
     // Update student details
-    @PutMapping
+    @PutMapping("/updateStudent")
     public Student updateStudent(@RequestBody StudentUpdateRequest studentUpdateRequest) {
         return studentService.updateStudent(studentUpdateRequest);
     }
@@ -68,7 +68,7 @@ public class StudentController {
         return studentService.getOnlineStudents(batchId);
     }
 
-    @GetMapping("/{batchId}/onlineStudents")
+    @GetMapping("/{batchId}/offlineStudents")
     List<Student> getOfflineStudents(String batchId) {
         return studentService.getOfflineStudents(batchId);
     }

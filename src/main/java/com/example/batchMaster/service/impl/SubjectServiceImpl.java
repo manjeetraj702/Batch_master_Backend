@@ -51,16 +51,8 @@ private SubjectRepository subjectRepository ;
         throw  new BatchMasterException("Subject is not present");
     }
 
-    @Override
-    public List<Subject> getCompleteandIncompletesubject(Boolean status) {
-         if(status)
-         {
-            return subjectRepository.findAllByStatusTrue();
-         }
-         else {
-              return  subjectRepository.findAllByStatusFalse();
-         }
-    }
+
+
 
     @Override
     public Subject changeSubjectStatus(String SubjectId) {
@@ -81,8 +73,15 @@ private SubjectRepository subjectRepository ;
         return subjectRepository.findAllByBatchId(batchId);
     }
 
+    @Override
+    public List<Subject> getCompleteSubject(String batchId) {
+        return subjectRepository.findAllByBatchIdAndStatusTrue(batchId);
+    }
 
-
+    @Override
+    public List<Subject> getIncompleteSubject(String batchId) {
+        return subjectRepository.findAllByBatchIdAndStatusFalse(batchId);
+    }
 
 
 }

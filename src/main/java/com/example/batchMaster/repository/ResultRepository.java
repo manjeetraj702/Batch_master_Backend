@@ -14,5 +14,5 @@ public interface ResultRepository extends MongoRepository<Result, String> {
 
     List<Result> findAllByBatchId(String batchId);
 
-    Result findByBatchIdAndSubjectIdAndTopicId(String batchId, String subjectId, String topicId);
+    Result findByBatchIdAndSubjectIdAndTopic(String batchId, String subjectId, String topic);
 }

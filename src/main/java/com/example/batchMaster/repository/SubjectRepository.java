@@ -13,7 +13,7 @@ public interface SubjectRepository extends MongoRepository<Subject,String> {
 
     List<Subject> findAllByBatchId(String batchId);
 
-    List<Subject> findAllByStatusTrue();
-    List<Subject> findAllByStatusFalse();
+    List<Subject> findAllByBatchIdAndStatusTrue(String batchId);
+    List<Subject> findAllByBatchIdAndStatusFalse(String batchId);
 
 }

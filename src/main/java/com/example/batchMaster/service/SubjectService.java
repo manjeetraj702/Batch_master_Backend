@@ -17,5 +17,7 @@ public interface SubjectService {
      List<Subject> getAllSubject();
      List<Subject> getSubjectByBatchId(String batchId);
       // get list of complete and incomplete  subject  ;
-  List<Subject> getCompleteandIncompletesubject(Boolean status);
+
+  List<Subject>getCompleteSubject(String batchid);
+    List<Subject>getIncompleteSubject(String batchid);
 }
