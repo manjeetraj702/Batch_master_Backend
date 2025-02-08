@@ -21,10 +21,10 @@ public class Student {
     private String fatherName;
     private String mobileNumber;
     private String email;
-    private String address;
     private String dob;
     private String degree;
     private String course;
+    private Address address;
     private String batchId = "Cage-00";
     private String branchId;
     private String admissionDate;
