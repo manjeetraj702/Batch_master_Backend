@@ -34,7 +34,7 @@ public class SubjectController {
        return subjectService.changeSubjectStatus(SubjectId);
    }
 
-   @GetMapping("get/complete/incomplete/subject")
+   @GetMapping("get/complete/incomplete/subjects")
    public  List<Subject> getCompleteAndIncompleteSubject(@RequestParam boolean status){
        return subjectService.getCompleteandIncompletesubject(status);
    }
