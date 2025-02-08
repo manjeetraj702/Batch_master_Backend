@@ -51,8 +51,8 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public Result getResultByBatchSubjectTopic(String batchId, String subjectId, String topicId) {
-        return resultRepository.findByBatchIdAndSubjectIdAndTopicId(batchId, subjectId, topicId);
+    public Result getResultByBatchSubjectTopic(String batchId, String subjectId, String topic) {
+        return resultRepository.findByBatchIdAndSubjectIdAndTopic(batchId, subjectId, topic);
     }
 
     @Override

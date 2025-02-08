@@ -28,7 +28,7 @@ public class ResultController {
         return resultService.updateResult(resultUpdateRequest);
     }
 
-    @GetMapping("/byBatch")
+    @GetMapping("/byBatchIdAndSubjectId")
     public List<Result> getResultsByBatchId(@RequestParam String batchId, @RequestParam String subjectId) {
         return resultService.getResultsByBatchIdAndSubjectId(batchId, subjectId);
     }
@@ -39,8 +39,8 @@ public class ResultController {
     }
 
     @GetMapping("/byBatchSubjectTopic")
-    public Result getResultByBatchSubjectTopic(@RequestParam String batchId, @RequestParam String subjectId, @RequestParam String topicId){
-        return resultService.getResultByBatchSubjectTopic(batchId, subjectId, topicId);
+    public Result getResultByBatchSubjectTopic(@RequestParam String batchId, @RequestParam String subjectId, @RequestParam String topic){
+        return resultService.getResultByBatchSubjectTopic(batchId, subjectId, topic);
     }
 
 }
