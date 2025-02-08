@@ -88,4 +88,9 @@ class StudentServiceImpl implements StudentService {
 
         throw  new BatchMasterException("Student is not present");
     }
+
+    @Override
+    public List<Student> getStudentsByBatchId(String batchId) {
+        return studentRepository.findAllByBatchId(batchId);
+    }
 }
