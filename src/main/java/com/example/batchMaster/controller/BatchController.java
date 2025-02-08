@@ -4,6 +4,7 @@ import com.example.batchMaster.model.Batch;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.service.BatchService;
+import com.example.batchMaster.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,25 +19,25 @@ public class BatchController {
 
     // 1. Create a new batch
     @PostMapping("/createBatch")
-    public String createBatch(@RequestBody Batch batch) {
+    public Batch createBatch(@RequestBody Batch batch) {
         return batchService.createBatch(batch);
     }
 
     // 2. Update an existing batch
     @PutMapping("/updateBatch")
-    public String updateBatch(@RequestParam String batchId, @RequestBody Batch updatedBatch) {
+    public Batch updateBatch(@RequestParam String batchId, @RequestBody Batch updatedBatch) {
         return batchService.updateBatch(batchId, updatedBatch);
     }
 
     // 3. Add a student to a batch
     @PutMapping("/addStudent")
-    public String addStudent(@RequestParam String batchId, @RequestParam String studentId) {
+    public Batch addStudent(@RequestParam String batchId, @RequestParam String studentId) {
         return batchService.addStudent(batchId, studentId);
     }
 
     // 4. Remove a student from a batch
     @PutMapping("/removeStudent")
-    public String removeStudent(@RequestParam String batchId, @RequestParam String studentId) {
+    public Batch removeStudent(@RequestParam String batchId, @RequestParam String studentId) {
         return batchService.removeStudent(batchId, studentId);
     }
 
@@ -80,13 +81,13 @@ public class BatchController {
 
     // 11. Get test results for a batch (to be implemented with a relevant TestResult model)
     @GetMapping("/getListOfTestResults")
-    public String getListOfTestResults(@RequestParam String batchId) {
+    public List<ResultService>  getListOfTestResults(@RequestParam String batchId) {
         return batchService.getListOfTestResults(batchId);
     }
 
     // 12. Switch a batch status (e.g., active/inactive)
-    @PutMapping("/batchSwitch")
-    public String updateBatchStatus(@RequestParam String batchId) {
+    @PutMapping("/updateBatchStatus")
+    public Batch updateBatchStatus(@RequestParam String batchId) {
         return batchService.updateBatchStatus(batchId);
     }
 }

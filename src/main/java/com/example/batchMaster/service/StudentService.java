@@ -22,7 +22,10 @@ public interface StudentService {
      List<Attendance> getListOfAttendance(String studentId) ;
 
      Student getStudentById(String studentId);
-
+Student updateStudentBatchId(String studentId,String batchId);
+Student removeStudentFromBatch(String studentId);
      List<Student> getStudentsByBatchId(String batchId);
+    List<Student> getOnlineStudents(String batchId);
+    List<Student> getOfflineStudents(String batchId);
 }
 
