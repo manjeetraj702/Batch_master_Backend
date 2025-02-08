@@ -5,8 +5,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,8 +26,6 @@ public class Student {
     private String batchId = "Cage-00";
     private String branchId;
     private String admissionDate;
-    private List<Marks> marksList;
-    private List<Attendance> attendanceList;
     private boolean status;
     private boolean mode;
 }
