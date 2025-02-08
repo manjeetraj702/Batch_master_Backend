@@ -1,12 +1,14 @@
 package com.example.batchMaster.service.impl;
+
 import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.repository.AttendanceRepository;
 import com.example.batchMaster.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDate;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {

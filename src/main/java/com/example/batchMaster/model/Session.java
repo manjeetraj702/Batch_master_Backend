@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "sessions")
 @Data
 @AllArgsConstructor
@@ -20,4 +22,6 @@ public class Session {
     private String sessionLink;
     private String date;
     private String batchId;
+    private List<String> onlineStudents;
+    private List<String> offlineStudents;
 }
