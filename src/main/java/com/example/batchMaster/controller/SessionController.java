@@ -22,7 +22,7 @@ public class SessionController {
     }
 
     @PutMapping("/update/{sessionId}")
-    public Session updateSession(@PathVariable String sessionId, @RequestBody SessionUpdateRequest updatedSession) {
+    public Session updateSession( @RequestBody SessionUpdateRequest updatedSession) {
         return sessionService.updateSession( updatedSession);
     }
 
@@ -34,5 +34,20 @@ public class SessionController {
     @GetMapping("/subject/{subject}")
     public List<Session> getSessionsBySubject(@PathVariable String subject) {
         return sessionService.getSessionsBySubject(subject);
+    }
+
+    @DeleteMapping("/delete/{sessionId}")
+    public boolean  deleteSession(@PathVariable String sessionId) {
+        return sessionService.deleteSessionById(sessionId);
+    }
+
+    @GetMapping("/{sessionId}")
+    public Session getSessionById(@PathVariable String sessionId) {
+        return sessionService.getSessionById(sessionId);
+    }
+
+    @GetMapping("/sessionByBatchId")
+    public List<Session> getAllSessions(@RequestParam String batchId) {
+        return sessionService.getSessionsByBatchId(batchId);
     }
 }

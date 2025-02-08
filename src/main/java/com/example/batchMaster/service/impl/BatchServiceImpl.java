@@ -1,14 +1,8 @@
 package com.example.batchMaster.service.impl;
 
-import com.example.batchMaster.model.Batch;
-import com.example.batchMaster.model.Result;
-import com.example.batchMaster.model.Student;
-import com.example.batchMaster.model.Subject;
+import com.example.batchMaster.model.*;
 import com.example.batchMaster.repository.BatchRepository;
-import com.example.batchMaster.service.BatchService;
-import com.example.batchMaster.service.ResultService;
-import com.example.batchMaster.service.StudentService;
-import com.example.batchMaster.service.SubjectService;
+import com.example.batchMaster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import  com.example.batchMaster.customException.BatchNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,9 +20,11 @@ public class BatchServiceImpl implements BatchService {
     @Autowired
     private SubjectService subjectService;
     @Autowired
-    ResultService resultService;
+    private ResultService resultService;
+    @Autowired
+    private AttendanceService attendanceService;
 
-
+// BATCH
     @Override
     public Batch createBatch(Batch batch) {
         // Check if a batch with the same name already exists
@@ -71,6 +67,24 @@ public class BatchServiceImpl implements BatchService {
     }
 
     @Override
+    public Batch updateBatchStatus(String batchId) {
+        // Check if the batch exists
+        Optional<Batch> preBatch = batchRepository.findById(batchId);
+        if (!preBatch.isPresent()) {
+            return null;
+        }
+
+        // Update the batch status
+        Batch existingBatch = preBatch.get();
+        existingBatch.setStatus(!existingBatch.isStatus());
+        batchRepository.save(existingBatch); // Save the updated batch back to the database
+
+        return existingBatch;
+
+    }
+
+//    STUDENT
+    @Override
     public Batch addStudent(String batchId, String studentId) {
         Optional<Batch> existingBatch = batchRepository.findById(batchId);
 
@@ -107,39 +121,6 @@ public class BatchServiceImpl implements BatchService {
         return studentService.getStudentsByBatchId(batchId);
     }
 
-
-//Todo: not completed
-    @Override
-    public List<Subject> getListOfCompletedSubjects(String batchId) {
-        // Fetch the batch by ID or throw an exception if not found
-        Batch batch = batchRepository.findById(batchId)
-                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
-
-        // Fetch completed subjects from the batch
-        return subjectService.getAllSubject();
-    }
-//Todo: not completed
-    @Override
-    public List<Subject> getListOfInCompletedSubjects(String batchId) {
-        // Fetch the batch by ID or throw an exception if not found
-        Batch batch = batchRepository.findById(batchId)
-                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
-
-        // Fetch incomplete subjects from the batch
-        return subjectService.getAllSubject();
-    }
-
-//Todo: not completed
-    @Override
-    public List<Subject> getListOfCurrentSubjects(String batchId) {
-        // Fetch the batch by ID or throw an exception if not found
-        Batch batch = batchRepository.findById(batchId)
-                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
-
-        // Fetch incomplete subjects from the batch
-        return subjectService.getAllSubject();
-    }
-
     @Override
     public List<Student> getListOfOnlineStudents(String batchId) {
         // Fetch the batch by ID or throw an exception if not found
@@ -160,7 +141,54 @@ public class BatchServiceImpl implements BatchService {
         return studentService.getOfflineStudents(batchId);
     }
 
+//    SUBJECT
+    @Override
+    public List<Subject> getListOfCompletedSubjects(String batchId) {
+        // Fetch the batch by ID or throw an exception if not found
+        Batch batch = batchRepository.findById(batchId)
+                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
 
+        // Fetch completed subjects from the batch
+        return subjectService.getCompleteSubject(batchId);
+    }
+
+    @Override
+    public List<Subject> getListOfInCompletedSubjects(String batchId) {
+        // Fetch the batch by ID or throw an exception if not found
+        Batch batch = batchRepository.findById(batchId)
+                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
+
+        // Fetch incomplete subjects from the batch
+        return subjectService.getIncompleteSubject(batchId);
+    }
+
+    //Todo: not completed
+    @Override
+    public Subject getCompletedSubjectTopics(String batchId, String subject) {
+        // Fetch the batch by ID or throw an exception if not found
+        Batch batch = batchRepository.findById(batchId)
+                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
+
+        // Fetch incomplete subjects from the batch
+        List<Subject> completeSubject=  subjectService.getCompleteSubject(batchId);
+
+
+        return null;
+    }
+
+    //Todo: not completed
+    @Override
+    public List<Subject> getListOfCurrentSubjects(String batchId) {
+        // Fetch the batch by ID or throw an exception if not found
+        Batch batch = batchRepository.findById(batchId)
+                .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
+
+        // Fetch incomplete subjects from the batch
+        return subjectService.getAllSubject();
+    }
+
+
+// TEST RESULT
     @Override
     public List<Result> getListOfTestResults(String batchId) {
         Optional<Batch> existingBatch = batchRepository.findById(batchId);
@@ -171,24 +199,6 @@ public class BatchServiceImpl implements BatchService {
         else {
             return null;
         }
-
-    }
-
-
-    @Override
-    public Batch updateBatchStatus(String batchId) {
-        // Check if the batch exists
-        Optional<Batch> preBatch = batchRepository.findById(batchId);
-        if (!preBatch.isPresent()) {
-            return null;
-        }
-
-        // Update the batch status
-        Batch existingBatch = preBatch.get();
-        existingBatch.setStatus(!existingBatch.isStatus());
-        batchRepository.save(existingBatch); // Save the updated batch back to the database
-
-        return existingBatch;
 
     }
 
@@ -215,4 +225,33 @@ public class BatchServiceImpl implements BatchService {
             return null;
         }
     }
+
+
+
+//    ATTENDANCE
+      @Override
+      public List<Attendance> getAllStudentAttendanceByBatchId(String batchId) {
+          Optional<Batch> existingBatch = batchRepository.findById(batchId);
+
+          if (existingBatch.isPresent()) {
+              return attendanceService.getAttendanceByBatchId(batchId);
+          }
+          else {
+              return null;
+          }
+      }
+
+      @Override
+      public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, String date) {
+          Optional<Batch> existingBatch = batchRepository.findById(batchId);
+
+          if (existingBatch.isPresent()) {
+              return attendanceService.getAttendanceByBatchIdAndDate(batchId,date);
+          }
+          else {
+              return null;
+          }
+      }
+
+
 }
