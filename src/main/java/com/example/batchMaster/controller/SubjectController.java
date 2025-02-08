@@ -34,13 +34,18 @@ public class SubjectController {
        return subjectService.changeSubjectStatus(SubjectId);
    }
 
-   @GetMapping("get/complete/incomplete/subjects")
-   public  List<Subject> getCompleteAndIncompleteSubject(@RequestParam boolean status){
-       return subjectService.getCompleteandIncompletesubject(status);
+   @GetMapping("get/incomplete/subjects/byBatchId")
+   public  List<Subject> getIncompleteSubject(@RequestParam String batchId){
+       return subjectService.getIncompleteSubject(batchId);
+   }
+
+   @GetMapping("get/complete/subjects/byBatchId")
+   public  List<Subject> getCompleteSubject(@RequestParam String batchId){
+      return subjectService.getCompleteSubject(batchId);
    }
 
 
-   @GetMapping("/get/batchid")
+   @GetMapping("/get/batchId")
    public List<Subject> getByBatchId(@RequestParam String batchId){
       return subjectService.getSubjectByBatchId(batchId);
    }
