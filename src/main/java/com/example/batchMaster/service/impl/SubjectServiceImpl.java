@@ -2,7 +2,6 @@ package com.example.batchMaster.service.impl;
 
 
 import com.example.batchMaster.exception.BatchMasterException;
-import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
 import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
@@ -11,7 +10,6 @@ import com.example.batchMaster.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +52,17 @@ private SubjectRepository subjectRepository ;
     }
 
     @Override
+    public List<Subject> getCompleteandIncompletesubject(Boolean status) {
+         if(status)
+         {
+            return subjectRepository.findAllByStatusTrue();
+         }
+         else {
+              return  subjectRepository.findAllByStatusFalse();
+         }
+    }
+
+    @Override
     public Subject changeSubjectStatus(String SubjectId) {
         Subject subject = getSubjectById(SubjectId);
         subject.setStatus(!subject.isStatus());
@@ -68,8 +77,12 @@ private SubjectRepository subjectRepository ;
     }
 
     @Override
-    public List<Subject> getbyBatchId(String batchId) {
+    public List<Subject> getSubjectByBatchId(String batchId) {
         return subjectRepository.findAllByBatchId(batchId);
     }
+
+
+
+
 
 }
