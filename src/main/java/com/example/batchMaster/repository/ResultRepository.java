@@ -10,4 +10,9 @@ import java.util.List;
 public interface ResultRepository extends MongoRepository<Result, String> {
 
     List<Result> findByBatchIdAndSubjectId(String batchId, String subjectId);
+
+
+    List<Result> findAllByBatchId(String batchId);
+
+    Result findByBatchIdAndSubjectIdAndTopicId(String batchId, String subjectId, String topicId);
 }
