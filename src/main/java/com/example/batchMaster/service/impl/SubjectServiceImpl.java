@@ -74,6 +74,11 @@ private SubjectRepository subjectRepository ;
     }
 
     @Override
+    public Subject getBySubjectNameAndBatchId(String subjectName, String batchId) {
+        return subjectRepository.findBySubjectNameAndBatchId(subjectName,batchId);
+    }
+
+    @Override
     public List<Subject> getCompleteSubject(String batchId) {
         return subjectRepository.findAllByBatchIdAndStatusTrue(batchId);
     }

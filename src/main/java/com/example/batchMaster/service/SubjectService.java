@@ -18,6 +18,8 @@ public interface SubjectService {
      List<Subject> getSubjectByBatchId(String batchId);
       // get list of complete and incomplete  subject  ;
 
+    Subject getBySubjectNameAndBatchId(String subjectName,String batchId);
+
   List<Subject>getCompleteSubject(String batchid);
     List<Subject>getIncompleteSubject(String batchid);
 }
