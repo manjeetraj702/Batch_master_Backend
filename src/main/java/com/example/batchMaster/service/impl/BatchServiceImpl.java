@@ -162,7 +162,7 @@ public class BatchServiceImpl implements BatchService {
         return subjectService.getIncompleteSubject(batchId);
     }
 
-    //Todo: not completed
+
     @Override
     public Subject getCompletedSubjectTopics(String batchId, String subject) {
         // Fetch the batch by ID or throw an exception if not found
@@ -170,10 +170,7 @@ public class BatchServiceImpl implements BatchService {
                 .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
 
         // Fetch incomplete subjects from the batch
-        List<Subject> completeSubject=  subjectService.getCompleteSubject(batchId);
-
-
-        return null;
+        return subjectService.getBySubjectNameAndBatchId(subject,batchId);
     }
 
     //Todo: not completed
