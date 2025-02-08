@@ -44,10 +44,6 @@ public class ResultServiceImpl implements ResultService {
                 .orElseThrow(() -> new RuntimeException("Result not found with ID: " + resultId));
     }
 
-    @Override
-    public List<Result> getResultsByStudentId(String studentId) {
-        return resultRepository.findAllByStudentId(studentId);
-    }
 
     @Override
     public List<Result> getResultByBatchId(String batchId) {
@@ -55,7 +51,14 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+    public Result getResultByBatchSubjectTopic(String batchId, String subjectId, String topicId) {
+        return resultRepository.findByBatchIdAndSubjectIdAndTopicId(batchId, subjectId, topicId);
+    }
+
+    @Override
     public List<Result> getResultsByBatchIdAndSubjectId(String batchId, String subjectId) {
         return resultRepository.findByBatchIdAndSubjectId(batchId, subjectId);
     }
+
+
 }

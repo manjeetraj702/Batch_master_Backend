@@ -14,4 +14,6 @@ public interface ResultRepository extends MongoRepository<Result, String> {
     List<Result> findAllByStudentId(String studentId);
 
     List<Result> findAllByBatchId(String batchId);
+
+    Result findByBatchIdAndSubjectIdAndTopicId(String batchId, String subjectId, String topicId);
 }

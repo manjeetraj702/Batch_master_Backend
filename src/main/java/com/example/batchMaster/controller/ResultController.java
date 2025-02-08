@@ -33,14 +33,14 @@ public class ResultController {
         return resultService.getResultsByBatchIdAndSubjectId(batchId, subjectId);
     }
 
-    @GetMapping("/byStudent")
-    public List<Result> getResultsByStudentId(@RequestParam String studentId) {
-        return resultService.getResultsByStudentId(studentId);
-    }
-
     @GetMapping("/byBatch")
     public List<Result> getResultByBatchId(@RequestParam String batchId) {
         return resultService.getResultByBatchId(batchId);
+    }
+
+    @GetMapping("/byBatchSubjectTopic")
+    public Result getResultByBatchSubjectTopic(@RequestParam String batchId, @RequestParam String subjectId, @RequestParam String topicId){
+        return resultService.getResultByBatchSubjectTopic(batchId, subjectId, topicId);
     }
 
 }
