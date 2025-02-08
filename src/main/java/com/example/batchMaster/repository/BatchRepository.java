@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BatchRepository extends MongoRepository<Batch,String> {
 
-    Optional<Batch> findByBatchId(String branchId);
-    Optional<Batch> findByBatchName(String branchName);
+    Optional<Batch> findByBatchId(String batchId);
+    Optional<Batch> findByBatchName(String batchName);
 }

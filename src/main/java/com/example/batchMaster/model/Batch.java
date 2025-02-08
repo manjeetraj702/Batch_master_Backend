@@ -23,10 +23,6 @@ public class Batch {
     private String batchName;
     private String startingDate;
     private String batchTime;
-    private List<String> studentList;
-    private List<String> subjectList;
-    private String currentSubject;
-    private List<String> completedSubjectList;
     private List<String> onlineStudentList;
     private List<String> offlineStudentList;
     private  boolean status=true;
