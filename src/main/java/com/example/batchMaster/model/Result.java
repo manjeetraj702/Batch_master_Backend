@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Result {
-
     @Id
     private String resultId;
     private String batchId;
