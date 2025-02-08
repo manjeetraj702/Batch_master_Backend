@@ -30,15 +30,28 @@ class StudentServiceImpl implements StudentService {
 
     @Override
     public Student createStudent(StudentCreateRequest studentCreateRequest) {
+        // Check if the email already exists in the database
+        Optional<Student> existingStudent = studentRepository.findByEmail(studentCreateRequest.getEmail());
+        if (existingStudent.isPresent()) {
+            throw new IllegalArgumentException("A student with this email already exists.");
+        }
 
-
+        // Create a new student if email does not exist
         Student student = new Student();
-        student.setStudentName(studentCreateRequest.getName());
-        student.setCourse(studentCreateRequest.getCourse());
+        student.setStudentName(studentCreateRequest.getStudentName());
+        student.setFatherName(studentCreateRequest.getFatherName());
+        student.setMobileNumber(studentCreateRequest.getMobileNumber());
         student.setEmail(studentCreateRequest.getEmail());
         student.setDob(studentCreateRequest.getDob());
+        student.setDegree(studentCreateRequest.getDegree());
+        student.setCourse(studentCreateRequest.getCourse());
+        student.setAddress(studentCreateRequest.getAddress());
+        student.setBranchId(studentCreateRequest.getBranchId());
+        student.setAdmissionDate(studentCreateRequest.getAdmissionDate());
+
         return studentRepository.save(student);
     }
+
 
     @Override
     public Student getStudentDetails(String studentId) {
@@ -47,17 +60,36 @@ class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Override
     public Student updateStudent(StudentUpdateRequest studentUpdateRequest) {
-      getStudentById(studentUpdateRequest.getId());
-            Student student = new Student();
-            student.setStudentId(studentUpdateRequest.getId());
-            student.setStudentName(studentUpdateRequest.getName());
-            student.setCourse(studentUpdateRequest.getCourse());
-            student.setEmail(studentUpdateRequest.getEmail());
-            student.setDob(studentUpdateRequest.getDob());
-            return studentRepository.save(student);
+        Student existingStudent = getStudentById(studentUpdateRequest.getId()); // Fetch existing student
 
+        // Update only if new values are provided (avoid overwriting with null)
+        if (studentUpdateRequest.getStudentName() != null) {
+            existingStudent.setStudentName(studentUpdateRequest.getStudentName());
+        }
+        if (studentUpdateRequest.getAddress() != null) {
+            existingStudent.setAddress(studentUpdateRequest.getAddress());
+        }
+        if (studentUpdateRequest.getCourse() != null) {
+            existingStudent.setCourse(studentUpdateRequest.getCourse());
+        }
+        if (studentUpdateRequest.getEmail() != null) {
+            existingStudent.setEmail(studentUpdateRequest.getEmail());
+        }
+        if (studentUpdateRequest.getDob() != null) {
+            existingStudent.setDob(studentUpdateRequest.getDob());
+        }
+        if (studentUpdateRequest.getAdmissionDate() != null) {
+            existingStudent.setAdmissionDate(studentUpdateRequest.getAdmissionDate());
+        }
+        if (studentUpdateRequest.getDegree() != null) {
+            existingStudent.setDegree(studentUpdateRequest.getDegree());
+        }
+
+        return studentRepository.save(existingStudent); // Save updated student
     }
+
 
 
 

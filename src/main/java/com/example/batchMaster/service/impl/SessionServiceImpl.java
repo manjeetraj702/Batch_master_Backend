@@ -30,12 +30,26 @@ public class SessionServiceImpl implements SessionService {
         session.setSessionLink(sessionCreateRequest.getSessionLink());
         session.setDate(sessionCreateRequest.getDate());
         session.setBatchId(sessionCreateRequest.getBatchId());
+        if (sessionCreateRequest.getOnlineStudentsIds() != null) {
+            if (session.getOnlineStudents() == null) {
+                session.setOnlineStudents(sessionCreateRequest.getOnlineStudentsIds());
+            } else {
+                session.getOnlineStudents().addAll(sessionCreateRequest.getOnlineStudentsIds());
+            }
+        }
+        if (sessionCreateRequest.getOfflineStudentsIds() != null) {
+            if (session.getOfflineStudents() == null) {
+                session.setOfflineStudents(sessionCreateRequest.getOfflineStudentsIds());
+            } else {
+                session.getOfflineStudents().addAll(sessionCreateRequest.getOfflineStudentsIds());
+            }
+        }
 
         return sessionRepository.save(session);
     }
 
     @Override
-    public Session updateSession( SessionUpdateRequest updatedSession) {
+    public Session updateSession(SessionUpdateRequest updatedSession) {
         Optional<Session> existingSessionOpt = sessionRepository.findById(updatedSession.getBatchId());
         if (existingSessionOpt.isPresent()) {
             Session existingSession = existingSessionOpt.get();
@@ -45,6 +59,20 @@ public class SessionServiceImpl implements SessionService {
             existingSession.setSessionLink(updatedSession.getSessionLink());
             existingSession.setDate(updatedSession.getDate());
             existingSession.setBatchId(updatedSession.getBatchId());
+            if (updatedSession.getOnlineStudentsIds() != null) {
+                if (existingSession.getOnlineStudents() == null) {
+                    existingSession.setOnlineStudents(updatedSession.getOnlineStudentsIds());
+                } else {
+                    existingSession.getOnlineStudents().addAll(updatedSession.getOnlineStudentsIds());
+                }
+            }
+            if (updatedSession.getOfflineStudentsIds() != null) {
+                if (existingSession.getOfflineStudents() == null) {
+                    existingSession.setOfflineStudents(updatedSession.getOfflineStudentsIds());
+                } else {
+                    existingSession.getOfflineStudents().addAll(updatedSession.getOfflineStudentsIds());
+                }
+            }
             return sessionRepository.save(existingSession);
         }
         throw new RuntimeException("Session not found with ID: " + updatedSession.getBatchId());
@@ -59,4 +87,41 @@ public class SessionServiceImpl implements SessionService {
     public List<Session> getSessionsBySubject(String subject) {
         return sessionRepository.findAllBySubject(subject);
     }
+
+    @Override
+    public Session getSessionById(String sessionId) {
+        return sessionRepository.findById(sessionId).orElseThrow(() -> new RuntimeException("Session not found with ID: " + sessionId));
+    }
+
+    @Override
+    public boolean deleteSessionById(String sessionId) {
+        if (sessionRepository.existsById(sessionId)) {
+            sessionRepository.deleteById(sessionId);
+            return true;
+        } else {
+            throw new RuntimeException("Session not found with ID: " + sessionId);
+        }
+    }
+
+    @Override
+    public Session addStudentsToSession(String sessionId, List<String> onlineStudents, List<String> offlineStudents) {
+        Session session = sessionRepository.findById(sessionId).orElseThrow(() -> new RuntimeException("Session not found with ID: " + sessionId));
+        if (onlineStudents != null) {
+            if (session.getOnlineStudents() == null) {
+                session.setOnlineStudents(onlineStudents);
+            } else {
+                session.getOnlineStudents().addAll(onlineStudents);
+            }
+        }
+        if (offlineStudents != null) {
+            if (session.getOfflineStudents() == null) {
+                session.setOfflineStudents(offlineStudents);
+            } else {
+                session.getOfflineStudents().addAll(offlineStudents);
+            }
+        }
+        return sessionRepository.save(session);
+    }
+
+
 }
