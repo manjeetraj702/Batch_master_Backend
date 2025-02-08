@@ -1,5 +1,6 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
@@ -41,16 +42,14 @@ public class StudentController {
     }
 
 
-<<<<<<< HEAD
     // Get list of marks for a student
     @GetMapping("/{studentId}/marks")
     public List<Marks> getListOfMarks(@RequestParam String studentId) {
         return studentService.getListOfMarks(studentId);
-=======
+    }
     @PatchMapping("/{studentId}/batchId")
     Student updateStudentBatchId(String studentId, String batchId) {
         return studentService.updateStudentBatchId(studentId, batchId);
->>>>>>> f40efbf88815e30c8da9383866a7e2cfa446407c
     }
 
     @PatchMapping("/{student}/remove")
