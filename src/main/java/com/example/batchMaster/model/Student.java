@@ -25,7 +25,7 @@ public class Student {
     private String dob;
     private String degree;
     private String course;
-    private String batchId;
+    private String batchId = "Cage-00";
     private String branchId;
     private String admissionDate;
     private List<Marks> marksList;
