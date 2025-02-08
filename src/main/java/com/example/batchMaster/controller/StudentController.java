@@ -41,12 +41,12 @@ public class StudentController {
     }
 
 
-    @PatchMapping("{studentId}/batchId")
+    @PatchMapping("/{studentId}/batchId")
     Student updateStudentBatchId(String studentId, String batchId) {
         return studentService.updateStudentBatchId(studentId, batchId);
     }
 
-    @PatchMapping("{student")
+    @PatchMapping("/{student}/remove")
     Student removeStudentFromBatch(String studentId) {
         return studentService.removeStudentFromBatch(studentId);
     }
