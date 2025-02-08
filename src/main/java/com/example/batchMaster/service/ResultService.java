@@ -15,4 +15,9 @@ public interface ResultService {
     List<Result> getResultsByBatchIdAndSubjectId(String batchId, String subjectId);
 
     Result getResultsByResultId(String resultId);
+
+    List<Result> getResultsByStudentId(String studentId);
+
+    List<Result> getResultByBatchId(String batchId);
+
 }

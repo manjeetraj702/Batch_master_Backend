@@ -45,6 +45,16 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+    public List<Result> getResultsByStudentId(String studentId) {
+        return resultRepository.findAllByStudentId(studentId);
+    }
+
+    @Override
+    public List<Result> getResultByBatchId(String batchId) {
+        return resultRepository.findAllByBatchId(batchId);
+    }
+
+    @Override
     public List<Result> getResultsByBatchIdAndSubjectId(String batchId, String subjectId) {
         return resultRepository.findByBatchIdAndSubjectId(batchId, subjectId);
     }
