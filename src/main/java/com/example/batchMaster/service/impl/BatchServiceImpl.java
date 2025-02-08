@@ -24,6 +24,7 @@ public class BatchServiceImpl implements BatchService {
     @Autowired
     private SubjectRepository subjectRepository;
 
+
     @Override
     public String createBatch(Batch batch) {
         // Check if a batch with the same name already exists
@@ -42,10 +43,6 @@ public class BatchServiceImpl implements BatchService {
         newBatch.setBatchName(batch.getBatchName());
         newBatch.setStartingDate(batch.getStartingDate());
         newBatch.setBatchTime(batch.getBatchTime());
-        newBatch.setStudentList(batch.getStudentList());
-        newBatch.setSubjectList(batch.getSubjectList());
-        newBatch.setCurrentSubject(batch.getCurrentSubject());
-        newBatch.setCompletedSubjectList(batch.getCompletedSubjectList());
         newBatch.setOnlineStudentList(batch.getOnlineStudentList());
         newBatch.setOfflineStudentList(batch.getOfflineStudentList());
 
@@ -63,10 +60,6 @@ public class BatchServiceImpl implements BatchService {
             batchToUpdate.setBatchName(updatedBatch.getBatchName());
             batchToUpdate.setStartingDate(updatedBatch.getStartingDate());
             batchToUpdate.setBatchTime(updatedBatch.getBatchTime());
-            batchToUpdate.setStudentList(updatedBatch.getStudentList());
-            batchToUpdate.setSubjectList(updatedBatch.getSubjectList());
-            batchToUpdate.setCurrentSubject(updatedBatch.getCurrentSubject());
-            batchToUpdate.setCompletedSubjectList(updatedBatch.getCompletedSubjectList());
             batchToUpdate.setOnlineStudentList(updatedBatch.getOnlineStudentList());
             batchToUpdate.setOfflineStudentList(updatedBatch.getOfflineStudentList());
             batchRepository.save(batchToUpdate);
@@ -82,11 +75,11 @@ public class BatchServiceImpl implements BatchService {
 
         if (existingBatch.isPresent()) {
             Batch batch = existingBatch.get();
-            List<String> students = batch.getStudentList();
+            List<String> students = batch.getOnlineStudentList();
 
             if (!students.contains(studentId)) {
                 students.add(studentId);
-                batch.setStudentList(students);
+                batch.setOfflineStudentList(students);
                 batchRepository.save(batch);
                 return "Student added successfully to batch " + batchId;
             } else {
@@ -103,11 +96,11 @@ public class BatchServiceImpl implements BatchService {
 
         if (existingBatch.isPresent()) {
             Batch batch = existingBatch.get();
-            List<String> students = batch.getStudentList();
+            List<String> students = batch.getOfflineStudentList();
 
             if (students.contains(studentId)) {
                 students.remove(studentId);
-                batch.setStudentList(students);
+                batch.setOfflineStudentList(students);
                 batchRepository.save(batch);
                 return "Student removed successfully from batch " + batchId;
             } else {
@@ -125,7 +118,7 @@ public class BatchServiceImpl implements BatchService {
                 .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
 
         // Fetch students only from the `studentList` in the batch
-        return studentRepository.findAllById(batch.getStudentList());
+        return studentRepository.findAllById(batch.getOfflineStudentList());
     }
 
 
@@ -137,7 +130,7 @@ public class BatchServiceImpl implements BatchService {
                 .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
 
         // Fetch completed subjects from the batch
-        return subjectRepository.findAllById(batch.getCompletedSubjectList());
+        return subjectRepository.findAllById(batch.getOnlineStudentList());
     }
 //Todo: not completed
     @Override
@@ -147,7 +140,7 @@ public class BatchServiceImpl implements BatchService {
                 .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
 
         // Fetch incomplete subjects from the batch
-        return subjectRepository.findAllById(batch.getSubjectList());
+        return subjectRepository.findAllById(batch.getOfflineStudentList());
     }
 
 //Todo: not completed
@@ -158,7 +151,7 @@ public class BatchServiceImpl implements BatchService {
                 .orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
 
         // Fetch incomplete subjects from the batch
-        return subjectRepository.findAllById(batch.getSubjectList());
+        return subjectRepository.findAllById(batch.getOfflineStudentList());
     }
 
     @Override

@@ -42,6 +42,7 @@ public class StudentController {
         return studentService.changeStudentStatus(studentId);
     }
 
+
     // Get list of marks for a student
     @GetMapping("/{studentId}/marks")
     public List<Marks> getListOfMarks(@RequestParam String studentId) {
