@@ -1,6 +1,7 @@
 package com.example.batchMaster.service;
 
 import com.example.batchMaster.model.Batch;
+import com.example.batchMaster.model.Result;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.Subject;
 
@@ -10,6 +11,8 @@ public interface BatchService {
     Batch createBatch(Batch batch);
 
     Batch updateBatch(String batchId, Batch updatedBatch);
+
+    Batch updateBatchStatus(String batchId);
 
     Batch addStudent(String batchId, String studentId);
 
@@ -27,7 +30,9 @@ public interface BatchService {
 
     List<Student> getListOfOfflineStudents(String batchId);
 
-    List<ResultService>  getListOfTestResults(String batchId);
+    List<Result> getListOfTestResults(String batchId);
 
-    Batch updateBatchStatus(String batchId);
+    Result getTestResultsofSubjectofTopic(String batchId,String subject,String topic);
+
+    List<Result> getListOfTestResultofSubject(String batchId, String subject);
 }

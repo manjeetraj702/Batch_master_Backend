@@ -1,11 +1,10 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Batch;
+import com.example.batchMaster.model.Result;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.repository.BatchRepository;
-import com.example.batchMaster.repository.StudentRepository;
-import com.example.batchMaster.repository.SubjectRepository;
 import com.example.batchMaster.service.BatchService;
 import com.example.batchMaster.service.ResultService;
 import com.example.batchMaster.service.StudentService;
@@ -162,15 +161,12 @@ public class BatchServiceImpl implements BatchService {
     }
 
 
-//Todo: not completed
     @Override
-    public List<ResultService> getListOfTestResults(String batchId) {
+    public List<Result> getListOfTestResults(String batchId) {
         Optional<Batch> existingBatch = batchRepository.findById(batchId);
 
         if (existingBatch.isPresent()) {
-
-
-            return null;
+            return resultService.getResultByBatchId(batchId);
         }
         else {
             return null;
@@ -194,5 +190,29 @@ public class BatchServiceImpl implements BatchService {
 
         return existingBatch;
 
+    }
+
+    @Override
+    public Result getTestResultsofSubjectofTopic(String batchId,String subject,String topic) {
+        Optional<Batch> existingBatch = batchRepository.findById(batchId);
+
+        if (existingBatch.isPresent()) {
+            return resultService.getResultByBatchSubjectTopic(batchId,subject,topic);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Result> getListOfTestResultofSubject(String batchId, String subject) {
+        Optional<Batch> existingBatch = batchRepository.findById(batchId);
+
+        if (existingBatch.isPresent()) {
+            return resultService.getResultsByBatchIdAndSubjectId(batchId,subject);
+        }
+        else {
+            return null;
+        }
     }
 }

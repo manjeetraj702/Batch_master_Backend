@@ -1,6 +1,7 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Attendance;
+import com.example.batchMaster.model.request.AttendanceCreateRequest;
 import com.example.batchMaster.repository.AttendanceRepository;
 import com.example.batchMaster.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,12 @@ public class AttendanceServiceImpl implements AttendanceService {
         @Autowired
     AttendanceRepository attendanceRepository;
     @Override
-    public Attendance createAttendance(String studentId, String status,String batchId) {
+    public Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest) {
         Attendance attendance = new Attendance();
-        attendance.setStudentId(studentId);
-        attendance.setStatus(status);
-        attendance.setBatchId(batchId);
-        attendance.setDate(LocalDate.now().toString());
+        attendance.setStudentId(attendanceCreateRequest.getStudentId());
+        attendance.setStatus(attendanceCreateRequest.getStatus());
+        attendance.setBatchId(attendanceCreateRequest.getBatchId());
+        attendance.setDate(attendanceCreateRequest.getDate());
         return attendanceRepository.save(attendance);
     }
 
@@ -44,5 +45,15 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public List<Attendance> getAttendanceByBatchId(String batchId) {
         return attendanceRepository.findByBatchId(batchId);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, String date) {
+        return attendanceRepository.findByBatchIdAndDate(batchId,date);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date) {
+        return attendanceRepository.findByStudentIdAndDate(studentId,date);
     }
 }

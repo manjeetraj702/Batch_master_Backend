@@ -1,10 +1,10 @@
 package com.example.batchMaster.controller;
 
 import com.example.batchMaster.model.Batch;
+import com.example.batchMaster.model.Result;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.service.BatchService;
-import com.example.batchMaster.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +27,11 @@ public class BatchController {
     @PutMapping("/updateBatch")
     public Batch updateBatch(@RequestParam String batchId, @RequestBody Batch updatedBatch) {
         return batchService.updateBatch(batchId, updatedBatch);
+    }
+    // 12. Switch a batch status (e.g., active/inactive)
+    @PutMapping("/updateBatchStatus")
+    public Batch updateBatchStatus(@RequestParam String batchId) {
+        return batchService.updateBatchStatus(batchId);
     }
 
     // 3. Add a student to a batch
@@ -81,13 +86,20 @@ public class BatchController {
 
     // 11. Get test results for a batch (to be implemented with a relevant TestResult model)
     @GetMapping("/getListOfTestResults")
-    public List<ResultService>  getListOfTestResults(@RequestParam String batchId) {
+    public List<Result> getListOfTestResults(@RequestParam String batchId) {
         return batchService.getListOfTestResults(batchId);
     }
-
-    // 12. Switch a batch status (e.g., active/inactive)
-    @PutMapping("/updateBatchStatus")
-    public Batch updateBatchStatus(@RequestParam String batchId) {
-        return batchService.updateBatchStatus(batchId);
+    // 12. Get test results for a batch (to be implemented with a relevant TestResult model)
+    @GetMapping("/getTestResultsofSubjectofTopic")
+    public Result getTestResultsofSubjectofTopic(@RequestParam String batchId,@RequestParam String subject,@RequestParam String topic) {
+        return batchService.getTestResultsofSubjectofTopic(batchId,subject,topic);
     }
+
+    // 13. Get test results for a batch (to be implemented with a relevant TestResult model)
+    @GetMapping("/getListOfTestResultofSubject")
+    public List<Result> getListOfTestResultofSubject(@RequestParam String batchId,@RequestParam String subject) {
+        return batchService.getListOfTestResultofSubject(batchId,subject);
+    }
+
+
 }
