@@ -28,8 +28,8 @@ public class Student {
     private String batchId;
     private String branchId;
     private String admissionDate;
-    private List<String> resultList;
-    private List<String> attendanceList;
+    private List<Marks> marksList;
+    private List<Attendance> attendanceList;
     private boolean status;
 }
 
