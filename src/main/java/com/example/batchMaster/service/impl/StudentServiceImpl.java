@@ -90,17 +90,32 @@ class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student updateStudentBatchId(String studentId, String batchId) {
+        Student student = getStudentById(studentId);
+        student.setBatchId(batchId);
+        return studentRepository.save(student);
+    }
+
+    @Override
+    public Student removeStudentFromBatch(String studentId) {
+        Student student = getStudentById(studentId);
+        student.setBatchId("Cage-00");
+        return studentRepository.save(student);
+    }
+
+
+    @Override
     public List<Student> getStudentsByBatchId(String batchId) {
         return studentRepository.findAllByBatchId(batchId);
     }
 
     @Override
     public List<Student> getOnlineStudents(String batchId) {
-        return studentRepository.findByBatchIdAndModeFalse(batchId);
+        return studentRepository.findAllByBatchIdAndModeFalse(batchId);
     }
 
     @Override
     public List<Student> getOfflineStudents(String batchId) {
-        return studentRepository.findByBatchIdAndModeTrue(batchId);
+        return studentRepository.findAllByBatchIdAndModeTrue(batchId);
     }
 }
