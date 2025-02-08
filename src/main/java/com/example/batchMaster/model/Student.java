@@ -31,6 +31,7 @@ public class Student {
     private List<Marks> marksList;
     private List<Attendance> attendanceList;
     private boolean status;
+    private boolean mode;
 }
 
 
