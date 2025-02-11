@@ -1,10 +1,13 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Session;
+import com.example.batchMaster.model.request.AttendanceCreateRequest;
 import com.example.batchMaster.model.request.SessionCreateRequest;
 import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
 import com.example.batchMaster.repository.SessionRepository;
+import com.example.batchMaster.service.AttendanceService;
 import com.example.batchMaster.service.SessionService;
+import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,13 @@ public class SessionServiceImpl implements SessionService {
 
     @Autowired
     private SessionRepository sessionRepository;
+    @Autowired
+    private AttendanceService attendanceService;
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private AttendanceServiceImpl attendanceServiceImpl;
 
     @Override
     public Session createSession(SessionCreateRequest sessionCreateRequest) {
@@ -44,7 +54,28 @@ public class SessionServiceImpl implements SessionService {
                 session.getOfflineStudents().addAll(sessionCreateRequest.getOfflineStudentsIds());
             }
         }
-
+        List<String> presentStudents = session.getPresentStudentsId();
+        if (presentStudents != null) {
+            for (String presentStudentId : presentStudents) {
+                AttendanceCreateRequest attendanceCreateRequest = new AttendanceCreateRequest();
+                attendanceCreateRequest.setStudentId(presentStudentId);
+                attendanceCreateRequest.setBatchId(session.getBatchId());
+                attendanceCreateRequest.setDate(session.getDate());
+                attendanceCreateRequest.setStatus(true);
+              attendanceService.createAttendance(attendanceCreateRequest);
+            }
+        }
+        List<String> absentStudents = session.getAbsentStudentsId();
+        if (absentStudents != null) {
+            for (String absentStudentId : absentStudents) {
+                AttendanceCreateRequest attendanceCreateRequest = new AttendanceCreateRequest();
+                attendanceCreateRequest.setStudentId(absentStudentId);
+                attendanceCreateRequest.setBatchId(session.getBatchId());
+                attendanceCreateRequest.setDate(session.getDate());
+                attendanceCreateRequest.setStatus(false);
+                attendanceService.createAttendance(attendanceCreateRequest);
+            }
+        }
         return sessionRepository.save(session);
     }
 

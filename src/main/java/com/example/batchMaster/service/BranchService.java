@@ -1,21 +1,22 @@
 package com.example.batchMaster.service;
 
 import com.example.batchMaster.model.Branch;
+import com.example.batchMaster.model.updateRequest.BranchUpdateRequest;
 
 import java.util.List;
 
 public interface BranchService {
 
 
-    String createBranch(Branch branch);
+    Branch createBranch(Branch branch);
 
-    String updateBranch(String branchId,String branchName, String startingDate, List<String> batchIdList);
+    Branch updateBranch(BranchUpdateRequest branchUpdateRequest);
 
     Branch getBranchByName(String branchName);
 
     List<Branch> getAllBranch();
 
-    String updateBranchStatus(String branchId);
+    Branch updateBranchStatus(String branchId);
 
 
 }

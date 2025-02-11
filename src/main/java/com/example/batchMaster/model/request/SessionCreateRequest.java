@@ -23,5 +23,6 @@ public class SessionCreateRequest {
     private String batchId;
     private List<String> onlineStudentsIds;
     private List<String> offlineStudentsIds;
+    private List<String> absentStudentsIds;
 
 }

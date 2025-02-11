@@ -7,7 +7,6 @@ import com.example.batchMaster.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest) {
         Attendance attendance = new Attendance();
         attendance.setStudentId(attendanceCreateRequest.getStudentId());
-        attendance.setStatus(attendanceCreateRequest.getStatus());
+        attendance.setStatus(attendanceCreateRequest.isStatus());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
         attendance.setDate(attendanceCreateRequest.getDate());
         return attendanceRepository.save(attendance);
@@ -27,14 +26,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 
     @Override
-    public Attendance updateAttendance(String status,String attendanceID) {
+    public Attendance updateAttendance(String attendanceID) {
         Optional<Attendance> attendanceOptional = attendanceRepository.findById(attendanceID);
         if (attendanceOptional.isPresent()) {
             Attendance attendance = attendanceOptional.get();
-            attendance.setStatus(status);
+            attendance.setStatus(!attendanceOptional.get().isStatus());
             return attendanceRepository.save(attendance);
         } else {
-            return null;
+            throw new RuntimeException("Attendance record not found with ID: " + attendanceID);
         }
     }
     @Override
