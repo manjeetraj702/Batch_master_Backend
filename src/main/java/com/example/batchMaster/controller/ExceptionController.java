@@ -13,14 +13,15 @@
 //
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ExceptionHandler(Exception.class)
-//    public ApiResponse<Object> generaException(Exception e) {
+//    public ApiResponse<Object> generalExceptionHandler(Exception e) {
+//        // Log the exception for debugging purposes
+//        System.err.println("Unhandled exception occurred: " + e.getMessage());
 //        ApiResponse<Object> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        response.setErrorMessage(e.getMessage());
+//        response.setErrorMessage("An unexpected error occurred. Please try again later.");
 //        return response;
 //    }
 //
 //    @ResponseStatus(HttpStatus.OK)
-//    @ExceptionHandler(BatchMasterException.class)
 //    public ApiResponse<Object> applicationExceptionHandler(BatchMasterException e) {
 //        ApiResponse<Object> response = new ApiResponse<>(HttpStatus.OK);
 //        response.setErrorMessage(e.getMessage());
@@ -29,7 +30,8 @@
 //
 //
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ApiResponse<Object> badRequestExceptionHandler(Exception e) {
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public ApiResponse<Object> badRequestExceptionHandler(IllegalArgumentException e) {
 //        ApiResponse<Object> response = new ApiResponse<>(HttpStatus.BAD_REQUEST);
 //        response.setErrorMessage(e.getMessage());
 //        return response;

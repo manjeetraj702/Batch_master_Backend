@@ -9,13 +9,13 @@ import java.util.List;
 public interface AttendanceService {
     Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest);
 
-    Attendance updateAttendance(String status,String attendanceId);
+    Attendance updateAttendance(String attendanceId);
 
-    public List<Attendance> getAttendanceByStudentId(String studentId);
+     List<Attendance> getAttendanceByStudentId(String studentId);
 
-    public List<Attendance> getAttendanceByBatchId(String batchId);
+    List<Attendance> getAttendanceByBatchId(String batchId);
 
-    public List<Attendance> getAttendanceByBatchIdAndDate(String batchId,String date);
+     List<Attendance> getAttendanceByBatchIdAndDate(String batchId,String date);
 
-    public List<Attendance> getAttendanceByStudentIdAndDate(String studentId,String date);
+     List<Attendance> getAttendanceByStudentIdAndDate(String studentId,String date);
 }

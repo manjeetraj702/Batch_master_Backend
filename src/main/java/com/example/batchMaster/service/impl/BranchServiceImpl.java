@@ -1,7 +1,9 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.customException.BranchNotFoundException;
+import com.example.batchMaster.exception.BatchMasterException;
 import com.example.batchMaster.model.Branch;
+import com.example.batchMaster.model.updateRequest.BranchUpdateRequest;
 import com.example.batchMaster.repository.BranchRepository;
 import com.example.batchMaster.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,43 +19,36 @@ public class BranchServiceImpl implements BranchService {
     BranchRepository branchRepository;
 
     @Override
-    public String createBranch(Branch branch) {
+    public Branch createBranch(Branch branch) {
 
         // Check if a branch with the same name or ID already exists
-        if (branchRepository.findByBranchName(branch.getBranchName()) != null) {
-            return "Branch with the same name already exists";
+        if (branchRepository.findByBranchName(branch.getBranchName()).isPresent()) {
+        throw new BatchMasterException("Branch with name '" + branch.getBranchName() + "' already exists");
         }
 
-        if (branchRepository.findByBranchId(branch.getBranchId()).isPresent()) {
-            return "Branch with the same ID already exists";
-        }
-       // Branch Create
+//
         Branch newBranch=new Branch();
         newBranch.setBranchId(branch.getBranchId());
         newBranch.setBranchName(branch.getBranchName());
         newBranch.setStartingDate(branch.getBranchId());
-        newBranch.setBatchIdList(branch.getBatchIdList());
 
-        branchRepository.save(branch);
-        return "Branch created successfully";
+
+       return branchRepository.save(branch);
+
     }
 
     @Override
-    public String updateBranch(String branchId, String branchName, String startingDate, List<String> batchIdList) {
-        Optional<Branch> preBranch=branchRepository.findByBranchId(branchId);
-
-        if(preBranch.isPresent()) {
-            Branch newBranch=preBranch.get();
-            newBranch.setBranchName(branchName);
-            newBranch.setStartingDate(startingDate);
-            newBranch.setBatchIdList(batchIdList);
-            branchRepository.save(newBranch);
-            return "Branch Updated Successfully";
-        }
-        else{
-            return "Branch Not found.";
-        }
-
+    public Branch updateBranch(BranchUpdateRequest branchUpdateRequest) {
+        Optional<Branch> preBranch=branchRepository.findByBranchId(branchUpdateRequest.getBranchId());
+if (preBranch.isPresent())
+{
+    Branch branch=preBranch.get();
+    branch.setBranchName(branchUpdateRequest.getBranchName());
+    branch.setStartingDate(branchUpdateRequest.getStartingDate());
+    branch.setAddress(branchUpdateRequest.getAddress());
+    return branchRepository.save(branch);
+}
+throw new BatchMasterException("Branch with ID '" + branchUpdateRequest.getBranchId() + "' not found");
     }
 
     @Override
@@ -67,12 +62,12 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public String updateBranchStatus(String branchId) {
+    public Branch updateBranchStatus(String branchId) {
 
         // Check if the branch exists
         Optional<Branch> preBranch = branchRepository.findById(branchId);
         if (!preBranch.isPresent()) {
-            return "Branch with ID " + branchId + " not found.";
+            throw new BranchNotFoundException("Branch with ID '" + branchId + "' not found");
         }
 
         // Update the branch status
@@ -80,7 +75,7 @@ public class BranchServiceImpl implements BranchService {
         newBranch.setBranchStatus(!newBranch.isBranchStatus());
         branchRepository.save(newBranch); // Save the updated branch back to the database
 
-        return newBranch.getBranchName() + " Status Updated Successfully.";
+        return newBranch;
     }
 
 
