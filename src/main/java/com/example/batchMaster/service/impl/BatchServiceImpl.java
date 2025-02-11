@@ -32,8 +32,6 @@ public class BatchServiceImpl implements BatchService {
         newBatch.setBatchName(batch.getBatchName());
         newBatch.setStartingDate(batch.getStartingDate());
         newBatch.setBatchTime(batch.getBatchTime());
-        newBatch.setOnlineStudentList(batch.getOnlineStudentList());
-        newBatch.setOfflineStudentList(batch.getOfflineStudentList());
         // Save the batch to the repository
         batchRepository.save(newBatch);
         return newBatch;
@@ -48,8 +46,6 @@ public class BatchServiceImpl implements BatchService {
             batchToUpdate.setBatchName(updatedBatch.getBatchName());
             batchToUpdate.setStartingDate(updatedBatch.getStartingDate());
             batchToUpdate.setBatchTime(updatedBatch.getBatchTime());
-            batchToUpdate.setOnlineStudentList(updatedBatch.getOnlineStudentList());
-            batchToUpdate.setOfflineStudentList(updatedBatch.getOfflineStudentList());
             batchRepository.save(batchToUpdate);
             return updatedBatch;
         } else {

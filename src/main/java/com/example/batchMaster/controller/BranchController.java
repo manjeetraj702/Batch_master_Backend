@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/branch")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 
 public class BranchController {
 
