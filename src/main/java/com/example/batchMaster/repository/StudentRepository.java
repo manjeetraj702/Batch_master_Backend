@@ -15,4 +15,6 @@ public interface StudentRepository extends MongoRepository<Student, String> {
     List<Student> findAllByBatchIdAndStudyModeTrue(String batchId);
 
     Optional<Student> findByEmail(String email);
+
+    List<Student> findAllByBranchId(String branchId);
 }

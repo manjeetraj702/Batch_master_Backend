@@ -44,6 +44,7 @@ class StudentServiceImpl implements StudentService {
         student.setAddress(studentCreateRequest.getAddress());
         student.setBranchId(studentCreateRequest.getBranchId());
         student.setAdmissionDate(studentCreateRequest.getAdmissionDate());
+        student.setBatchId("Cage-00");
 
         return studentRepository.save(student);
     }
@@ -139,5 +140,10 @@ class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getOfflineStudents(String batchId) {
         return studentRepository.findAllByBatchIdAndStudyModeTrue(batchId);
+    }
+
+    @Override
+    public List<Student> getStudentsByBranchId(String branchId) {
+        return studentRepository.findAllByBranchId(branchId);
     }
 }

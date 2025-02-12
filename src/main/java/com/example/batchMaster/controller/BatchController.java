@@ -1,6 +1,7 @@
 package com.example.batchMaster.controller;
 
 import com.example.batchMaster.model.Batch;
+import com.example.batchMaster.model.request.BatchCreateRequest;
 import com.example.batchMaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class BatchController {
     BatchService batchService;
 
     @PostMapping("/createBatch")
-    public Batch createBatch(@RequestBody Batch batch) {
-        return batchService.createBatch(batch);
+    public Batch createBatch(@RequestBody BatchCreateRequest batchCreateRequest) {
+        return batchService.createBatch(batchCreateRequest);
     }
 
     @PutMapping("/updateBatch")
@@ -39,14 +40,11 @@ public class BatchController {
         return batchService.getBatchByName(batchName);
     }
 
-    @GetMapping("/getBatchByBranchId")
-    public Batch getBatchByBranchId(@RequestParam String branchId) {
-        return batchService.getBatchByBranchId(branchId);
-    }
 
-    @GetMapping("/getAllBatches")
-    public List<Batch> getAllBatches(@RequestParam String branchId) {
-        return batchService.getAllBatches(branchId);
+
+    @GetMapping("/getAllBatchesByBranchId")
+    public List<Batch> getBatchesByBranchId(@RequestParam String branchId) {
+        return batchService.getAllBatchesByBranchId(branchId);
     }
 
 }

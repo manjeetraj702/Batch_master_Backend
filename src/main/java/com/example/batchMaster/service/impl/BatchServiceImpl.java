@@ -1,7 +1,8 @@
 package com.example.batchMaster.service.impl;
 
-import com.example.batchMaster.customException.BatchNotFoundException;
+import com.example.batchMaster.exception.BatchNotFoundException;
 import com.example.batchMaster.model.Batch;
+import com.example.batchMaster.model.request.BatchCreateRequest;
 import com.example.batchMaster.repository.BatchRepository;
 import com.example.batchMaster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +19,20 @@ public class BatchServiceImpl implements BatchService {
 
     // BATCH
     @Override
-    public Batch createBatch(Batch batch) {
+    public Batch createBatch(BatchCreateRequest batchCreateRequest) {
         // Check if a batch with the same name already exists
-        if (batchRepository.findByBatchName(batch.getBatchName()).equals(batch.getBatchName())) {
-            return batch;
+        if (batchRepository.findByBatchName(batchCreateRequest.getBatchName()).isPresent()) {
+            throw  new RuntimeException("Batch with name '" + batchCreateRequest.getBatchName() + "' already exists");
         }
-        // Check if a batch with the same ID already exists
-        if (batchRepository.findById(batch.getBatchId()).equals(batch.getBatchId())) {
-            return batch;
-        }
+
         // Create a new Batch instance
         Batch newBatch = new Batch();
-        newBatch.setBatchId(batch.getBatchId());
-        newBatch.setBatchName(batch.getBatchName());
-        newBatch.setStartingDate(batch.getStartingDate());
-        newBatch.setBatchTime(batch.getBatchTime());
-        batchRepository.save(newBatch);
-        return newBatch;
+        newBatch.setBranchId(batchCreateRequest.getBranchId());
+        newBatch.setStartingDate(batchCreateRequest.getStartingDate());
+        newBatch.setBatchTime(batchCreateRequest.getBatchTime());
+        // Save the batch to the repository
+       return batchRepository.save(newBatch);
+
     }
 
     @Override
@@ -64,9 +62,9 @@ public class BatchServiceImpl implements BatchService {
         // Update the batch status
         Batch existingBatch = preBatch.get();
         existingBatch.setStatus(!existingBatch.isStatus());
-        batchRepository.save(existingBatch); // Save the updated batch back to the database
+       return batchRepository.save(existingBatch); // Save the updated batch back to the database
 
-        return existingBatch;
+
 
     }
 
@@ -85,16 +83,8 @@ public class BatchServiceImpl implements BatchService {
     }
 
     @Override
-    public Batch getBatchByBranchId(String branchId) {
-        Optional<Batch> preBatch = batchRepository.findByBranchId(branchId);
-        if (preBatch.isEmpty()) {
-            throw new BatchNotFoundException("Batch with ID " + branchId + " not found");
-        }
-        return preBatch.get();
-    }
+    public List<Batch> getAllBatchesByBranchId(String branchId) {
 
-    @Override
-    public List<Batch> getAllBatches(String branchId) {
         return batchRepository.findAllByBranchId(branchId);
     }
 }

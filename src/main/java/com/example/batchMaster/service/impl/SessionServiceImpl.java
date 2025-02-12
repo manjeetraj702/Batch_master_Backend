@@ -1,7 +1,6 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Session;
-import com.example.batchMaster.model.request.AttendanceCreateRequest;
 import com.example.batchMaster.model.request.SessionCreateRequest;
 import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
 import com.example.batchMaster.repository.SessionRepository;
@@ -11,6 +10,7 @@ import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,42 +40,13 @@ public class SessionServiceImpl implements SessionService {
         session.setSessionLink(sessionCreateRequest.getSessionLink());
         session.setDate(sessionCreateRequest.getDate());
         session.setBatchId(sessionCreateRequest.getBatchId());
-        if (sessionCreateRequest.getOnlineStudentsIds() != null) {
-            if (session.getOnlineStudents() == null) {
-                session.setOnlineStudents(sessionCreateRequest.getOnlineStudentsIds());
-            } else {
-                session.getOnlineStudents().addAll(sessionCreateRequest.getOnlineStudentsIds());
-            }
-        }
-        if (sessionCreateRequest.getOfflineStudentsIds() != null) {
-            if (session.getOfflineStudents() == null) {
-                session.setOfflineStudents(sessionCreateRequest.getOfflineStudentsIds());
-            } else {
-                session.getOfflineStudents().addAll(sessionCreateRequest.getOfflineStudentsIds());
-            }
-        }
-        List<String> presentStudents = session.getPresentStudentsId();
-        if (presentStudents != null) {
-            for (String presentStudentId : presentStudents) {
-                AttendanceCreateRequest attendanceCreateRequest = new AttendanceCreateRequest();
-                attendanceCreateRequest.setStudentId(presentStudentId);
-                attendanceCreateRequest.setBatchId(session.getBatchId());
-                attendanceCreateRequest.setDate(session.getDate());
-                attendanceCreateRequest.setStatus(true);
-              attendanceService.createAttendance(attendanceCreateRequest);
-            }
-        }
-        List<String> absentStudents = session.getAbsentStudentsId();
-        if (absentStudents != null) {
-            for (String absentStudentId : absentStudents) {
-                AttendanceCreateRequest attendanceCreateRequest = new AttendanceCreateRequest();
-                attendanceCreateRequest.setStudentId(absentStudentId);
-                attendanceCreateRequest.setBatchId(session.getBatchId());
-                attendanceCreateRequest.setDate(session.getDate());
-                attendanceCreateRequest.setStatus(false);
-                attendanceService.createAttendance(attendanceCreateRequest);
-            }
-        }
+       session.setOnlineStudents(sessionCreateRequest.getOnlineStudents());
+       session.setOfflineStudents(sessionCreateRequest.getOfflineStudents());
+       session.setAbsentStudents(sessionCreateRequest.getAbsentStudents());
+       session.setBranchId(sessionCreateRequest.getBranchId());
+       session.setCreatedAt(Instant.now());
+
+
         return sessionRepository.save(session);
     }
 
@@ -90,20 +61,10 @@ public class SessionServiceImpl implements SessionService {
             existingSession.setSessionLink(updatedSession.getSessionLink());
             existingSession.setDate(updatedSession.getDate());
             existingSession.setBatchId(updatedSession.getBatchId());
-            if (updatedSession.getOnlineStudentsIds() != null) {
-                if (existingSession.getOnlineStudents() == null) {
-                    existingSession.setOnlineStudents(updatedSession.getOnlineStudentsIds());
-                } else {
-                    existingSession.getOnlineStudents().addAll(updatedSession.getOnlineStudentsIds());
-                }
-            }
-            if (updatedSession.getOfflineStudentsIds() != null) {
-                if (existingSession.getOfflineStudents() == null) {
-                    existingSession.setOfflineStudents(updatedSession.getOfflineStudentsIds());
-                } else {
-                    existingSession.getOfflineStudents().addAll(updatedSession.getOfflineStudentsIds());
-                }
-            }
+            existingSession.setOnlineStudents(updatedSession.getOnlineStudents());
+            existingSession.setOfflineStudents(updatedSession.getOfflineStudents());
+            existingSession.setAbsentStudents(updatedSession.getAbsentStudents());
+            existingSession.setBranchId(updatedSession.getBranchId());
             return sessionRepository.save(existingSession);
         }
         throw new RuntimeException("Session not found with ID: " + updatedSession.getBatchId());
@@ -135,24 +96,15 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Session addStudentsToSession(String sessionId, List<String> onlineStudents, List<String> offlineStudents) {
-        Session session = sessionRepository.findById(sessionId).orElseThrow(() -> new RuntimeException("Session not found with ID: " + sessionId));
-        if (onlineStudents != null) {
-            if (session.getOnlineStudents() == null) {
-                session.setOnlineStudents(onlineStudents);
-            } else {
-                session.getOnlineStudents().addAll(onlineStudents);
-            }
+    public Session getLastSessionByBatchId(String batchId) {
+        Optional<Session> session = sessionRepository.findTopByBatchIdOrderByCreatedAtDesc(batchId);
+        if (session.isPresent()) {
+            return session.get();
+        } else {
+            throw new RuntimeException("No session found for batch ID: " + batchId);
         }
-        if (offlineStudents != null) {
-            if (session.getOfflineStudents() == null) {
-                session.setOfflineStudents(offlineStudents);
-            } else {
-                session.getOfflineStudents().addAll(offlineStudents);
-            }
-        }
-        return sessionRepository.save(session);
     }
+
 
 
 }
