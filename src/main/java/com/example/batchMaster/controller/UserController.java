@@ -23,12 +23,12 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}")
-    public User updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest userUpdateRequest) {
+    public User updateUser(@RequestParam String userId, @RequestBody UserUpdateRequest userUpdateRequest) {
         return userService.updateUser(userId, userUpdateRequest);
     }
 
-    @GetMapping("/{userId}")
-    public User getUserById(@PathVariable String userId) {
+    @GetMapping("/userId")
+    public User getUserById(@RequestParam String userId) {
         return userService.getUserById(userId);
     }
 

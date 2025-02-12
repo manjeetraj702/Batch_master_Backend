@@ -24,20 +24,20 @@ public class MarksController {
     }
 
     // Update Marks by ID
-    @PutMapping("/{marksId}")
-    public Marks updateMarks(@PathVariable String marksId, @RequestBody Marks updatedMarks) {
+    @PutMapping("/marksId")
+    public Marks updateMarks(@RequestParam String marksId, @RequestBody Marks updatedMarks) {
         return marksService.updateMarks(marksId, updatedMarks);
     }
 
     // Get Marks by Student ID
     @GetMapping("/student/{studentId}")
-    public List<Marks> getMarksByStudentId(@PathVariable String studentId) {
+    public List<Marks> getMarksByStudentId(@RequestParam String studentId) {
         return marksService.getMarksByStudentId(studentId);
     }
 
     // Get Marks by Topic ID and Batch ID
-    @GetMapping("/topic/{topicId}/batch/{batchId}")
-    public List<Marks> getMarksByTopicIdAndBatchId(@PathVariable String subject, @PathVariable String topic, @PathVariable String batch) {
+    @GetMapping("/topic/topicId/batch/batchId")
+    public List<Marks> getMarksByTopicIdAndBatchId(@RequestParam String subject, @RequestParam String topic, @RequestParam String batch) {
         return marksService.getMarksBySubjectTopicAndBatchId(subject, topic,batch);
     }
 }
