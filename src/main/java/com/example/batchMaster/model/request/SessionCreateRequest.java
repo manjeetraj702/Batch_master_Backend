@@ -5,15 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 public class SessionCreateRequest {
-    
+
 
     private String subject;
     private String topic;
@@ -21,8 +19,9 @@ public class SessionCreateRequest {
     private String sessionLink;
     private String date;
     private String batchId;
-    private List<String> onlineStudentsIds;
-    private List<String> offlineStudentsIds;
-    private List<String> absentStudentsIds;
+    private String branchId;
+    private int onlineStudents;
+    private int offlineStudents;
+    private int absentStudents;
 
 }
