@@ -29,22 +29,22 @@ public class SessionController {
     }
 
     @GetMapping("/batch/{batchId}")
-    public List<Session> getSessionsByBatchId(@PathVariable String batchId) {
+    public List<Session> getSessionsByBatchId(@RequestParam String batchId) {
         return sessionService.getSessionsByBatchId(batchId);
     }
 
     @GetMapping("/subject/{subject}")
-    public List<Session> getSessionsBySubject(@PathVariable String subject) {
+    public List<Session> getSessionsBySubject(@RequestParam String subject) {
         return sessionService.getSessionsBySubject(subject);
     }
 
     @DeleteMapping("/delete/{sessionId}")
-    public boolean  deleteSession(@PathVariable String sessionId) {
+    public boolean  deleteSession(@RequestParam String sessionId) {
         return sessionService.deleteSessionById(sessionId);
     }
 
-    @GetMapping("/{sessionId}")
-    public Session getSessionById(@PathVariable String sessionId) {
+    @GetMapping("/sessionId")
+    public Session getSessionById(@RequestParam String sessionId) {
         return sessionService.getSessionById(sessionId);
     }
 
@@ -55,7 +55,7 @@ public class SessionController {
 
 
     @GetMapping("/sessions/last/{batchId}")
-    public Session getLastSessionByBatchId(String batchId)
+    public Session getLastSessionByBatchId( @RequestParam String batchId)
     {
         return sessionService.getLastSessionByBatchId(batchId);
     }
