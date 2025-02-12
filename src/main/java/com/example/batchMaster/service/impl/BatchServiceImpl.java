@@ -19,11 +19,11 @@ public class BatchServiceImpl implements BatchService {
     @Override
     public Batch createBatch(Batch batch) {
         // Check if a batch with the same name already exists
-        if (batchRepository.findByBatchName(batch.getBatchName()).isPresent()) {
+        if (batchRepository.findByBatchName(batch.getBatchName()).equals(batch.getBatchName())) {
             return batch;
         }
         // Check if a batch with the same ID already exists
-        if (batchRepository.findById(batch.getBatchId()).isPresent()) {
+        if (batchRepository.findById(batch.getBatchId()).equals(batch.getBatchId())) {
             return batch;
         }
         // Create a new Batch instance
@@ -32,7 +32,6 @@ public class BatchServiceImpl implements BatchService {
         newBatch.setBatchName(batch.getBatchName());
         newBatch.setStartingDate(batch.getStartingDate());
         newBatch.setBatchTime(batch.getBatchTime());
-        // Save the batch to the repository
         batchRepository.save(newBatch);
         return newBatch;
     }
