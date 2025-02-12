@@ -19,8 +19,8 @@ public class AttendanceController {
         return attendanceServiceImpl.createAttendance(attendanceCreateRequest);
     }
     @PutMapping("/updateAttendance")
-    public Attendance updateAttendance(@RequestParam String status,@RequestParam String attendanceId){
-        return attendanceServiceImpl.updateAttendance(status,attendanceId);
+    public Attendance updateAttendance(@RequestParam String attendanceId){
+        return attendanceServiceImpl.updateAttendance(attendanceId);
     }
      @GetMapping("/getAttendanceByStudentId/{studentId}")
     public List<Attendance> getAttendanceByStudentId(@RequestParam String studentId){

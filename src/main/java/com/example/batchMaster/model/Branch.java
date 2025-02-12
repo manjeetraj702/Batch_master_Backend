@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -22,7 +20,5 @@ public class Branch {
     private String startingDate;
     private Address address;
     private boolean branchStatus=true;
-    private List<String> batchIdList;
-
 
 }

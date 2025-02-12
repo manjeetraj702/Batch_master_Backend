@@ -18,5 +18,6 @@ public class StudentCreateRequest {
     private Address address;
     private String branchId;
     private String admissionDate;
+    private boolean studyMode;
 
 }

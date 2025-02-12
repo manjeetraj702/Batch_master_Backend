@@ -16,5 +16,5 @@ public class Attendance {
     private String batchId;
     private String date;
     private String studentId;
-    private String status;
+    private boolean status;
 }

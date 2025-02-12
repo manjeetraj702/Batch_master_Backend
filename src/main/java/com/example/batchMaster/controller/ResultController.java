@@ -13,6 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/results")
 @Validated
+@CrossOrigin(origins = "*")
+
 public class ResultController {
 
     @Autowired

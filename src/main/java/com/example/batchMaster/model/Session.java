@@ -24,4 +24,7 @@ public class Session {
     private String batchId;
     private List<String> onlineStudents;
     private List<String> offlineStudents;
+    private List<String> presentStudentsId;
+    private List<String> absentStudentsId;
+
 }

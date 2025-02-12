@@ -8,8 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Document(collection = "students")
 public class Student {
 
@@ -26,8 +24,8 @@ public class Student {
     private String batchId = "Cage-00";
     private String branchId;
     private String admissionDate;
-    private boolean status;
-    private boolean mode;
+    private boolean activeStatus;
+    private boolean studyMode;
 }
 
 
