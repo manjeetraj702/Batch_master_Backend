@@ -1,11 +1,12 @@
 package com.example.batchMaster.service;
 
 import com.example.batchMaster.model.Batch;
+import com.example.batchMaster.model.request.BatchCreateRequest;
 
 import java.util.List;
 
 public interface BatchService {
-    Batch createBatch(Batch batch);
+    Batch createBatch(BatchCreateRequest batchCreateRequest);
 
     Batch updateBatch(String batchId, Batch updatedBatch);
 
