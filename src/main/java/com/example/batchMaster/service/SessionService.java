@@ -21,4 +21,5 @@ public interface SessionService {
 
     // New method to get the last session by batchId
     Session getLastSessionByBatchId(String batchId);
+     Session addStudentsToSession(String sessionId, List<String> onlineStudents, List<String> offlineStudents);
 }

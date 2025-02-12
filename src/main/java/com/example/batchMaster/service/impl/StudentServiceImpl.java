@@ -142,7 +142,7 @@ class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudentsByBranch(String branchId) {
+    public List<Student> getStudentsByBranchId(String branchId) {
         return studentRepository.findAllByBranchId(branchId);
     }
 }

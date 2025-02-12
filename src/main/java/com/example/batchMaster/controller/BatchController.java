@@ -43,8 +43,8 @@ public class BatchController {
 
 
     @GetMapping("/getAllBatchesByBranchId")
-    public List<Batch> getBatchByBranchId(@RequestParam String branchId) {
-        return batchService.getAllBatches(branchId);
+    public List<Batch> getBatchesByBranchId(@RequestParam String branchId) {
+        return batchService.getAllBatchesByBranchId(branchId);
     }
 
 }

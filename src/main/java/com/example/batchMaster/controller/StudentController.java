@@ -67,7 +67,7 @@ public class StudentController {
 
     @GetMapping("/{branchId}/students")
     List<Student> getStudentsByBranchId(String branchId) {
-        return studentService.getStudentsByBranch(branchId);
+        return studentService.getStudentsByBranchId(branchId);
     }
 
     @GetMapping("/{batchId}/onlineStudents")
