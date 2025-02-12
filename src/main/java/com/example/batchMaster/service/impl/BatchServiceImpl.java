@@ -82,17 +82,9 @@ public class BatchServiceImpl implements BatchService {
         return batchRepository.findByBatchName(batchName).orElseThrow(() -> new BatchNotFoundException("Batch with name '" + batchName + "' not found"));
     }
 
-//    @Override
-//    public Batch getBatchByBranchId(String branchId) {
-//        Optional<Batch> preBatch = batchRepository.findByBranchId(branchId);
-//        if (preBatch.isEmpty()) {
-//            throw new BatchNotFoundException("Batch with ID " + branchId + " not found");
-//        }
-//        return preBatch.get();
-//    }
-
     @Override
-    public List<Batch> getAllBatches(String branchId) {
+    public List<Batch> getAllBatchesByBranchId(String branchId) {
+
         return batchRepository.findAllByBranchId(branchId);
     }
 }

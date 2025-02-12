@@ -140,4 +140,9 @@ class StudentServiceImpl implements StudentService {
     public List<Student> getOfflineStudents(String batchId) {
         return studentRepository.findAllByBatchIdAndStudyModeTrue(batchId);
     }
+
+    @Override
+    public List<Student> getStudentsByBranchId(String branchId) {
+        return studentRepository.findAllByBranchId(branchId);
+    }
 }
