@@ -29,13 +29,13 @@ public class BatchServiceImpl implements BatchService {
         }
         // Create a new Batch instance
         Batch newBatch = new Batch();
-        newBatch.setBatchId(batch.getBatchId());
+        newBatch.setBranchId(batch.getBranchId());
         newBatch.setBatchName(batch.getBatchName());
         newBatch.setStartingDate(batch.getStartingDate());
         newBatch.setBatchTime(batch.getBatchTime());
         // Save the batch to the repository
-        batchRepository.save(newBatch);
-        return newBatch;
+       return batchRepository.save(newBatch);
+
     }
 
     @Override
