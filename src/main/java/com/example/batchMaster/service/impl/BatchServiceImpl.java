@@ -1,6 +1,6 @@
 package com.example.batchMaster.service.impl;
 
-import com.example.batchMaster.customException.BatchNotFoundException;
+import com.example.batchMaster.exception.BatchNotFoundException;
 import com.example.batchMaster.model.Batch;
 import com.example.batchMaster.repository.BatchRepository;
 import com.example.batchMaster.service.*;

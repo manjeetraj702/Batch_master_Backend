@@ -1,7 +1,7 @@
 package com.example.batchMaster.service.impl;
 
-import com.example.batchMaster.customException.BranchNotFoundException;
 import com.example.batchMaster.exception.BatchMasterException;
+import com.example.batchMaster.exception.BranchNotFoundException;
 import com.example.batchMaster.model.Branch;
 import com.example.batchMaster.model.updateRequest.BranchUpdateRequest;
 import com.example.batchMaster.repository.BranchRepository;
@@ -22,7 +22,7 @@ public class BranchServiceImpl implements BranchService {
     public Branch createBranch(Branch branch) {
 
         // Check if a branch with the same name or ID already exists
-        if (branchRepository.findByBranchName(branch.getBranchName()).isPresent()) {
+        if (branchRepository.findByBranchName(branch.getBranchName()).equals(branch.getBranchName())) {
         throw new BatchMasterException("Branch with name '" + branch.getBranchName() + "' already exists");
         }
 

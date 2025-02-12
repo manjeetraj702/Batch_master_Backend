@@ -1,9 +1,12 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.exception.BatchNotFoundException;
 import com.example.batchMaster.model.Batch;
 import com.example.batchMaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/batches")
