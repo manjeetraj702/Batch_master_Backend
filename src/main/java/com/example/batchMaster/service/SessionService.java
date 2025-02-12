@@ -22,5 +22,7 @@ public interface SessionService {
     // New method to get the last session by batchId
     Session getLastSessionByBatchId(String batchId);
 
+
     List<Session>  getAllLastSessionsOfAllBatchesByBranchId(String branch);
+
 }
