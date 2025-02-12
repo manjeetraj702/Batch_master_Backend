@@ -52,4 +52,11 @@ public class SessionController {
     public List<Session> getAllSessions(@RequestParam String batchId) {
         return sessionService.getSessionsByBatchId(batchId);
     }
+
+
+    @GetMapping("/sessions/last/{batchId}")
+    public Session getLastSessionByBatchId(String batchId)
+    {
+        return sessionService.getLastSessionByBatchId(batchId);
+    }
 }
