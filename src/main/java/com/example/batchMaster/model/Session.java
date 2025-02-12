@@ -9,14 +9,13 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.util.List;
 
 @Document(collection = "sessions")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Session {
-    
+
     @Id
     private String sessionId;
     private String subject;
@@ -25,10 +24,10 @@ public class Session {
     private String sessionLink;
     private String date;
     private String batchId;
-    private List<String> onlineStudents;
-    private List<String> offlineStudents;
-    private List<String> presentStudentsId;
-    private List<String> absentStudentsId;
+    private String branchId;
+    private int onlineStudents;
+    private int offlineStudents;
+    private int absentStudents;
     @CreatedDate
     @Indexed // Index for faster queries
     private Instant createdAt;
