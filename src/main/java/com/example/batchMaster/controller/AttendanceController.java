@@ -36,7 +36,7 @@ public class AttendanceController {
         return attendanceServiceImpl.getAttendanceByBatchIdAndDate(batchId,date);
      }
 
-     @GetMapping("/getAttendanceByStudentId&Date/studentId}/date")
+     @GetMapping("/getAttendanceByStudentId&Date/studentId/date")
     public List<Attendance> getAttendanceByStudentIdAndDate(@RequestParam String studentId,@RequestParam String date){
         return attendanceServiceImpl.getAttendanceByStudentIdAndDate(studentId,date);
      }

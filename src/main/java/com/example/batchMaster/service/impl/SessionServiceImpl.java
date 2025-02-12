@@ -105,6 +105,10 @@ public class SessionServiceImpl implements SessionService {
         }
     }
 
+    @Override
+    public List<Session> getAllLastSessionsOfAllBatchesByBranchId(String branchId) {
+        return sessionRepository.findLastSessionForEachBatchByBranchId(branchId);
+    }
 
 
 }
