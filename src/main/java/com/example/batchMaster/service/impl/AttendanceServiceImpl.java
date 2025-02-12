@@ -58,7 +58,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
+    public boolean createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
         List<Attendance> attendances = new ArrayList<>();
 
         // Mark present students
@@ -83,6 +83,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
 
         attendanceRepository.saveAll(attendances);
+        return true;
     }
 
 }
