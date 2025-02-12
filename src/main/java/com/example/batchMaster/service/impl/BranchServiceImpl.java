@@ -59,7 +59,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<Branch> getAllBranch(){
+    public List<Branch> getAllBranch() {
         return branchRepository.findAll();
     }
 
