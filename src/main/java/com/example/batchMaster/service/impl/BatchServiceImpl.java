@@ -7,6 +7,7 @@ import com.example.batchMaster.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -91,5 +92,10 @@ public class BatchServiceImpl implements BatchService {
             throw new BatchNotFoundException("Batch with ID " + branchId + " not found");
         }
         return preBatch.get();
+    }
+
+    @Override
+    public List<Batch> getAllBatches(String branchId) {
+        return batchRepository.findAllByBranchId(branchId);
     }
 }

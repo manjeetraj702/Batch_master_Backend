@@ -1,6 +1,7 @@
 package com.example.batchMaster.controller;
 
 import com.example.batchMaster.model.Branch;
+import com.example.batchMaster.model.request.BranchCreateRequest;
 import com.example.batchMaster.model.updateRequest.BranchUpdateRequest;
 import com.example.batchMaster.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class BranchController {
     private BranchService branchService;
 
     @PostMapping("/createBranch")
-    public Branch createBranch(@RequestBody Branch branch) {
-        return branchService.createBranch(branch);
+    public Branch createBranch(@RequestBody BranchCreateRequest branchCreateRequest) {
+        return branchService.createBranch(branchCreateRequest);
     }
 
     @PutMapping("/updateBranchById")
