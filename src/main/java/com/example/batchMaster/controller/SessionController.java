@@ -54,7 +54,7 @@ public class SessionController {
     }
 
 
-    @GetMapping("/sessions/last/{batchId}")
+    @GetMapping("/sessions/last/batchId")
     public Session getLastSessionByBatchId( @RequestParam String batchId)
     {
         return sessionService.getLastSessionByBatchId(batchId);
