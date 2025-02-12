@@ -135,6 +135,16 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    public Session getLastSessionByBatchId(String batchId) {
+        Optional<Session> session = sessionRepository.findTopByBatchIdOrderByCreatedAtDesc(batchId);
+        if (session.isPresent()) {
+            return session.get();
+        } else {
+            throw new RuntimeException("No session found for batch ID: " + batchId);
+        }
+    }
+
+    @Override
     public Session addStudentsToSession(String sessionId, List<String> onlineStudents, List<String> offlineStudents) {
         Session session = sessionRepository.findById(sessionId).orElseThrow(() -> new RuntimeException("Session not found with ID: " + sessionId));
         if (onlineStudents != null) {

@@ -14,6 +14,5 @@ public interface BatchService {
 
     Batch getBatchById(String batchId);
     Batch getBatchByName(String batchName);
-    Batch getBatchByBranchId(String branchId);
     List<Batch> getAllBatches(String branchId);
 }

@@ -19,6 +19,6 @@ public interface SessionService {
 
     boolean deleteSessionById(String sessionId);
 
-    Session addStudentsToSession(String sessionId, List<String> onlineStudents, List<String> offlineStudents);
-
+    // New method to get the last session by batchId
+    Session getLastSessionByBatchId(String batchId);
 }
