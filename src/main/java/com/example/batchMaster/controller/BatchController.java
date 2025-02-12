@@ -5,6 +5,8 @@ import com.example.batchMaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/batches")
 @CrossOrigin("*")
@@ -27,5 +29,24 @@ public class BatchController {
         return batchService.updateBatchStatus(batchId);
     }
 
+    @GetMapping("/getBatchById")
+    public Batch getBatchById(@RequestParam String batchId) {
+        return batchService.getBatchById(batchId);
+    }
+
+    @GetMapping("/getBatchByName")
+    public Batch getBatchByName(@RequestParam String batchName) {
+        return batchService.getBatchByName(batchName);
+    }
+
+    @GetMapping("/getBatchByBranchId")
+    public Batch getBatchByBranchId(@RequestParam String branchId) {
+        return batchService.getBatchByBranchId(branchId);
+    }
+
+    @GetMapping("/getAllBatches")
+    public List<Batch> getAllBatches(@RequestParam String branchId) {
+        return batchService.getAllBatches(branchId);
+    }
 
 }
