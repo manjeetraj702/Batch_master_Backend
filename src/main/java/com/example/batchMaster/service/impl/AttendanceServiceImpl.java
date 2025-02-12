@@ -7,6 +7,7 @@ import com.example.batchMaster.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,4 +56,33 @@ public class AttendanceServiceImpl implements AttendanceService {
     public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date) {
         return attendanceRepository.findByStudentIdAndDate(studentId,date);
     }
+
+    @Override
+    public void createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
+        List<Attendance> attendances = new ArrayList<>();
+
+        // Mark present students
+        for (String studentId : presentStudentIds) {
+
+            Attendance attendance = new Attendance();
+            attendance.setStudentId(studentId);
+            attendance.setStatus(true);
+            attendance.setBatchId(batchId);
+            attendance.setDate(date);
+            attendances.add(attendance);
+        }
+
+        // Mark absent students
+        for (String studentId : absentStudentIds) {
+            Attendance attendance = new Attendance();
+            attendance.setStudentId(studentId);
+            attendance.setStatus(false);
+            attendance.setBatchId(batchId);
+            attendance.setDate(date);
+            attendances.add(attendance);
+        }
+
+        attendanceRepository.saveAll(attendances);
+    }
+
 }

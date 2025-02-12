@@ -59,4 +59,10 @@ public class SessionController {
     {
         return sessionService.getLastSessionByBatchId(batchId);
     }
+
+
+    @GetMapping("/branchId/lastSessions")
+    public List<Session> getLastSessionForEachBatch(@RequestParam String branchId) {
+        return sessionService.getAllLastSessionsOfAllBatchesByBranchId(branchId);
+    }
 }

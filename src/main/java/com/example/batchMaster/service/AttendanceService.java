@@ -18,4 +18,6 @@ public interface AttendanceService {
      List<Attendance> getAttendanceByBatchIdAndDate(String batchId,String date);
 
      List<Attendance> getAttendanceByStudentIdAndDate(String studentId,String date);
+    void createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date);
+
 }
