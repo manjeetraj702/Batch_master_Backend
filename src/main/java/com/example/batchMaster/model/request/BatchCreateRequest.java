@@ -16,5 +16,5 @@ public class BatchCreateRequest {
     private String batchName;
     private String startingDate;
     private String batchTime;
-    private  boolean status=true;
+    private boolean status = true;
 }

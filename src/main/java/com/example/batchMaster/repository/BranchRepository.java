@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BranchRepository extends MongoRepository<Branch,String> {
-         Optional<Branch> findByBranchId(String branchId);
-         Optional<Branch> findByBranchName(String branchName);
+public interface BranchRepository extends MongoRepository<Branch, String> {
+    Optional<Branch> findByBranchId(String branchId);
+
+    Optional<Branch> findByBranchName(String branchName);
 
 }

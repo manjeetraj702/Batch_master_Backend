@@ -17,9 +17,11 @@ public class ResultCreateRequest {
 
     private String date;
 
-    private String subjectId;
+    private String subject;
 
     private String topic;
+
+    private float totalMarks;
 
     private List<StudentMarksRequest> studentAndMarksList;
 }

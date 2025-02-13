@@ -25,7 +25,7 @@ public class BranchController {
 
     @PutMapping("/updateBranchById")
     public Branch updateBranch(@RequestBody BranchUpdateRequest branchUpdateRequest) {
-return branchService.updateBranch(branchUpdateRequest);
+        return branchService.updateBranch(branchUpdateRequest);
     }
 
     @GetMapping("/GetBranchByName")

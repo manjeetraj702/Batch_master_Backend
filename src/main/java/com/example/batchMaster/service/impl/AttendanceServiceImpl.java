@@ -4,6 +4,7 @@ import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.model.request.AttendanceCreateRequest;
 import com.example.batchMaster.repository.AttendanceRepository;
 import com.example.batchMaster.service.AttendanceService;
+import com.example.batchMaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,15 @@ import java.util.Optional;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
-        @Autowired
+    @Autowired
     AttendanceRepository attendanceRepository;
+    @Autowired
+    BatchService batchService;
+
     @Override
     public Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest) {
+
+        batchService.getBatchById(attendanceCreateRequest.getBatchId());
         Attendance attendance = new Attendance();
         attendance.setStudentId(attendanceCreateRequest.getStudentId());
         attendance.setStatus(attendanceCreateRequest.isStatus());
@@ -37,6 +43,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             throw new RuntimeException("Attendance record not found with ID: " + attendanceID);
         }
     }
+
     @Override
     public List<Attendance> getAttendanceByStudentId(String studentId) {
         return attendanceRepository.findByStudentId(studentId);
@@ -49,12 +56,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, String date) {
-        return attendanceRepository.findByBatchIdAndDate(batchId,date);
+        return attendanceRepository.findByBatchIdAndDate(batchId, date);
     }
 
     @Override
     public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date) {
-        return attendanceRepository.findByStudentIdAndDate(studentId,date);
+        return attendanceRepository.findByStudentIdAndDate(studentId, date);
     }
 
     @Override
@@ -82,7 +89,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             attendances.add(attendance);
         }
 
-       return attendanceRepository.saveAll(attendances);
+        return attendanceRepository.saveAll(attendances);
 
     }
 

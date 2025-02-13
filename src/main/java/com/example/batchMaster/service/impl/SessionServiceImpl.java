@@ -39,10 +39,10 @@ public class SessionServiceImpl implements SessionService {
         session.setSessionLink(sessionCreateRequest.getSessionLink());
         session.setDate(sessionCreateRequest.getDate());
         session.setBatchId(sessionCreateRequest.getBatchId());
-       session.setOnlineStudents(sessionCreateRequest.getOnlineStudents());
-       session.setOfflineStudents(sessionCreateRequest.getOfflineStudents());
-       session.setAbsentStudents(sessionCreateRequest.getAbsentStudents());
-       session.setBranchId(sessionCreateRequest.getBranchId());
+        session.setOnlineStudents(sessionCreateRequest.getOnlineStudents());
+        session.setOfflineStudents(sessionCreateRequest.getOfflineStudents());
+        session.setAbsentStudents(sessionCreateRequest.getAbsentStudents());
+        session.setBranchId(sessionCreateRequest.getBranchId());
         session.setDay(sessionCreateRequest.getDay());
         session.setWeek(sessionCreateRequest.getWeek());
 
@@ -52,7 +52,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session updateSession(SessionUpdateRequest updatedSession) {
-        Optional<Session> existingSessionOpt = sessionRepository.findById(updatedSession.getBatchId());
+        Optional<Session> existingSessionOpt = sessionRepository.findById(updatedSession.getSessionId());
         if (existingSessionOpt.isPresent()) {
             Session existingSession = existingSessionOpt.get();
             existingSession.setSubject(updatedSession.getSubject());
@@ -108,17 +108,22 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String batch) {
-        return List.of();
-        
+    public List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String subject, String topic) {
+        return sessionRepository.findAllBySubjectAndTopic(subject, topic);
+
     }
 
-   
 
     @Override
     public List<Session> getAllLastSessionsOfAllBatchesByBranchId(String branchId) {
         return sessionRepository.findLastSessionForEachBatchByBranchId(branchId);
     }
+
+    @Override
+    public List<Session> getSessionsByDate(String date) {
+        return sessionRepository.findAllByDate(date);
+    }
+
 
 
 }

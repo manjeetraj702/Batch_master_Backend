@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/sessions")
 @CrossOrigin(origins = "*")
-
 public class SessionController {
 
     @Autowired
@@ -23,57 +22,56 @@ public class SessionController {
         return sessionService.createSession(session);
     }
 
-    @PutMapping("/update/{sessionId}")
-    public Session updateSession( @RequestBody SessionUpdateRequest updatedSession) {
-        return sessionService.updateSession( updatedSession);
+    @PutMapping("/update/BySessionId")
+    public Session updateSession(@RequestBody SessionUpdateRequest updatedSession) {
+        return sessionService.updateSession(updatedSession);
     }
 
-    @GetMapping("/batch/{batchId}")
-    public List<Session> getSessionsByBatchId(@RequestParam String batchId) {
+    @GetMapping("/batch/batchId")
+    public List<Session> getSessionsByBatchId(@PathVariable String batchId) {
         return sessionService.getSessionsByBatchId(batchId);
     }
 
-    @GetMapping("/subject/{subject}")
-    public List<Session> getSessionsBySubject(@RequestParam String subject) {
+    @GetMapping("/subject/subject")
+    public List<Session> getSessionsBySubject(@PathVariable String subject) {
         return sessionService.getSessionsBySubject(subject);
     }
 
-    @DeleteMapping("/delete/{sessionId}")
-    public boolean  deleteSession(@RequestParam String sessionId) {
+    @GetMapping("/date/date")
+    public List<Session> getSessionsByDate(@PathVariable String date) {
+        return sessionService.getSessionsByDate(date);
+    }
+
+
+    @DeleteMapping("/delete/sessionId")
+    public boolean deleteSession(@PathVariable String sessionId) {
         return sessionService.deleteSessionById(sessionId);
     }
 
     @GetMapping("/sessionId")
-    public Session getSessionById(@RequestParam String sessionId) {
+    public Session getSessionById(@PathVariable String sessionId) {
         return sessionService.getSessionById(sessionId);
     }
 
-    @GetMapping("/sessionByBatchId")
-    public List<Session> getAllSessions(@RequestParam String batchId) {
-        return sessionService.getSessionsByBatchId(batchId);
-    }
-
-
-    @GetMapping("/sessions/last/batchId")
-    public Session getLastSessionByBatchId( @RequestParam String batchId)
-    {
+    @GetMapping("/last/batch/batchId")
+    public Session getLastSessionByBatchId(@PathVariable String batchId) {
         return sessionService.getLastSessionByBatchId(batchId);
     }
 
-
-    @GetMapping("/branchId/lastSessions")
-    public List<Session> getLastSessionForEachBatch(@RequestParam String branchId) {
+    @GetMapping("/branch/branchId/lastSessions")
+    public List<Session> getLastSessionForEachBatch(@PathVariable String branchId) {
         return sessionService.getAllLastSessionsOfAllBatchesByBranchId(branchId);
     }
 
-
-    List<Session> getAllSessionsOfAllBatchesByBranchId(String branch)
-    {
-        return sessionService.getAllSessionsOfAllBatchesByBranchId(branch);
+    @GetMapping("/branch/branchId/sessions")
+    public List<Session> getAllSessionsOfAllBatchesByBranchId(@PathVariable String branchId) {
+        return sessionService.getAllSessionsOfAllBatchesByBranchId(branchId);
     }
 
-    List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String batch)
-    {
-        return sessionService.getAllSessionsOfAllBatchesBySubjectAndTopic(batch);
+    @GetMapping("/subject/subject/topic/topic")
+    public List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(@PathVariable String subject, @PathVariable String topic) {
+        return sessionService.getAllSessionsOfAllBatchesBySubjectAndTopic(subject, topic);
     }
+
+
 }

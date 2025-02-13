@@ -13,7 +13,6 @@ public interface BatchRepository extends MongoRepository<Batch,String> {
 
     Optional<Batch> findByBatchName(String batchName);
 
-    Optional<Batch> findByBranchId(String branchId);
 
     List<Batch> findAllByBranchId(String branchId);
 }
