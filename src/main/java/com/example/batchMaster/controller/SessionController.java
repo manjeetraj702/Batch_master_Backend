@@ -65,4 +65,15 @@ public class SessionController {
     public List<Session> getLastSessionForEachBatch(@RequestParam String branchId) {
         return sessionService.getAllLastSessionsOfAllBatchesByBranchId(branchId);
     }
+
+
+    List<Session> getAllSessionsOfAllBatchesByBranchId(String branch)
+    {
+        return sessionService.getAllSessionsOfAllBatchesByBranchId(branch);
+    }
+
+    List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String batch)
+    {
+        return sessionService.getAllSessionsOfAllBatchesBySubjectAndTopic(batch);
+    }
 }
