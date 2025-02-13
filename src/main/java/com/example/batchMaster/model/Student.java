@@ -15,7 +15,9 @@ public class Student {
     private String studentId;
     private String studentName;
     private String fatherName;
+    private String parentsPhoneNo;
     private String mobileNumber;
+    private String imgUrl;
     private String email;
     private String dob;
     private String degree;

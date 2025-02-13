@@ -31,5 +31,6 @@ public interface StudentService {
     List<Student> getOfflineStudents(String batchId);
 
     List<Student> getStudentsByBranchId(String branchId);
+    List<Student> getAllStudents();
 }
 

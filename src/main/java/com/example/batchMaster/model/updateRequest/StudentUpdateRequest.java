@@ -19,8 +19,10 @@ public class StudentUpdateRequest {
     private String studentName;
     private String fatherName;
     private String mobileNumber;
+    private String parentsPhoneNo;
     private String email;
     private String dob;
+    private String imgUrl;
     private String degree;
     private String course;
     private Address address;

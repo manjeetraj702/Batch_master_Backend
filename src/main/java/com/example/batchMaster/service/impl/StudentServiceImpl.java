@@ -36,6 +36,7 @@ class StudentServiceImpl implements StudentService {
         Student student = new Student();
         student.setStudentName(studentCreateRequest.getStudentName());
         student.setFatherName(studentCreateRequest.getFatherName());
+        student.setParentsPhoneNo(studentCreateRequest.getParentsPhoneNo());
         student.setMobileNumber(studentCreateRequest.getMobileNumber());
         student.setEmail(studentCreateRequest.getEmail());
         student.setDob(studentCreateRequest.getDob());
@@ -44,6 +45,7 @@ class StudentServiceImpl implements StudentService {
         student.setAddress(studentCreateRequest.getAddress());
         student.setBranchId(studentCreateRequest.getBranchId());
         student.setAdmissionDate(studentCreateRequest.getAdmissionDate());
+        student.setImgUrl(studentCreateRequest.getImgUrl());
         student.setBatchId("Cage-00");
 
         return studentRepository.save(student);
@@ -145,5 +147,10 @@ class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getStudentsByBranchId(String branchId) {
         return studentRepository.findAllByBranchId(branchId);
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 }

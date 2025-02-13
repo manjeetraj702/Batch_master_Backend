@@ -47,4 +47,10 @@ public class BatchController {
         return batchService.getAllBatchesByBranchId(branchId);
     }
 
+    @GetMapping("/getAllBatches")
+    public List<Batch> getAllBatches()
+    {
+        return batchService.getAllBatches();
+    }
+
 }

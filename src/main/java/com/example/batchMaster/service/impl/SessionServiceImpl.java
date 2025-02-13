@@ -10,7 +10,6 @@ import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +43,8 @@ public class SessionServiceImpl implements SessionService {
        session.setOfflineStudents(sessionCreateRequest.getOfflineStudents());
        session.setAbsentStudents(sessionCreateRequest.getAbsentStudents());
        session.setBranchId(sessionCreateRequest.getBranchId());
-       session.setCreatedAt(Instant.now());
+        session.setDay(sessionCreateRequest.getDay());
+        session.setWeek(sessionCreateRequest.getWeek());
 
 
         return sessionRepository.save(session);
@@ -97,13 +97,23 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session getLastSessionByBatchId(String batchId) {
-        Optional<Session> session = sessionRepository.findTopByBatchIdOrderByCreatedAtDesc(batchId);
-        if (session.isPresent()) {
-            return session.get();
-        } else {
-            throw new RuntimeException("No session found for batch ID: " + batchId);
-        }
+        return sessionRepository.findTopByBatchIdOrderByCreatedAtDesc(batchId)
+                .orElseThrow(() -> new RuntimeException("No session found for batch ID: " + batchId));
     }
+
+    @Override
+    public List<Session> getAllSessionsOfAllBatchesByBranchId(String branch) {
+        return sessionRepository.findAllByBranchId(branch);
+
+    }
+
+    @Override
+    public List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String batch) {
+        return List.of();
+        
+    }
+
+   
 
     @Override
     public List<Session> getAllLastSessionsOfAllBatchesByBranchId(String branchId) {

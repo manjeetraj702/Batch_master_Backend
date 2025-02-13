@@ -20,8 +20,11 @@ public class SessionCreateRequest {
     private String date;
     private String batchId;
     private String branchId;
+    private String day;
     private int onlineStudents;
     private int offlineStudents;
     private int absentStudents;
+    private int week;
+
 
 }

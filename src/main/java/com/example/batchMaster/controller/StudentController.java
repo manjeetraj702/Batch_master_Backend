@@ -80,5 +80,10 @@ public class StudentController {
     List<Student> getOfflineStudents(@RequestParam String batchId) {
         return studentService.getOfflineStudents(batchId);
     }
+    @GetMapping("/getAllStudents")
+    List<Student> getAllStudents()
+    {
+        return studentService.getAllStudents();
+    }
     
 }
