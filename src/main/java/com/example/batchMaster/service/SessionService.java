@@ -20,7 +20,11 @@ public interface SessionService {
     boolean deleteSessionById(String sessionId);
 
     Session getLastSessionByBatchId(String batchId);
+
 List<Session>  getAllSessionsOfAllBatchesByBranchId(String branch);
 List<Session>  getAllSessionsOfAllBatchesBySubjectAndTopic(String batch);
-    List<Session>  getAllLastSessionsOfAllBatchesByBranchId(String branch);
+
+
+
+
 }
