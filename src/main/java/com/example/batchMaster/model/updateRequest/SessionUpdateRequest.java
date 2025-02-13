@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SessionUpdateRequest {
-    
+
 
     private String sessionId;
     private String subject;

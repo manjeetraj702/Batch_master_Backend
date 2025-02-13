@@ -14,7 +14,7 @@ public class BranchCreateRequest {
     private String branchName;
     private String startingDate;
     private Address address;
-    private boolean branchStatus=true;
+    private boolean branchStatus = true;
 
 
 }
