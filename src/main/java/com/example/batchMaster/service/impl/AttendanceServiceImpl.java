@@ -60,9 +60,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public boolean createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
         List<Attendance> attendances = new ArrayList<>();
-
+List<String> presents= new ArrayList<>(presentStudentIds);
         // Mark present students
-        for (String studentId : presentStudentIds) {
+        for (String studentId : presents) {
 
             Attendance attendance = new Attendance();
             attendance.setStudentId(studentId);
@@ -71,9 +71,9 @@ public class AttendanceServiceImpl implements AttendanceService {
             attendance.setDate(date);
             attendances.add(attendance);
         }
-
+List<String> absents = new ArrayList<>(absentStudentIds);
         // Mark absent students
-        for (String studentId : absentStudentIds) {
+        for (String studentId : absents) {
             Attendance attendance = new Attendance();
             attendance.setStudentId(studentId);
             attendance.setStatus(false);
