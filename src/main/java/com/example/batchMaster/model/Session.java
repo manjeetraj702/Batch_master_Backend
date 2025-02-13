@@ -25,9 +25,11 @@ public class Session {
     private String date;
     private String batchId;
     private String branchId;
+    private String day;
     private int onlineStudents;
     private int offlineStudents;
     private int absentStudents;
+    private int week;
     @CreatedDate
     @Indexed // Index for faster queries
     private Instant createdAt;

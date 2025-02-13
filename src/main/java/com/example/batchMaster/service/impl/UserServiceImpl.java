@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public User login(String email, String password) {
+        return null;
+    }
+
 
     // Add method implementations as required by UserService interface
 }

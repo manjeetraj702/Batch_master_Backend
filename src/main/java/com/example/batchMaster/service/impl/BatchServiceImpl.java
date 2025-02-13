@@ -87,4 +87,9 @@ public class BatchServiceImpl implements BatchService {
 
         return batchRepository.findAllByBranchId(branchId);
     }
+
+    @Override
+    public List<Batch> getAllBatches() {
+      return batchRepository.findAll();
+    }
 }

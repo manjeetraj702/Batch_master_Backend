@@ -10,9 +10,11 @@ public class StudentCreateRequest {
 
     private String studentName;
     private String fatherName;
+    private String parentsPhoneNo;
     private String mobileNumber;
     private String email;
     private String dob;
+    private String imgUrl;
     private String degree;
     private String course;
     private Address address;
