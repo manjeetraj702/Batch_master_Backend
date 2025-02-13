@@ -1,4 +1,4 @@
-package com.example.batchMaster.customException;
+package com.example.batchMaster.exception;
 
 public class BatchNotFoundException extends RuntimeException {
     public BatchNotFoundException(String message) {
