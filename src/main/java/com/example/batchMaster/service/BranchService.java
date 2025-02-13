@@ -19,5 +19,5 @@ public interface BranchService {
 
     Branch updateBranchStatus(String branchId);
 
-
+Branch getBranchById(String branchId);
 }

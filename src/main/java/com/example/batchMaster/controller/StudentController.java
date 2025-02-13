@@ -50,8 +50,8 @@ public class StudentController {
         return studentService.getListOfMarks(studentId);
     }
 
-    @PatchMapping("/studentId/batchId")
-    Student updateStudentBatchId(@PathVariable String studentId, @RequestParam String batchId) {
+    @PatchMapping("/studentsBatchAssign")
+    Student updateStudentBatchId(@RequestParam String studentId, @RequestParam String batchId) {
         return studentService.updateStudentBatchId(studentId, batchId);
     }
 
