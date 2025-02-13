@@ -26,4 +26,7 @@ public interface SessionRepository extends MongoRepository<Session, String> {
     List<Session> findLastSessionForEachBatchByBranchId(String branchId);
 
 
+    List<Session> findAllByBranchId(String branch);
+
+    List<Session> findAllBySubjectAndTopic(String subject, String topic);
 }

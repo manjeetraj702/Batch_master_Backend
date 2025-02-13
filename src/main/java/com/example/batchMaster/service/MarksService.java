@@ -2,12 +2,13 @@ package com.example.batchMaster.service;
 
 
 import com.example.batchMaster.model.Marks;
+import com.example.batchMaster.model.request.MarksCreateRequest;
 
 import java.util.List;
 
 public interface MarksService {
     
-    Marks createMarks(Marks marks);
+    Marks createMarks(MarksCreateRequest marks);
     
     Marks updateMarks(String marksId, Marks updatedMarks);
     

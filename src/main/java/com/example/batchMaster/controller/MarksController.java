@@ -2,6 +2,7 @@ package com.example.batchMaster.controller;
 
 
 import com.example.batchMaster.model.Marks;
+import com.example.batchMaster.model.request.MarksCreateRequest;
 import com.example.batchMaster.service.MarksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class MarksController {
 
     // Create Marks
     @PostMapping
-    public Marks createMarks(@RequestBody Marks marks) {
-        return marksService.createMarks(marks);
+    public Marks createMarks(@RequestBody MarksCreateRequest marksCreateRequest) {
+        return marksService.createMarks(marksCreateRequest);
     }
 
     // Update Marks by ID

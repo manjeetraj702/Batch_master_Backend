@@ -1,6 +1,7 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Marks;
+import com.example.batchMaster.model.request.MarksCreateRequest;
 import com.example.batchMaster.repository.MarksRepository;
 import com.example.batchMaster.service.MarksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,14 @@ public class MarksServiceImpl implements MarksService {
     private MarksRepository marksRepository;
 
     @Override
-    public Marks createMarks(Marks marks) {
+    public Marks createMarks(MarksCreateRequest marksCreateRequest) {
+        Marks marks = new Marks();
+        marks.setBatchId(marksCreateRequest.getBatchId());
+        marks.setStudentId(marksCreateRequest.getStudentId());
+        marks.setSubject(marksCreateRequest.getSubject());
+        marks.setTopic(marksCreateRequest.getTopic());
+        marks.setTotalMarks(marksCreateRequest.getTotalMarks());
+        marks.setMarksObtained(marksCreateRequest.getMarksObtained());
         return marksRepository.save(marks);
     }
 

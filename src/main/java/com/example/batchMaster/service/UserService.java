@@ -15,5 +15,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
+    User login(String email, String password);
+
 
 }
