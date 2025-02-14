@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class ApiResponse<T> {
-    private T data;
+public class ApiResponse<D> {
+    private D data;
     private HttpStatus responseStatus;
     private String errorMessage;
 
@@ -20,7 +20,7 @@ public class ApiResponse<T> {
         this.errorMessage = errorMessage;
     }
 
-    public ApiResponse(T data, HttpStatus responseStatus) {
+    public ApiResponse(D data, HttpStatus responseStatus) {
         this.data = data;
         this.responseStatus = responseStatus;
     }

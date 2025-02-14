@@ -42,4 +42,9 @@ public class BranchController {
     public Branch updateBranchStatus(@RequestParam String branchId) {
         return branchService.updateBranchStatus(branchId);
     }
+
+    @GetMapping("/getBranchById")
+    public Branch getBranchById(@RequestParam String branchId) {
+        return branchService.getBranchById(branchId);
+    }
 }
