@@ -10,6 +10,7 @@ import com.example.batchMaster.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +29,8 @@ public class ResultServiceImpl implements ResultService {
         newResult.setSubjectId(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
         newResult.setStudentAndMarksList(resultCreateRequest.getStudentAndMarksList());
+        int topperMarks = 0;
+        List<String> topperList = new ArrayList<>();
         for (StudentMarksRequest studentMarksRequest : resultCreateRequest.getStudentAndMarksList()) {
             MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
             marksCreateRequest.setBatchId(resultCreateRequest.getBatchId());
@@ -36,8 +39,12 @@ public class ResultServiceImpl implements ResultService {
             marksCreateRequest.setStudentId(studentMarksRequest.getStudentId());
             marksCreateRequest.setMarksObtained(studentMarksRequest.getStudentMarks());
             marksCreateRequest.setTotalMarks(resultCreateRequest.getTotalMarks());
-
             marksServiceImpl.createMarks(marksCreateRequest);
+
+            if (studentMarksRequest.getStudentMarks() == topperMarks) {
+//                topperList.add(studentMarksRequest)
+            }
+            newResult.setTopperList(topperList);
         }
         return resultRepository.save(newResult);
     }
@@ -45,7 +52,7 @@ public class ResultServiceImpl implements ResultService {
     @Override
     public Result updateResult(ResultUpdateRequest resultUpdateRequest) {
         Result existingResult = getResultsByResultId(resultUpdateRequest.getResultId());
-        existingResult.setListOfTopperIds(resultUpdateRequest.getListOfTopperIds());
+//        existingResult.setListOfTopperIds(resultUpdateRequest.getListOfTopperIds());
         existingResult.setDate(resultUpdateRequest.getDate());
         existingResult.setSubjectId(resultUpdateRequest.getSubjectId());
         existingResult.setTopic(resultUpdateRequest.getTopic());
@@ -58,7 +65,6 @@ public class ResultServiceImpl implements ResultService {
         return resultRepository.findById(resultId)
                 .orElseThrow(() -> new RuntimeException("Result not found with ID: " + resultId));
     }
-
 
     @Override
     public List<Result> getResultByBatchId(String batchId) {
@@ -74,6 +80,5 @@ public class ResultServiceImpl implements ResultService {
     public List<Result> getResultsByBatchIdAndSubjectId(String batchId, String subjectId) {
         return resultRepository.findByBatchIdAndSubjectId(batchId, subjectId);
     }
-
 
 }

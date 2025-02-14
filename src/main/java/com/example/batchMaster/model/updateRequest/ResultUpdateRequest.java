@@ -18,7 +18,7 @@ public class ResultUpdateRequest {
 
     private String batchId;
 
-    private List<String> listOfTopperIds;
+//    private List<String> listOfTopperIds;
 
     private String date;
 
