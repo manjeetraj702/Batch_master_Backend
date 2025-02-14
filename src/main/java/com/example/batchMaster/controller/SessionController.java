@@ -1,10 +1,12 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Session;
 import com.example.batchMaster.model.request.SessionCreateRequest;
 import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
 import com.example.batchMaster.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,61 +19,81 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
 
+    // Create a new session
     @PostMapping("/create")
-    public Session createSession(@RequestBody SessionCreateRequest session) {
-        return sessionService.createSession(session);
+    public ApiResponse<Session> createSession(@RequestBody SessionCreateRequest session) {
+        Session createdSession = sessionService.createSession(session);
+        return new ApiResponse<>(createdSession, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/BySessionId")
-    public Session updateSession(@RequestBody SessionUpdateRequest updatedSession) {
-        return sessionService.updateSession(updatedSession);
+    // Update session
+    @PutMapping("/update")
+    public ApiResponse<Session> updateSession(@RequestBody SessionUpdateRequest updatedSession) {
+        Session session = sessionService.updateSession(updatedSession);
+        return new ApiResponse<>(session, HttpStatus.OK);
     }
 
-    @GetMapping("/batch/batchId")
-    public List<Session> getSessionsByBatchId(@PathVariable String batchId) {
-        return sessionService.getSessionsByBatchId(batchId);
+    // Get sessions by batch ID
+    @GetMapping("/batch")
+    public ApiResponse<List<Session>> getSessionsByBatchId(@RequestParam String batchId) {
+        List<Session> sessions = sessionService.getSessionsByBatchId(batchId);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
     }
 
-    @GetMapping("/subject/subject")
-    public List<Session> getSessionsBySubject(@PathVariable String subject) {
-        return sessionService.getSessionsBySubject(subject);
+    // Get sessions by subject
+    @GetMapping("/getSessionsBySubject")
+    public ApiResponse<List<Session>> getSessionsBySubject(@RequestParam String subject) {
+        List<Session> sessions = sessionService.getSessionsBySubject(subject);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
     }
 
-    @GetMapping("/date/date")
-    public List<Session> getSessionsByDate(@PathVariable String date) {
-        return sessionService.getSessionsByDate(date);
+    // Get sessions by date
+    @GetMapping("/getSessionsByDate")
+    public ApiResponse<List<Session>> getSessionsByDate(@RequestParam String date) {
+        List<Session> sessions = sessionService.getSessionsByDate(date);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/delete/sessionId")
-    public boolean deleteSession(@PathVariable String sessionId) {
-        return sessionService.deleteSessionById(sessionId);
+    // Delete a session by ID
+    @DeleteMapping("/deleteSession")
+    public ApiResponse<Boolean> deleteSession(@RequestParam String sessionId) {
+        Boolean deleted = sessionService.deleteSessionById(sessionId);
+        return new ApiResponse<>(deleted, HttpStatus.OK);
     }
 
-    @GetMapping("/sessionId")
-    public Session getSessionById(@PathVariable String sessionId) {
-        return sessionService.getSessionById(sessionId);
+    // Get a session by ID
+    @GetMapping("/getSessionById")
+    public ApiResponse<Session> getSessionById(@RequestParam String sessionId) {
+        Session session = sessionService.getSessionById(sessionId);
+        return new ApiResponse<>(session, HttpStatus.OK);
     }
 
-    @GetMapping("/last/batch/batchId")
-    public Session getLastSessionByBatchId(@PathVariable String batchId) {
-        return sessionService.getLastSessionByBatchId(batchId);
+    // Get last session by batch ID
+    @GetMapping("/getLastSessionByBatchId")
+    public ApiResponse<Session> getLastSessionByBatchId(@RequestParam String batchId) {
+        Session session = sessionService.getLastSessionByBatchId(batchId);
+        return new ApiResponse<>(session, HttpStatus.OK);
     }
 
-    @GetMapping("/branch/branchId/lastSessions")
-    public List<Session> getLastSessionForEachBatch(@PathVariable String branchId) {
-        return sessionService.getAllLastSessionsOfAllBatchesByBranchId(branchId);
+    // Get last session for each batch by branch ID
+    @GetMapping("/getLastSessionForEachBatch")
+    public ApiResponse<List<Session>> getLastSessionForEachBatch(@RequestParam String branchId) {
+        List<Session> sessions = sessionService.getAllLastSessionsOfAllBatchesByBranchId(branchId);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
     }
 
-    @GetMapping("/branch/branchId/sessions")
-    public List<Session> getAllSessionsOfAllBatchesByBranchId(@PathVariable String branchId) {
-        return sessionService.getAllSessionsOfAllBatchesByBranchId(branchId);
+    // Get all sessions of all batches by branch ID
+    @GetMapping("/getAllSessionsOfAllBatchesByBranchId")
+    public ApiResponse<List<Session>> getAllSessionsOfAllBatchesByBranchId(@RequestParam String branchId) {
+        List<Session> sessions = sessionService.getAllSessionsOfAllBatchesByBranchId(branchId);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
     }
 
-    @GetMapping("/subject/subject/topic/topic")
-    public List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(@PathVariable String subject, @PathVariable String topic) {
-        return sessionService.getAllSessionsOfAllBatchesBySubjectAndTopic(subject, topic);
+    // Get all sessions by subject and topic
+    @GetMapping("/getAllSessionsOfAllBatchesBySubjectAndTopic")
+    public ApiResponse<List<Session>> getAllSessionsOfAllBatchesBySubjectAndTopic(
+            @RequestParam String subject, @RequestParam String topic) {
+        List<Session> sessions = sessionService.getAllSessionsOfAllBatchesBySubjectAndTopic(subject, topic);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
     }
-
-
 }

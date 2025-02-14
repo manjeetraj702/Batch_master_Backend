@@ -3,7 +3,6 @@ package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.exception.BatchMasterException;
 import com.example.batchMaster.model.BatchSubject;
-import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
 import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 import com.example.batchMaster.repository.BatchSubjectRepository;
@@ -88,6 +87,42 @@ private BatchSubjectRepository batchSubjectRepository;
     public List<BatchSubject> getIncompleteSubject(String batchId) {
         return batchSubjectRepository.findAllByBatchIdAndStatusFalse(batchId);
     }
+
+        @Override
+        public BatchSubject addTopic(String subjectId, String topic) {
+            Optional<BatchSubject> optionalSubject = batchSubjectRepository.findById(subjectId);
+
+            if (optionalSubject.isPresent()) {
+                BatchSubject batchSubject = optionalSubject.get();
+
+                if (!batchSubject.getListOfTopics().contains(topic)) {
+                    batchSubject.getListOfTopics().add(topic);
+                    return batchSubjectRepository.save(batchSubject); // Save updated subject
+                }
+                throw new RuntimeException("Topic already exists in the subject");
+            }
+
+            throw new RuntimeException("Subject not found");
+        }
+
+        @Override
+        public BatchSubject removeTopic(String subjectId, String topic) {
+            Optional<BatchSubject> optionalSubject = batchSubjectRepository.findById(subjectId);
+
+            if (optionalSubject.isPresent()) {
+                BatchSubject batchSubject = optionalSubject.get();
+
+                if (batchSubject.getListOfTopics().contains(topic)) {
+                    batchSubject.getListOfTopics().remove(topic);
+                    return batchSubjectRepository.save(batchSubject); // Save updated subject
+                }
+                throw new RuntimeException("Topic not found in the subject");
+            }
+
+            throw new RuntimeException("Subject not found");
+        }
+
+
 
 
 }

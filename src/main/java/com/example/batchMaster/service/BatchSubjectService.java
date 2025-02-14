@@ -2,7 +2,6 @@ package com.example.batchMaster.service;
 
 
 import com.example.batchMaster.model.BatchSubject;
-import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
 import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 
@@ -28,5 +27,8 @@ public interface BatchSubjectService {
     List<BatchSubject> getCompleteSubject(String batchId);
 
     List<BatchSubject> getIncompleteSubject(String batchId);
+
+    BatchSubject addTopic(String subjectId, String topic);
+    BatchSubject removeTopic(String subjectId, String topic);
 
 }

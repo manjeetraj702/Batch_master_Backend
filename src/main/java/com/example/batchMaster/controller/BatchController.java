@@ -1,9 +1,10 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Batch;
 import com.example.batchMaster.model.request.BatchCreateRequest;
 import com.example.batchMaster.service.BatchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,43 +14,58 @@ import java.util.List;
 @CrossOrigin("*")
 public class BatchController {
 
-    @Autowired
-    BatchService batchService;
+    private final BatchService batchService;
 
-    @PostMapping("/createBatch")
-    public Batch createBatch(@RequestBody BatchCreateRequest batchCreateRequest) {
-        return batchService.createBatch(batchCreateRequest);
+    public BatchController(BatchService batchService) {
+        this.batchService = batchService;
     }
 
-    @PutMapping("/updateBatch")
-    public Batch updateBatch(@RequestParam String batchId, @RequestBody Batch updatedBatch) {
-        return batchService.updateBatch(batchId, updatedBatch);
+    // Create a new batch
+    @PostMapping("/create")
+    public ApiResponse<Batch> createBatch(@RequestBody BatchCreateRequest batchCreateRequest) {
+        Batch batch = batchService.createBatch(batchCreateRequest);
+        return new ApiResponse<>(batch, HttpStatus.CREATED);
     }
 
+    // Update batch details
+    @PutMapping("/update")
+    public ApiResponse<Batch> updateBatch(@RequestParam String batchId, @RequestBody Batch updatedBatch) {
+        Batch batch = batchService.updateBatch(batchId, updatedBatch);
+        return new ApiResponse<>(batch, HttpStatus.OK);
+    }
+
+    // Update batch status (activate/deactivate)
     @PutMapping("/updateBatchStatus")
-    public Batch updateBatchStatus(@RequestParam String batchId) {
-        return batchService.updateBatchStatus(batchId);
+    public ApiResponse<Batch> updateBatchStatus(@RequestParam String batchId) {
+        Batch batch = batchService.updateBatchStatus(batchId);
+        return new ApiResponse<>(batch, HttpStatus.OK);
     }
 
+    // Get batch by ID
     @GetMapping("/getBatchById")
-    public Batch getBatchById(@RequestParam String batchId) {
-        return batchService.getBatchById(batchId);
+    public ApiResponse<Batch> getBatchById(@RequestParam String batchId) {
+        Batch batch = batchService.getBatchById(batchId);
+        return new ApiResponse<>(batch, HttpStatus.OK);
     }
 
+    // Get batch by name
     @GetMapping("/getBatchByName")
-    public Batch getBatchByName(@RequestParam String batchName) {
-        return batchService.getBatchByName(batchName);
+    public ApiResponse<Batch> getBatchByName(@RequestParam String batchName) {
+        Batch batch = batchService.getBatchByName(batchName);
+        return new ApiResponse<>(batch, HttpStatus.OK);
     }
 
-
-    @GetMapping("/getAllBatchesByBranchId")
-    public List<Batch> getBatchesByBranchId(@RequestParam String branchId) {
-        return batchService.getAllBatchesByBranchId(branchId);
+    // Get all batches by branch ID
+    @GetMapping("/getBatchesByBranchId")
+    public ApiResponse<List<Batch>> getBatchesByBranchId(@RequestParam String branchId) {
+        List<Batch> batches = batchService.getAllBatchesByBranchId(branchId);
+        return new ApiResponse<>(batches, HttpStatus.OK);
     }
 
+    // Get all batches
     @GetMapping("/getAllBatches")
-    public List<Batch> getAllBatches() {
-        return batchService.getAllBatches();
+    public ApiResponse<List<Batch>> getAllBatches() {
+        List<Batch> batches = batchService.getAllBatches();
+        return new ApiResponse<>(batches, HttpStatus.OK);
     }
-
 }

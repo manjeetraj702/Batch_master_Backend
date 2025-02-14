@@ -1,11 +1,12 @@
 package com.example.batchMaster.controller;
 
-
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.BatchSubject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
 import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 import com.example.batchMaster.service.BatchSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,50 +15,80 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/batchSubject")
 public class BatchSubjectController {
+
+   private final BatchSubjectService batchSubjectService;
+
    @Autowired
-   private BatchSubjectService subjectService;
-   @PostMapping("/create/batchSubject")
-   public BatchSubject createCourse(@RequestBody SubjectCreateRequest subjectCreateRequest)
-   {
-      return subjectService.createCourse(subjectCreateRequest);
+   public BatchSubjectController(BatchSubjectService batchSubjectService) {
+      this.batchSubjectService = batchSubjectService;
    }
 
-   @PutMapping("/update/batchSubject")
-  public BatchSubject updateSubject(@RequestBody  SubjectUpdateRequest subjectUpdateRequest){
-     return subjectService.updateSubject(subjectUpdateRequest);
-   }
-@GetMapping("/get/allBatchSubject")
-   public List<BatchSubject> getAllSubject() {
-      return subjectService.getAllSubject();
+   // Create a new subject in a batch
+   @PostMapping("/create")
+   public ApiResponse<BatchSubject> createBatchSubject(@RequestBody SubjectCreateRequest subjectCreateRequest) {
+      BatchSubject subject = batchSubjectService.createCourse(subjectCreateRequest);
+      return new ApiResponse<>(subject, HttpStatus.CREATED);
    }
 
-   @PatchMapping("/status/active or not ")
-   public BatchSubject changeSubjectStatus(@RequestParam String SubjectId){
-       return subjectService.changeSubjectStatus(SubjectId);
+   // Update an existing subject
+   @PutMapping("/update")
+   public ApiResponse<BatchSubject> updateSubject(@RequestBody SubjectUpdateRequest subjectUpdateRequest) {
+      BatchSubject subject = batchSubjectService.updateSubject(subjectUpdateRequest);
+      return new ApiResponse<>(subject, HttpStatus.OK);
    }
 
-   @GetMapping("get/incomplete/batchSubjects/byBatchId")
-   public  List<BatchSubject> getIncompleteSubject(@RequestParam String batchId){
-       return subjectService.getIncompleteSubject(batchId);
+   // Get all subjects
+   @GetMapping("/getAllSubjects")
+   public ApiResponse<List<BatchSubject>> getAllSubjects() {
+      List<BatchSubject> subjects = batchSubjectService.getAllSubject();
+      return new ApiResponse<>(subjects, HttpStatus.OK);
    }
 
-   @GetMapping("get/complete/batchSubjects/byBatchId")
-   public  List<BatchSubject> getCompleteSubject(@RequestParam String batchId){
-      return subjectService.getCompleteSubject(batchId);
+   // Change subject status (active/inactive)
+   @PatchMapping("/changeSubjectStatus")
+   public ApiResponse<BatchSubject> changeSubjectStatus(@RequestParam(name = "subjectId") String subjectId) {
+      BatchSubject subject = batchSubjectService.changeSubjectStatus(subjectId);
+      return new ApiResponse<>(subject, HttpStatus.OK);
    }
 
-
-   @GetMapping("/getBy/batch" + "Id")
-   public List<BatchSubject> getByBatchId(@RequestParam String batchId){
-      return subjectService.getSubjectByBatchId(batchId);
+   // Get incomplete subjects by batch ID
+   @GetMapping("/getIncompleteSubjects")
+   public ApiResponse<List<BatchSubject>> getIncompleteSubjects(@RequestParam(name = "batchId") String batchId) {
+      List<BatchSubject> subjects = batchSubjectService.getIncompleteSubject(batchId);
+      return new ApiResponse<>(subjects, HttpStatus.OK);
    }
 
-
-   @GetMapping("/getBy/subjectName/batchId")
-   public BatchSubject getBySubjectNameAndBatchId(@RequestParam String subjectName , String batchId){
-      return subjectService.getBySubjectNameAndBatchId(subjectName,batchId);
+   // Get complete subjects by batch ID
+   @GetMapping("/getCompleteSubjects")
+   public ApiResponse<List<BatchSubject>> getCompleteSubjects(@RequestParam(name = "batchId") String batchId) {
+      List<BatchSubject> subjects = batchSubjectService.getCompleteSubject(batchId);
+      return new ApiResponse<>(subjects, HttpStatus.OK);
    }
 
+   // Get subjects by batch ID
+   @GetMapping("/getSubjectsByBatchId")
+   public ApiResponse<List<BatchSubject>> getSubjectsByBatchId(@RequestParam(name = "batchId") String batchId) {
+      List<BatchSubject> subjects = batchSubjectService.getSubjectByBatchId(batchId);
+      return new ApiResponse<>(subjects, HttpStatus.OK);
+   }
 
+   // Get subject by name and batch ID
+   @GetMapping("/getBySubjectNameAndBatchId")
+   public ApiResponse<BatchSubject> getBySubjectNameAndBatchId(
+           @RequestParam(name = "subjectName") String subjectName,
+           @RequestParam(name = "batchId") String batchId) {
+      BatchSubject subject = batchSubjectService.getBySubjectNameAndBatchId(subjectName, batchId);
+      return new ApiResponse<>(subject, HttpStatus.OK);
+   }
+   @PutMapping("/add-topicBySubjectId")
+   public ApiResponse<BatchSubject> addTopic(@RequestParam String subjectId, @RequestParam String topic) {
+      BatchSubject updatedSubject = batchSubjectService.addTopic(subjectId, topic);
+      return new ApiResponse<>(updatedSubject, HttpStatus.OK);
+   }
+
+   @PutMapping("/remove-topicBySubjectId")
+   public ApiResponse<BatchSubject> removeTopic(@RequestParam String subjectId, @RequestParam String topic) {
+      BatchSubject updatedSubject = batchSubjectService.removeTopic(subjectId, topic);
+      return new ApiResponse<>(updatedSubject, HttpStatus.OK);
+   }
 }
-

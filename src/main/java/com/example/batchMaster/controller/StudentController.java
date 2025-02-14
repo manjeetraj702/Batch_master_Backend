@@ -1,89 +1,107 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
 import com.example.batchMaster.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/v1/students")
 @CrossOrigin(origins = "*")
-
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
     // Create a new student
-    @PostMapping("/createStudent")
-    public Student createStudent(@RequestBody StudentCreateRequest studentCreateRequest) {
-        return studentService.createStudent(studentCreateRequest);
+    @PostMapping("/create")
+    public ApiResponse<Student> createStudent(@Valid @RequestBody StudentCreateRequest studentCreateRequest) {
+        Student student = studentService.createStudent(studentCreateRequest);
+        return new ApiResponse<>(student, HttpStatus.CREATED);
     }
 
     // Get student details by ID
     @GetMapping("/{studentId}")
-    public Student getStudentDetails(@PathVariable String studentId) {
-        return studentService.getStudentDetails(studentId);
+    public ApiResponse<Student> getStudentDetails(@PathVariable String studentId) {
+        Student student = studentService.getStudentDetails(studentId);
+        return new ApiResponse<>(student, HttpStatus.OK);
     }
 
     // Update student details
-    @PutMapping("/updateStudent")
-    public Student updateStudent(@RequestBody StudentUpdateRequest studentUpdateRequest) {
-        return studentService.updateStudent(studentUpdateRequest);
+    @PutMapping("/update")
+    public ApiResponse<Student> updateStudent(@Valid @RequestBody StudentUpdateRequest studentUpdateRequest) {
+        Student student = studentService.updateStudent(studentUpdateRequest);
+        return new ApiResponse<>(student, HttpStatus.OK);
     }
 
     // Change student status (active/inactive)
-    @PatchMapping("/studentId/status")
-    public Student changeStudentStatus(@PathVariable String studentId) {
-        return studentService.changeStudentStatus(studentId);
+    @PatchMapping("/changeStatus")
+    public ApiResponse<Student> changeStudentStatus(@RequestParam String studentId) {
+        Student student = studentService.changeStudentStatus(studentId);
+        return new ApiResponse<>(student, HttpStatus.OK);
     }
-
 
     // Get list of marks for a student
-    @GetMapping("/studentId/marks")
-    public List<Marks> getListOfMarks(@PathVariable String studentId) {
-        return studentService.getListOfMarks(studentId);
+    @GetMapping("/getListOfMarks")
+    public ApiResponse<List<Marks>> getListOfMarks(@PathVariable String studentId) {
+        List<Marks> marks = studentService.getListOfMarks(studentId);
+        return new ApiResponse<>(marks, HttpStatus.OK);
     }
 
-    @PatchMapping("/studentsBatchAssign")
-    Student updateStudentBatchId(@RequestParam String studentId, @RequestParam String batchId) {
-        return studentService.updateStudentBatchId(studentId, batchId);
+    // Assign a student to a batch
+    @PatchMapping("/getListOfMarks")
+    public ApiResponse<Student> updateStudentBatchId(@RequestParam String studentId, @RequestParam String batchId) {
+        Student student = studentService.updateStudentBatchId(studentId, batchId);
+        return new ApiResponse<>(student, HttpStatus.OK);
     }
 
-    @PatchMapping("/studentId/remove")
-    Student removeStudentFromBatch(@RequestParam String studentId) {
-        return studentService.removeStudentFromBatch(studentId);
+    // Remove student from batch
+    @PatchMapping("/removeStudentFromBatch")
+    public ApiResponse<Student> removeStudentFromBatch(@RequestParam String studentId) {
+        Student student = studentService.removeStudentFromBatch(studentId);
+        return new ApiResponse<>(student, HttpStatus.OK);
     }
 
-    @GetMapping("/batchId/students")
-    List<Student> getStudentsByBatchId(@RequestParam String batchId) {
-        return studentService.getStudentsByBatchId(batchId);
+    // Get students by batch ID
+    @GetMapping("/getStudentsByBatchId")
+    public ApiResponse<List<Student>> getStudentsByBatchId(@RequestParam String batchId) {
+        List<Student> students = studentService.getStudentsByBatchId(batchId);
+        return new ApiResponse<>(students, HttpStatus.OK);
     }
 
-
-    @GetMapping("/branchId/students")
-    List<Student> getStudentsByBranchId(@RequestParam String branchId) {
-        return studentService.getStudentsByBranchId(branchId);
+    // Get students by branch ID
+    @GetMapping("/getStudentsByBranchId")
+    public ApiResponse<List<Student>> getStudentsByBranchId(@RequestParam String branchId) {
+        List<Student> students = studentService.getStudentsByBranchId(branchId);
+        return new ApiResponse<>(students, HttpStatus.OK);
     }
 
-    @GetMapping("/batchId/onlineStudents")
-    List<Student> getOnlineStudents(@RequestParam String batchId) {
-        return studentService.getOnlineStudents(batchId);
+    // Get online students by batch ID
+    @GetMapping("/getOnlineStudentsByBatchId")
+    public ApiResponse<List<Student>> getOnlineStudents(@RequestParam String batchId) {
+        List<Student> students = studentService.getOnlineStudents(batchId);
+        return new ApiResponse<>(students, HttpStatus.OK);
     }
 
-    @GetMapping("/batchId/offlineStudents")
-    List<Student> getOfflineStudents(@RequestParam String batchId) {
-        return studentService.getOfflineStudents(batchId);
+    // Get offline students by batch ID
+    @GetMapping("/bgetOfflineStudentsByBatchId")
+    public ApiResponse<List<Student>> getOfflineStudents(@RequestParam String batchId) {
+        List<Student> students = studentService.getOfflineStudents(batchId);
+        return new ApiResponse<>(students, HttpStatus.OK);
     }
 
+    // Get all students
     @GetMapping("/getAllStudents")
-    List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public ApiResponse<List<Student>> getAllStudents() {
+        List<Student> students = studentService.getAllStudents();
+        return new ApiResponse<>(students, HttpStatus.OK);
     }
-
 }
