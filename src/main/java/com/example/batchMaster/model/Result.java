@@ -26,4 +26,5 @@ public class Result {
     private float totalMarks;
 
     private List<StudentMarksRequest> studentAndMarksList;
+    private List<String> topperList;
 }

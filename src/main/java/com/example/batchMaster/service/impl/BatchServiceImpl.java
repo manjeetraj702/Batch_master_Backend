@@ -1,6 +1,6 @@
 package com.example.batchMaster.service.impl;
 
-import com.example.batchMaster.customException.BatchNotFoundException;
+import com.example.batchMaster.exception.BatchNotFoundException;
 import com.example.batchMaster.model.Batch;
 import com.example.batchMaster.model.request.BatchCreateRequest;
 import com.example.batchMaster.repository.BatchRepository;
@@ -88,6 +88,7 @@ public class BatchServiceImpl implements BatchService {
 
     @Override
     public List<Batch> getAllBatchesByBranchId(String branchId) {
+
         return batchRepository.findAllByBranchId(branchId);
     }
 

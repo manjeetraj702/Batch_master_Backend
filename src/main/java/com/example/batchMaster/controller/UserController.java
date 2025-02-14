@@ -1,39 +1,50 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.User;
 import com.example.batchMaster.model.request.UserCreateRequest;
 import com.example.batchMaster.model.updateRequest.UserUpdateRequest;
 import com.example.batchMaster.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 @CrossOrigin("*")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    // Create a new user
     @PostMapping("/create")
-    public User createUser(@RequestBody UserCreateRequest userCreateRequest) {
-        return userService.createUser(userCreateRequest);
+    public ApiResponse<User> createUser(@Valid @RequestBody UserCreateRequest userCreateRequest) {
+        User user = userService.createUser(userCreateRequest);
+        return new ApiResponse<>(user, HttpStatus.CREATED);
     }
 
+    // Update an existing user
     @PutMapping("/update/userId")
-    public User updateUser(@RequestParam String userId, @RequestBody UserUpdateRequest userUpdateRequest) {
-        return userService.updateUser(userId, userUpdateRequest);
+    public ApiResponse<User> updateUser(@RequestParam String userId, @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+        User updatedUser = userService.updateUser(userId, userUpdateRequest);
+        return new ApiResponse<>(updatedUser, HttpStatus.OK);
     }
 
+    // Get user details by ID
     @GetMapping("/userId")
-    public User getUserById(@RequestParam String userId) {
-        return userService.getUserById(userId);
+    public ApiResponse<User> getUserById(@RequestParam String userId) {
+        User user = userService.getUserById(userId);
+        return new ApiResponse<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    // Get all users
+    @GetMapping("/getAllUsers")
+    public ApiResponse<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ApiResponse<>(users, HttpStatus.OK);
     }
 }

@@ -1,10 +1,12 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Branch;
 import com.example.batchMaster.model.request.BranchCreateRequest;
 import com.example.batchMaster.model.updateRequest.BranchUpdateRequest;
 import com.example.batchMaster.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,39 +14,56 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/branch")
 @CrossOrigin("*")
-
 public class BranchController {
 
+    private final BranchService branchService;
+
     @Autowired
-    private BranchService branchService;
-
-    @PostMapping("/createBranch")
-    public Branch createBranch(@RequestBody BranchCreateRequest branchCreateRequest) {
-        return branchService.createBranch(branchCreateRequest);
+    public BranchController(BranchService branchService) {
+        this.branchService = branchService;
     }
 
-    @PutMapping("/updateBranchById")
-    public Branch updateBranch(@RequestBody BranchUpdateRequest branchUpdateRequest) {
-        return branchService.updateBranch(branchUpdateRequest);
+    // Create a new branch
+    @PostMapping("/create")
+    public ApiResponse<Branch> createBranch(@RequestBody BranchCreateRequest branchCreateRequest) {
+        Branch branch = branchService.createBranch(branchCreateRequest);
+        return new ApiResponse<>(branch, HttpStatus.CREATED);
     }
 
-    @GetMapping("/GetBranchByName")
-    public Branch getBranchByName(@RequestParam String branchName) {
-        return branchService.getBranchByName(branchName);
+    // Update an existing branch
+    @PutMapping("/update")
+    public ApiResponse<Branch> updateBranch(@RequestBody BranchUpdateRequest branchUpdateRequest) {
+        Branch branch = branchService.updateBranch(branchUpdateRequest);
+        return new ApiResponse<>(branch, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllBranch")
-    public List<Branch> getAllBranch() {
-        return branchService.getAllBranch();
+    // Get branch by name
+    @GetMapping("/getBranchByName")
+    public ApiResponse<Branch> getBranchByName(@RequestParam(name = "branchName") String branchName) {
+        Branch branch = branchService.getBranchByName(branchName);
+        return new ApiResponse<>(branch, HttpStatus.OK);
     }
 
-    @PutMapping("/updateBranchStatus")
-    public Branch updateBranchStatus(@RequestParam String branchId) {
-        return branchService.updateBranchStatus(branchId);
+    // Get all branches
+    @GetMapping("/getAllBranches")
+    public ApiResponse<List<Branch>> getAllBranches() {
+        List<Branch> branches = branchService.getAllBranch();
+        return new ApiResponse<>(branches, HttpStatus.OK);
     }
 
+    // Update branch status (active/inactive)
+    @PatchMapping("/updateBranchStatus")
+    public ApiResponse<Branch> updateBranchStatus(@RequestParam(name = "branchId") String branchId) {
+        Branch branch = branchService.updateBranchStatus(branchId);
+        return new ApiResponse<>(branch, HttpStatus.OK);
+    }
+
+    // Get Branch By BranchId
     @GetMapping("/getBranchById")
-    public Branch getBranchById(@RequestParam String branchId) {
-        return branchService.getBranchById(branchId);
+    public ApiResponse<Branch> getBranchById(@RequestParam(name = "branchId") String branchId) {
+        Branch branch = branchService.getBranchById(branchId);
+        return new ApiResponse<>(branch, HttpStatus.OK);
     }
+
+
 }

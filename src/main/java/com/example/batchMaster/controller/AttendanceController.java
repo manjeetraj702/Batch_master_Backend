@@ -1,55 +1,79 @@
 package com.example.batchMaster.controller;
 
+import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.model.request.AttendanceCreateRequest;
+import com.example.batchMaster.model.request.BatchAttendanceRequest;
 import com.example.batchMaster.service.AttendanceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/attendance")
+@RequestMapping("/api/attendance")
 public class AttendanceController {
-    @Autowired
-    private AttendanceService attendanceService;
 
-    @PostMapping("/createAttendance")
-    public Attendance createAttendance(@RequestBody AttendanceCreateRequest attendanceCreateRequest) {
-        return attendanceService.createAttendance(attendanceCreateRequest);
+    private final AttendanceService attendanceService;
+
+    public AttendanceController(AttendanceService attendanceService) {
+        this.attendanceService = attendanceService;
     }
 
-    @PutMapping("/updateAttendance")
-    public Attendance updateAttendance(@RequestParam String attendanceId) {
-        return attendanceService.updateAttendance(attendanceId);
+    // Create attendance for a student
+    @PostMapping("/create")
+    public ApiResponse<Attendance> createAttendance(@RequestBody AttendanceCreateRequest attendanceCreateRequest) {
+        Attendance attendance = attendanceService.createAttendance(attendanceCreateRequest);
+        return new ApiResponse<>(attendance, HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAttendanceByStudentId/studentId")
-    public List<Attendance> getAttendanceByStudentId(@RequestParam String studentId) {
-        return attendanceService.getAttendanceByStudentId(studentId);
+    // Update an attendance record
+    @PutMapping("/update")
+    public ApiResponse<Attendance> updateAttendance(@RequestParam String attendanceId) {
+        Attendance attendance = attendanceService.updateAttendance(attendanceId);
+        return new ApiResponse<>(attendance, HttpStatus.OK);
     }
 
-    @GetMapping("/getAttendanceByBatchId/batchId")
-    public List<Attendance> getAttendanceByBatchId(@RequestParam String batchId) {
-        return attendanceService.getAttendanceByBatchId(batchId);
+    // Get attendance records by student ID
+    @GetMapping("/getAttendanceByStudentId")
+    public ApiResponse<List<Attendance>> getAttendanceByStudentId(@RequestParam String studentId) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByStudentId(studentId);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
-    @GetMapping("/getAttendanceByBatchId&Date/{batchId}/date")
-    public List<Attendance> getAttendanceByBatchIdAndDate(@RequestParam String batchId, @RequestParam String date) {
-        return attendanceService.getAttendanceByBatchIdAndDate(batchId, date);
+    // Get attendance records by batch ID
+    @GetMapping("/getAttendanceByBatchId")
+    public ApiResponse<List<Attendance>> getAttendanceByBatchId(@RequestParam String batchId) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchId(batchId);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
-    @GetMapping("/getAttendanceByStudentId&Date/studentId/date")
-    public List<Attendance> getAttendanceByStudentIdAndDate(@RequestParam String studentId, @RequestParam String date) {
-        return attendanceService.getAttendanceByStudentIdAndDate(studentId, date);
+    // Get attendance by batch ID and date
+    @GetMapping("/getAttendanceByBatchIdAndDate")
+    public ApiResponse<List<Attendance>> getAttendanceByBatchIdAndDate(
+            @RequestParam String batchId, @RequestParam String date) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdAndDate(batchId, date);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
+    // Get attendance by student ID and date
+    @GetMapping("/getAttendanceByStudentIdAndDate")
+    public ApiResponse<List<Attendance>> getAttendanceByStudentIdAndDate(
+            @RequestParam String studentId, @RequestParam String date) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdAndDate(studentId, date);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Create attendance records for an entire batch
     @PostMapping("/createAttendanceForBatch")
-    List<Attendance> createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
-        return attendanceService.createAttendanceForBatch(absentStudentIds, presentStudentIds, batchId, date);
-
+    public ApiResponse<List<Attendance>> createAttendanceForBatch(@RequestBody BatchAttendanceRequest request) {
+        List<Attendance> attendanceList = attendanceService.createAttendanceForBatch(
+                request.getAbsentStudentIds(),
+                request.getPresentStudentIds(),
+                request.getBatchId(),
+                request.getDate()
+        );
+        return new ApiResponse<>(attendanceList, HttpStatus.CREATED);
     }
-
-
 }

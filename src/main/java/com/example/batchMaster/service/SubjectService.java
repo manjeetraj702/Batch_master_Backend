@@ -1,30 +1,17 @@
 package com.example.batchMaster.service;
 
-
 import com.example.batchMaster.model.Subject;
-import com.example.batchMaster.model.request.SubjectCreateRequest;
-import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
 
 import java.util.List;
 
 public interface SubjectService {
+    Subject createNewSubject(String subjectName, List<String> listOfTopics);
 
-    Subject createCourse(SubjectCreateRequest subjectCreateRequest);
+    Subject updateSubject(String subjectId, String subjectNewName, List<String> listofTopics);
 
-    Subject updateSubject(SubjectUpdateRequest subjectUpdateRequest);
+    Subject getSubjectById(String subjectId);
 
-    Subject getSubjectById(String SubjectId);
+    Boolean deleteSubject(String subjectId);
 
-    Subject changeSubjectStatus(String SubjectId);
-
-    List<Subject> getAllSubject();
-
-    List<Subject> getSubjectByBatchId(String batchId);
-
-
-    Subject getBySubjectNameAndBatchId(String subjectName, String batchId);
-
-    List<Subject> getCompleteSubject(String batchId);
-
-    List<Subject> getIncompleteSubject(String batchId);
+    List<Subject> getAllSubjects();
 }

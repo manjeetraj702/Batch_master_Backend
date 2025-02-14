@@ -5,11 +5,12 @@ import com.example.batchMaster.model.request.SessionCreateRequest;
 import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
 import com.example.batchMaster.repository.SessionRepository;
 import com.example.batchMaster.service.AttendanceService;
-import com.example.batchMaster.service.SessionService;
 import com.example.batchMaster.service.StudentService;
+import com.example.batchMaster.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,7 @@ public class SessionServiceImpl implements SessionService {
         session.setBranchId(sessionCreateRequest.getBranchId());
         session.setDay(sessionCreateRequest.getDay());
         session.setWeek(sessionCreateRequest.getWeek());
+        session.setCreatedAt(Instant.now());
 
 
         return sessionRepository.save(session);

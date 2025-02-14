@@ -21,13 +21,16 @@ public interface SessionService {
 
     Session getLastSessionByBatchId(String batchId);
 
+
     List<Session> getAllSessionsOfAllBatchesByBranchId(String branch);
 
     List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String subject, String topic);
 
     List<Session> getAllLastSessionsOfAllBatchesByBranchId(String branch);
 
+
     List<Session> getSessionsByDate(String date);
+
 
 
 }
