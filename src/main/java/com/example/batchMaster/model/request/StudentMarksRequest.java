@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 public class StudentMarksRequest {
     private String studentId;
-    private String studentMarks;
+    private float studentMarks;
 }

@@ -41,7 +41,7 @@ public class ResultController {
     }
 
     @GetMapping("/byBatchSubjectTopic")
-    public Result getResultByBatchSubjectTopic(@RequestParam String batchId, @RequestParam String subjectId, @RequestParam String topic){
+    public Result getResultByBatchSubjectTopic(@RequestParam String batchId, @RequestParam String subjectId, @RequestParam String topic) {
         return resultService.getResultByBatchSubjectTopic(batchId, subjectId, topic);
     }
 

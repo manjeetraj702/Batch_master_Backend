@@ -24,13 +24,12 @@ public interface SessionService {
 
     List<Session> getAllSessionsOfAllBatchesByBranchId(String branch);
 
-    List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String batch);
+    List<Session> getAllSessionsOfAllBatchesBySubjectAndTopic(String subject, String topic);
 
     List<Session> getAllLastSessionsOfAllBatchesByBranchId(String branch);
 
 
-
-
+    List<Session> getSessionsByDate(String date);
 
 
 

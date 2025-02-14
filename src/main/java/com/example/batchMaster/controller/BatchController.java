@@ -25,6 +25,7 @@ public class BatchController {
     public Batch updateBatch(@RequestParam String batchId, @RequestBody Batch updatedBatch) {
         return batchService.updateBatch(batchId, updatedBatch);
     }
+
     @PutMapping("/updateBatchStatus")
     public Batch updateBatchStatus(@RequestParam String batchId) {
         return batchService.updateBatchStatus(batchId);
@@ -40,14 +41,14 @@ public class BatchController {
         return batchService.getBatchByName(batchName);
     }
 
+
     @GetMapping("/getAllBatchesByBranchId")
     public List<Batch> getBatchesByBranchId(@RequestParam String branchId) {
         return batchService.getAllBatchesByBranchId(branchId);
     }
 
     @GetMapping("/getAllBatches")
-    public List<Batch> getAllBatches()
-    {
+    public List<Batch> getAllBatches() {
         return batchService.getAllBatches();
     }
 

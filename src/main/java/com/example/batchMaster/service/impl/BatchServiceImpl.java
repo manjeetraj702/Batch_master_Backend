@@ -17,6 +17,9 @@ public class BatchServiceImpl implements BatchService {
     @Autowired
     private BatchRepository batchRepository;
 
+    @Autowired
+    private BranchService branchService;
+
     // BATCH
     @Override
     public Batch createBatch(BatchCreateRequest batchCreateRequest) {
@@ -24,13 +27,14 @@ public class BatchServiceImpl implements BatchService {
         if (batchRepository.findByBatchName(batchCreateRequest.getBatchName()).isPresent()) {
             throw  new RuntimeException("Batch with name '" + batchCreateRequest.getBatchName() + "' already exists");
         }
-
+//        if(branchService.)
         // Create a new Batch instance
         Batch newBatch = new Batch();
         newBatch.setBranchId(batchCreateRequest.getBranchId());
         newBatch.setStartingDate(batchCreateRequest.getStartingDate());
         newBatch.setBatchTime(batchCreateRequest.getBatchTime());
-        // Save the batch to the repository
+        newBatch.setBatchName(batchCreateRequest.getBatchName());
+
        return batchRepository.save(newBatch);
 
     }

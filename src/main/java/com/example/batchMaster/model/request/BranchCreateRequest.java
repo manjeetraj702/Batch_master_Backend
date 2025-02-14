@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -16,8 +14,7 @@ public class BranchCreateRequest {
     private String branchName;
     private String startingDate;
     private Address address;
-    private boolean branchStatus=true;
-    private List<String> batchIdList;
+    private boolean branchStatus = true;
 
 
 }

@@ -73,5 +73,10 @@ public class BranchServiceImpl implements BranchService {
         return branchRepository.save(branch);
     }
 
+    @Override
+    public Branch getBranchById(String branchId) {
+        return branchRepository.findById(branchId).orElseThrow(() -> new BranchNotFoundException("Branch with ID '" + branchId + "' not found"));
+    }
+
 
 }

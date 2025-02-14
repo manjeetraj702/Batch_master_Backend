@@ -39,6 +39,6 @@ public class MarksController {
     // Get Marks by Topic ID and Batch ID
     @GetMapping("/topic/topicId/batch/batchId")
     public List<Marks> getMarksByTopicIdAndBatchId(@RequestParam String subject, @RequestParam String topic, @RequestParam String batch) {
-        return marksService.getMarksBySubjectTopicAndBatchId(subject, topic,batch);
+        return marksService.getMarksBySubjectTopicAndBatchId(subject, topic, batch);
     }
 }
