@@ -17,73 +17,73 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    private StudentService studentService;
+    private StudentService batchStudentService;
 
     // Create a new student
     @PostMapping("/createStudent")
     public Student createStudent(@RequestBody StudentCreateRequest studentCreateRequest) {
-        return studentService.createStudent(studentCreateRequest);
+        return batchStudentService.createStudent(studentCreateRequest);
     }
 
     // Get student details by ID
     @GetMapping("/{studentId}")
     public Student getStudentDetails(@PathVariable String studentId) {
-        return studentService.getStudentDetails(studentId);
+        return batchStudentService.getStudentDetails(studentId);
     }
 
     // Update student details
     @PutMapping("/updateStudent")
     public Student updateStudent(@RequestBody StudentUpdateRequest studentUpdateRequest) {
-        return studentService.updateStudent(studentUpdateRequest);
+        return batchStudentService.updateStudent(studentUpdateRequest);
     }
 
     // Change student status (active/inactive)
     @PatchMapping("/studentId/status")
     public Student changeStudentStatus(@PathVariable String studentId) {
-        return studentService.changeStudentStatus(studentId);
+        return batchStudentService.changeStudentStatus(studentId);
     }
 
 
     // Get list of marks for a student
     @GetMapping("/studentId/marks")
     public List<Marks> getListOfMarks(@PathVariable String studentId) {
-        return studentService.getListOfMarks(studentId);
+        return batchStudentService.getListOfMarks(studentId);
     }
 
     @PatchMapping("/studentId/batchId")
     Student updateStudentBatchId(@PathVariable String studentId, @RequestParam String batchId) {
-        return studentService.updateStudentBatchId(studentId, batchId);
+        return batchStudentService.updateStudentBatchId(studentId, batchId);
     }
 
     @PatchMapping("/studentId/remove")
     Student removeStudentFromBatch(@RequestParam String studentId) {
-        return studentService.removeStudentFromBatch(studentId);
+        return batchStudentService.removeStudentFromBatch(studentId);
     }
 
     @GetMapping("/batchId/students")
     List<Student> getStudentsByBatchId(@RequestParam String batchId) {
-        return studentService.getStudentsByBatchId(batchId);
+        return batchStudentService.getStudentsByBatchId(batchId);
     }
 
 
     @GetMapping("/branchId/students")
     List<Student> getStudentsByBranchId(@RequestParam String branchId) {
-        return studentService.getStudentsByBranchId(branchId);
+        return batchStudentService.getStudentsByBranchId(branchId);
     }
 
     @GetMapping("/batchId/onlineStudents")
     List<Student> getOnlineStudents(@RequestParam String batchId) {
-        return studentService.getOnlineStudents(batchId);
+        return batchStudentService.getOnlineStudents(batchId);
     }
 
     @GetMapping("/batchId/offlineStudents")
     List<Student> getOfflineStudents(@RequestParam String batchId) {
-        return studentService.getOfflineStudents(batchId);
+        return batchStudentService.getOfflineStudents(batchId);
     }
     @GetMapping("/getAllStudents")
     List<Student> getAllStudents()
     {
-        return studentService.getAllStudents();
+        return batchStudentService.getAllStudents();
     }
     
 }

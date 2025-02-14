@@ -40,8 +40,6 @@ public class BatchController {
         return batchService.getBatchByName(batchName);
     }
 
-
-
     @GetMapping("/getAllBatchesByBranchId")
     public List<Batch> getBatchesByBranchId(@RequestParam String branchId) {
         return batchService.getAllBatchesByBranchId(branchId);
