@@ -10,6 +10,7 @@ import com.example.batchMaster.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,7 @@ public class SessionServiceImpl implements SessionService {
         session.setBranchId(sessionCreateRequest.getBranchId());
         session.setDay(sessionCreateRequest.getDay());
         session.setWeek(sessionCreateRequest.getWeek());
+        session.setCreatedAt(Instant.now());
 
 
         return sessionRepository.save(session);
