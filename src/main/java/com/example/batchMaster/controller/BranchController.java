@@ -57,11 +57,13 @@ public class BranchController {
         Branch branch = branchService.updateBranchStatus(branchId);
         return new ApiResponse<>(branch, HttpStatus.OK);
     }
+
     // Get Branch By BranchId
     @GetMapping("/getBranchById")
     public ApiResponse<Branch> getBranchById(@RequestParam(name = "branchId") String branchId) {
         Branch branch = branchService.getBranchById(branchId);
         return new ApiResponse<>(branch, HttpStatus.OK);
     }
+
 
 }

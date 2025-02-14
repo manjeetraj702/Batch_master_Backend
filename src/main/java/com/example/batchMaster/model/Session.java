@@ -31,6 +31,6 @@ public class Session {
     private int absentStudents;
     private int week;
     @CreatedDate
-    @Indexed // Index for faster queries
+    @Indexed
     private Instant createdAt;
 }

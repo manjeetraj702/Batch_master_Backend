@@ -1,4 +1,3 @@
-
 package com.example.batchMaster.controller;
 
 import com.example.batchMaster.base.ApiResponse;
@@ -19,7 +18,9 @@ public class ExceptionController {
         // Log the exception for debugging purposes
         System.err.println("Unhandled exception occurred: " + e.getMessage());
         ApiResponse<Object> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
         response.setErrorMessage(e.getMessage());
+
         return response;
     }
 
