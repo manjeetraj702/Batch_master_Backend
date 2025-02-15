@@ -27,6 +27,12 @@ public class UserController {
         return new ApiResponse<>(user, HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
+    public ApiResponse<User> login(String email, String password){
+        User user = userService.login(email,password);
+        return new ApiResponse<>(user, HttpStatus.OK);
+    }
+
     // Update an existing user
     @PutMapping("/update/userId")
     public ApiResponse<User> updateUser(@RequestParam String userId, @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
@@ -47,4 +53,5 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return new ApiResponse<>(users, HttpStatus.OK);
     }
+
 }

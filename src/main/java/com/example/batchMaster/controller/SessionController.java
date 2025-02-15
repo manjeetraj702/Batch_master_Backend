@@ -96,4 +96,14 @@ public class SessionController {
         List<Session> sessions = sessionService.getAllSessionsOfAllBatchesBySubjectAndTopic(subject, topic);
         return new ApiResponse<>(sessions, HttpStatus.OK);
     }
+
+    // Get all sessions by batch and subject
+    @GetMapping("/getAllSessionsBySubjectAndTopic")
+    public ApiResponse<List<Session>> getAllSessionsOfAllBatchesByBatchIdAndSubject(
+            @RequestParam String batchId, @RequestParam String subject) {
+        List<Session> sessions = sessionService.getAllSessionsByBatchIdAndSubject(batchId, subject);
+        return new ApiResponse<>(sessions, HttpStatus.OK);
+    }
+
+
 }

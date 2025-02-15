@@ -31,4 +31,6 @@ public interface SessionRepository extends MongoRepository<Session, String> {
     List<Session> findAllByDate(String date);
 
     List<Session> findAllBySubjectAndTopic(String subject, String topic);
+
+    List<Session> findAllByBatchIdAndSubject(String batchId, String subject);
 }

@@ -126,6 +126,10 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.findAllByDate(date);
     }
 
+    @Override
+    public List<Session> getAllSessionsByBatchIdAndSubject(String batchId, String subject) {
+        return sessionRepository.findAllByBatchIdAndSubject(batchId,subject);
+    }
 
 
 }
