@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/results")
+@RequestMapping("/api/v1/results")
 @CrossOrigin("*")
 public class ResultController {
 

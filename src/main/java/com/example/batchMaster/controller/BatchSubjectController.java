@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/batchSubject")
+@RequestMapping("/api/v1/batchSubject")
 public class BatchSubjectController {
 
    private final BatchSubjectService batchSubjectService;

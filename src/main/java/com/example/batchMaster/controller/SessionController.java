@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sessions")
+@RequestMapping("/api/v1/sessions")
 @CrossOrigin(origins = "*")
 public class SessionController {
 

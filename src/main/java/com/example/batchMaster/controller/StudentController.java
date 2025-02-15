@@ -29,8 +29,8 @@ public class StudentController {
     }
 
     // Get student details by ID
-    @GetMapping("/{studentId}")
-    public ApiResponse<Student> getStudentDetails(@PathVariable String studentId) {
+    @GetMapping("/getStudentDetailsBystudentId")
+    public ApiResponse<Student> getStudentDetails(@RequestParam String studentId) {
         Student student = studentService.getStudentDetails(studentId);
         return new ApiResponse<>(student, HttpStatus.OK);
     }
@@ -51,13 +51,13 @@ public class StudentController {
 
     // Get list of marks for a student
     @GetMapping("/getListOfMarks")
-    public ApiResponse<List<Marks>> getListOfMarks(@PathVariable String studentId) {
+    public ApiResponse<List<Marks>> getListOfMarks(@RequestParam String studentId) {
         List<Marks> marks = studentService.getListOfMarks(studentId);
         return new ApiResponse<>(marks, HttpStatus.OK);
     }
 
     // Assign a student to a batch
-    @PatchMapping("/getListOfMarks")
+    @PatchMapping("/assignStudentToBatch")
     public ApiResponse<Student> updateStudentBatchId(@RequestParam String studentId, @RequestParam String batchId) {
         Student student = studentService.updateStudentBatchId(studentId, batchId);
         return new ApiResponse<>(student, HttpStatus.OK);
@@ -92,7 +92,7 @@ public class StudentController {
     }
 
     // Get offline students by batch ID
-    @GetMapping("/bgetOfflineStudentsByBatchId")
+    @GetMapping("/getOfflineStudentsByBatchId")
     public ApiResponse<List<Student>> getOfflineStudents(@RequestParam String batchId) {
         List<Student> students = studentService.getOfflineStudents(batchId);
         return new ApiResponse<>(students, HttpStatus.OK);

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/batches")
+@RequestMapping("/api/v1/batches")
 @CrossOrigin("*")
 public class BatchController {
 
