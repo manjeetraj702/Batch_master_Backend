@@ -69,4 +69,18 @@ public class SubjectServiceImpl implements SubjectService {
     public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
     }
+
+    @Override
+    public Subject addTopicsInSubject(String subjectId, String topic) {
+        Subject subject = getSubjectById(subjectId);
+        subject.getListOfTopics().add(topic);
+        return subjectRepository.save(subject);
+    }
+
+    @Override
+    public Subject removeTopicsFromSubject(String subjectId, String topic) {
+        Subject subject = getSubjectById(subjectId);
+        subject.getListOfTopics().remove(topic);
+        return subjectRepository.save(subject);
+    }
 }

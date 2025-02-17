@@ -29,7 +29,7 @@ public class ResultServiceImpl implements ResultService {
         newResult.setSubjectId(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
         newResult.setStudentAndMarksList(resultCreateRequest.getStudentAndMarksList());
-        int topperMarks = 0;
+        float topperMarks = 0;
         List<String> topperList = new ArrayList<>();
         for (StudentMarksRequest studentMarksRequest : resultCreateRequest.getStudentAndMarksList()) {
             MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
@@ -42,7 +42,12 @@ public class ResultServiceImpl implements ResultService {
             marksServiceImpl.createMarks(marksCreateRequest);
 
             if (studentMarksRequest.getStudentMarks() == topperMarks) {
-//                topperList.add(studentMarksRequest)
+                topperList.add(studentMarksRequest.getStudentName());
+            } else if (topperMarks<studentMarksRequest.getStudentMarks()) {
+                topperList = new ArrayList<>();
+                topperList.add(studentMarksRequest.getStudentName());
+                topperMarks = studentMarksRequest.getStudentMarks();
+
             }
             newResult.setTopperList(topperList);
         }

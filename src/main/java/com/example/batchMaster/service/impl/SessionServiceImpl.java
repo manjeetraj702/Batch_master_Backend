@@ -37,6 +37,7 @@ public class SessionServiceImpl implements SessionService {
         session.setSubject(sessionCreateRequest.getSubject());
         session.setTopic(sessionCreateRequest.getTopic());
         session.setMentor(sessionCreateRequest.getMentor());
+        session.setType(sessionCreateRequest.getType());
         session.setSessionLink(sessionCreateRequest.getSessionLink());
         session.setDate(sessionCreateRequest.getDate());
         session.setBatchId(sessionCreateRequest.getBatchId());
@@ -60,6 +61,7 @@ public class SessionServiceImpl implements SessionService {
             existingSession.setSubject(updatedSession.getSubject());
             existingSession.setTopic(updatedSession.getTopic());
             existingSession.setMentor(updatedSession.getMentor());
+            existingSession.setType(updatedSession.getType());
             existingSession.setSessionLink(updatedSession.getSessionLink());
             existingSession.setDate(updatedSession.getDate());
             existingSession.setBatchId(updatedSession.getBatchId());
@@ -128,7 +130,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public List<Session> getAllSessionsByBatchIdAndSubject(String batchId, String subject) {
-        return sessionRepository.findAllByBatchIdAndSubject(batchId,subject);
+        return sessionRepository.findAllByBatchIdAndSubject(batchId, subject);
     }
 
 

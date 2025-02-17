@@ -14,4 +14,8 @@ public interface SubjectService {
     Boolean deleteSubject(String subjectId);
 
     List<Subject> getAllSubjects();
+
+    Subject addTopicsInSubject(String subjectId,String topic);
+    Subject removeTopicsFromSubject(String subjectId,String topic);
+
 }
