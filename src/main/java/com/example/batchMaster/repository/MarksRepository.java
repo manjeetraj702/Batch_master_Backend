@@ -13,4 +13,8 @@ public interface MarksRepository extends MongoRepository<Marks, String> {
 
 
     List<Marks> findAllBySubjectAndTopicAndBatchId(String subject, String topic, String batchId);
+
+    void deleteAllByResultId(String resultId);
+
+    List<Marks> findAllByResultId(String resultId);
 }

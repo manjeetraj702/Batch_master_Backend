@@ -16,6 +16,7 @@ public class Marks {
     private String marksId;
     private String batchId;
     private String studentId;
+    private String resultId;
     private String subject;
     private String topic;
     private float totalMarks;

@@ -26,5 +26,6 @@ public class ResultUpdateRequest {
 
     private String topic;
 
+    private float totalMarks;
     private List<StudentMarksRequest> studentAndMarksList;
 }

@@ -10,7 +10,6 @@ import com.example.batchMaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +28,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setStudentId(attendanceCreateRequest.getStudentId());
         attendance.setStatus(attendanceCreateRequest.isStatus());
         attendance.setMode(attendanceCreateRequest.isMode());
+        attendance.setSessionId(attendanceCreateRequest.getSessionId());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
         attendance.setDate(attendanceCreateRequest.getDate());
         return attendanceRepository.save(attendance);
@@ -76,32 +76,14 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
-        List<Attendance> attendances = new ArrayList<>();
-        List<String> presents = new ArrayList<>(presentStudentIds);
-        // Mark present students
-        for (String studentId : presents) {
-
-            Attendance attendance = new Attendance();
-            attendance.setStudentId(studentId);
-            attendance.setStatus(true);
-            attendance.setBatchId(batchId);
-            attendance.setDate(date);
-            attendances.add(attendance);
-        }
-        List<String> absents = new ArrayList<>(absentStudentIds);
-        // Mark absent students
-        for (String studentId : absents) {
-            Attendance attendance = new Attendance();
-            attendance.setStudentId(studentId);
-            attendance.setStatus(false);
-            attendance.setBatchId(batchId);
-            attendance.setDate(date);
-            attendances.add(attendance);
-        }
-
-        return attendanceRepository.saveAll(attendances);
-
+    public List<Attendance> getAttendanceBySessionId(String sessionId) {
+        return attendanceRepository.findAllBySessionId(sessionId);
     }
+
+    @Override
+    public void deleteAttendanceBySessionId(String sessionId) {
+        attendanceRepository.deleteAllBySessionId(sessionId);
+    }
+
 
 }

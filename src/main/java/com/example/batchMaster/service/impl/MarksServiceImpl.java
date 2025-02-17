@@ -23,6 +23,7 @@ public class MarksServiceImpl implements MarksService {
         marks.setStudentId(marksCreateRequest.getStudentId());
         marks.setSubject(marksCreateRequest.getSubject());
         marks.setTopic(marksCreateRequest.getTopic());
+        marks.setResultId(marks.getResultId());
         marks.setTotalMarks(marksCreateRequest.getTotalMarks());
         marks.setMarksObtained(marksCreateRequest.getMarksObtained());
         return marksRepository.save(marks);
@@ -51,7 +52,18 @@ public class MarksServiceImpl implements MarksService {
 
     @Override
     public List<Marks> getMarksBySubjectTopicAndBatchId(String subject, String topic, String batchId) {
-        return marksRepository.findAllBySubjectAndTopicAndBatchId(subject,topic,batchId);
+        return marksRepository.findAllBySubjectAndTopicAndBatchId(subject, topic, batchId);
+    }
+
+    @Override
+    public void deleteMarksByResultId(String resultId) {
+        marksRepository.deleteAllByResultId(resultId);
+    }
+
+    @Override
+    public List<Marks> getMarksByResultId(String resultId) {
+
+        return marksRepository.findAllByResultId(resultId);
     }
 
 

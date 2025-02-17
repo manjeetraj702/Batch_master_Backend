@@ -16,4 +16,8 @@ public interface AttendanceRepository extends MongoRepository<Attendance, String
 
     List<Attendance> findByStudentIdAndDate(String studentId, String date);
 
+
+    void deleteAllBySessionId(String sessionId);
+
+    List<Attendance> findAllBySessionId(String sessionId);
 }

@@ -6,7 +6,6 @@ import com.example.batchMaster.model.request.SessionCreateRequest;
 import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
 import com.example.batchMaster.repository.SessionRepository;
 import com.example.batchMaster.service.AttendanceService;
-import com.example.batchMaster.service.StudentService;
 import com.example.batchMaster.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,7 @@ public class SessionServiceImpl implements SessionService {
     private SessionRepository sessionRepository;
     @Autowired
     private AttendanceService attendanceService;
-    @Autowired
-    private StudentService studentService;
+
 
     @Autowired
     private AttendanceServiceImpl attendanceServiceImpl;
@@ -54,14 +52,14 @@ public class SessionServiceImpl implements SessionService {
         session = sessionRepository.save(session);
 
         // Process attendance
-        processAttendance(sessionCreateRequest.getOnlineStudentsIds(), sessionCreateRequest, true, false);
-        processAttendance(sessionCreateRequest.getOfflineStudentsIds(), sessionCreateRequest, true, true);
-        processAttendance(sessionCreateRequest.getAbsentStudentsIds(), sessionCreateRequest, false, null);
+        processAttendance(sessionCreateRequest.getOnlineStudentsIds(), sessionCreateRequest, true, false, session.getSessionId());
+        processAttendance(sessionCreateRequest.getOfflineStudentsIds(), sessionCreateRequest, true, true, session.getSessionId());
+        processAttendance(sessionCreateRequest.getAbsentStudentsIds(), sessionCreateRequest, false, null, session.getSessionId());
 
         return session;
     }
 
-    private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, Boolean mode) {
+    private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, Boolean mode, String sessionId) {
         for (String studentId : studentIds) {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
@@ -69,6 +67,7 @@ public class SessionServiceImpl implements SessionService {
             attendanceRequest.setDate(request.getDate());
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
+            attendanceRequest.setSessionId(sessionId);
 
             // Save attendance
             attendanceService.createAttendance(attendanceRequest);
@@ -79,22 +78,50 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Session updateSession(SessionUpdateRequest updatedSession) {
         Optional<Session> existingSessionOpt = sessionRepository.findById(updatedSession.getSessionId());
+
         if (existingSessionOpt.isPresent()) {
-            Session existingSession = existingSessionOpt.get();
-            existingSession.setSubject(updatedSession.getSubject());
-            existingSession.setTopic(updatedSession.getTopic());
-            existingSession.setMentor(updatedSession.getMentor());
-            existingSession.setType(updatedSession.getType());
-            existingSession.setSessionLink(updatedSession.getSessionLink());
-            existingSession.setDate(updatedSession.getDate());
-            existingSession.setBatchId(updatedSession.getBatchId());
-            existingSession.setOnlineStudentsIds(updatedSession.getOnlineStudentsIds());
-            existingSession.setOfflineStudentsIds(updatedSession.getOfflineStudentsIds());
-            existingSession.setAbsentStudentsIds(updatedSession.getAbsentStudentsIds());
-            existingSession.setBranchId(updatedSession.getBranchId());
-            return sessionRepository.save(existingSession);
+            Session session = existingSessionOpt.get();
+            session.setSubject(updatedSession.getSubject());
+            session.setTopic(updatedSession.getTopic());
+            session.setMentor(updatedSession.getMentor());
+            session.setType(updatedSession.getType());
+            session.setSessionLink(updatedSession.getSessionLink());
+            session.setDate(updatedSession.getDate());
+            session.setBatchId(updatedSession.getBatchId());
+            session.setOnlineStudentsIds(updatedSession.getOnlineStudentsIds());
+            session.setOfflineStudentsIds(updatedSession.getOfflineStudentsIds());
+            session.setAbsentStudentsIds(updatedSession.getAbsentStudentsIds());
+            session.setBranchId(updatedSession.getBranchId());
+            session.setDay(updatedSession.getDay());
+            session.setWeek(updatedSession.getWeek());
+            session.setCreatedAt(Instant.now());
+
+            // Save session first
+            session = sessionRepository.save(session);
+
+            // Process attendance
+            UpdateAttendance(updatedSession.getOnlineStudentsIds(), updatedSession, true, false, session.getSessionId());
+            UpdateAttendance(updatedSession.getOfflineStudentsIds(), updatedSession, true, true, session.getSessionId());
+            UpdateAttendance(updatedSession.getAbsentStudentsIds(), updatedSession, false, null, session.getSessionId());
+
+            return session;
         }
         throw new RuntimeException("Session not found with ID: " + updatedSession.getBatchId());
+    }
+
+    private void UpdateAttendance(List<String> studentIds, SessionUpdateRequest request, boolean status, Boolean mode, String sessionId) {
+        for (String studentId : studentIds) {
+            AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
+            attendanceRequest.setStatus(status);
+            attendanceRequest.setMode(mode); // Can be null for absent students
+            attendanceRequest.setDate(request.getDate());
+            attendanceRequest.setStudentId(studentId);
+            attendanceRequest.setBatchId(request.getBatchId());
+            attendanceRequest.setSessionId(sessionId);
+
+            // Save attendance
+            attendanceService.createAttendance(attendanceRequest);
+        }
     }
 
     @Override

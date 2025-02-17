@@ -14,6 +14,7 @@ public class MarksUpdateRequest {
     private String batchId;
     private String studentId;
     private String subject;
+    private String resultId;
     private String topic;
     private float totalMarks;
     private float marksObtained;

@@ -16,6 +16,7 @@ public class AttendanceUpdateRequest {
     private String batchId;
     private String date;
     private String studentId;
+    private String sessionId;
     private boolean mode;
     private boolean status;
 }

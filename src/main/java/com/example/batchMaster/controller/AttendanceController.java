@@ -3,7 +3,6 @@ package com.example.batchMaster.controller;
 import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.model.request.AttendanceCreateRequest;
-import com.example.batchMaster.model.request.BatchAttendanceRequest;
 import com.example.batchMaster.model.updateRequest.AttendanceUpdateRequest;
 import com.example.batchMaster.service.AttendanceService;
 import org.springframework.http.HttpStatus;
@@ -66,15 +65,10 @@ public class AttendanceController {
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
-    // Create attendance records for an entire batch
-    @PostMapping("/createAttendanceForBatch")
-    public ApiResponse<List<Attendance>> createAttendanceForBatch(@RequestBody BatchAttendanceRequest request) {
-        List<Attendance> attendanceList = attendanceService.createAttendanceForBatch(
-                request.getAbsentStudentIds(),
-                request.getPresentStudentIds(),
-                request.getBatchId(),
-                request.getDate()
-        );
-        return new ApiResponse<>(attendanceList, HttpStatus.CREATED);
+    //Get attendance by session Id
+    @GetMapping("/getAttendanceBySessionId")
+    public ApiResponse<List<Attendance>> getAttendanceBySessionId(@RequestParam String sessionId) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceBySessionId(sessionId);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 }

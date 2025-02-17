@@ -22,6 +22,7 @@ public interface AttendanceService {
 
     List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date);
 
-    List<Attendance> createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date);
+    void deleteAttendanceBySessionId(String sessionId);
 
+    List<Attendance> getAttendanceBySessionId(String sessionId);
 }

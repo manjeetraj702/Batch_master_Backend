@@ -53,4 +53,11 @@ public class MarksController {
         List<Marks> marksList = marksService.getMarksBySubjectTopicAndBatchId(subjectId, topicId, batchId);
         return new ApiResponse<>(marksList, HttpStatus.OK);
     }
+
+    @GetMapping("/getMarksByResultId")
+    public ApiResponse<List<Marks>> getMarksByResultId(@RequestParam(name = "resultId") String resultId) {
+        List<Marks> marksList = marksService.getMarksByResultId(resultId);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
 }

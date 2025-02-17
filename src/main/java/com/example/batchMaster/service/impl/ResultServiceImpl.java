@@ -29,6 +29,7 @@ public class ResultServiceImpl implements ResultService {
         newResult.setSubjectId(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
         newResult.setStudentAndMarksList(resultCreateRequest.getStudentAndMarksList());
+        Result result = resultRepository.save(newResult);
         float topperMarks = 0;
         List<String> topperList = new ArrayList<>();
         for (StudentMarksRequest studentMarksRequest : resultCreateRequest.getStudentAndMarksList()) {
@@ -43,25 +44,50 @@ public class ResultServiceImpl implements ResultService {
 
             if (studentMarksRequest.getStudentMarks() == topperMarks) {
                 topperList.add(studentMarksRequest.getStudentName());
-            } else if (topperMarks<studentMarksRequest.getStudentMarks()) {
+            } else if (topperMarks < studentMarksRequest.getStudentMarks()) {
                 topperList = new ArrayList<>();
                 topperList.add(studentMarksRequest.getStudentName());
                 topperMarks = studentMarksRequest.getStudentMarks();
 
             }
-            newResult.setTopperList(topperList);
+            result.setTopperList(topperList);
         }
-        return resultRepository.save(newResult);
+        return resultRepository.save(result);
     }
 
     @Override
     public Result updateResult(ResultUpdateRequest resultUpdateRequest) {
         Result existingResult = getResultsByResultId(resultUpdateRequest.getResultId());
-//        existingResult.setListOfTopperIds(resultUpdateRequest.getListOfTopperIds());
-        existingResult.setDate(resultUpdateRequest.getDate());
-        existingResult.setSubjectId(resultUpdateRequest.getSubjectId());
-        existingResult.setTopic(resultUpdateRequest.getTopic());
-        existingResult.setStudentAndMarksList(resultUpdateRequest.getStudentAndMarksList());
+
+        Result newResult = existingResult;
+        newResult.setBatchId(resultUpdateRequest.getBatchId());
+        newResult.setDate(resultUpdateRequest.getDate());
+        newResult.setSubjectId(resultUpdateRequest.getSubjectId());
+        newResult.setTopic(resultUpdateRequest.getTopic());
+        newResult.setStudentAndMarksList(resultUpdateRequest.getStudentAndMarksList());
+        marksServiceImpl.deleteMarksByResultId(newResult.getResultId());
+        float topperMarks = 0;
+        List<String> topperList = new ArrayList<>();
+        for (StudentMarksRequest studentMarksRequest : resultUpdateRequest.getStudentAndMarksList()) {
+            MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
+            marksCreateRequest.setBatchId(resultUpdateRequest.getBatchId());
+            marksCreateRequest.setSubject(resultUpdateRequest.getSubjectId());
+            marksCreateRequest.setTopic(resultUpdateRequest.getTopic());
+            marksCreateRequest.setStudentId(studentMarksRequest.getStudentId());
+            marksCreateRequest.setMarksObtained(studentMarksRequest.getStudentMarks());
+            marksCreateRequest.setTotalMarks(resultUpdateRequest.getTotalMarks());
+            marksServiceImpl.createMarks(marksCreateRequest);
+
+            if (studentMarksRequest.getStudentMarks() == topperMarks) {
+                topperList.add(studentMarksRequest.getStudentName());
+            } else if (topperMarks < studentMarksRequest.getStudentMarks()) {
+                topperList = new ArrayList<>();
+                topperList.add(studentMarksRequest.getStudentName());
+                topperMarks = studentMarksRequest.getStudentMarks();
+
+            }
+            existingResult.setTopperList(topperList);
+        }
         return resultRepository.save(existingResult);
     }
 

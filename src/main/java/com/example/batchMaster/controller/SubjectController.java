@@ -51,4 +51,19 @@ public class SubjectController {
         List<Subject> subjects = subjectService.getAllSubjects();
         return new ApiResponse<>(subjects, HttpStatus.OK);
     }
+
+
+    // add topic in subject
+    @PutMapping("/addTopicBySubjectId")
+    public ApiResponse<Subject> addTopicBySubjectId(String subjectId, String topic) {
+        Subject subject = subjectService.addTopicsInSubject(subjectId, topic);
+        return new ApiResponse<>(subject, HttpStatus.OK);
+    }
+
+    // remove topic from subject
+    @PutMapping("/removeTopicsFromSubject")
+    public ApiResponse<Subject> removeTopicsFromSubject(String subjectId, String topic) {
+        Subject subject = subjectService.removeTopicsFromSubject(subjectId, topic);
+        return new ApiResponse<>(subject, HttpStatus.OK);
+    }
 }

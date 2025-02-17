@@ -24,7 +24,6 @@ public class Result {
     private String subjectId;
     private String topic;
     private float totalMarks;
-
     private List<StudentMarksRequest> studentAndMarksList;
     private List<String> topperList;
 }
