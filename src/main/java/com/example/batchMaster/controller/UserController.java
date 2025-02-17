@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ApiResponse<User> login(String email, String password){
-        User user = userService.login(email,password);
+    public ApiResponse<User> login(String email, String password) {
+        User user = userService.login(email, password);
         return new ApiResponse<>(user, HttpStatus.OK);
     }
 
@@ -40,7 +40,7 @@ public class UserController {
         return new ApiResponse<>(updatedUser, HttpStatus.OK);
     }
 
-    // Get user details by ID
+    // Get user details by  ID
     @GetMapping("/userId")
     public ApiResponse<User> getUserById(@RequestParam String userId) {
         User user = userService.getUserById(userId);
