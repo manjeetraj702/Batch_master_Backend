@@ -1,7 +1,9 @@
 package com.example.batchMaster.service.impl;
 
+import com.example.batchMaster.exception.BatchMasterException;
 import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.model.request.AttendanceCreateRequest;
+import com.example.batchMaster.model.updateRequest.AttendanceUpdateRequest;
 import com.example.batchMaster.repository.AttendanceRepository;
 import com.example.batchMaster.service.AttendanceService;
 import com.example.batchMaster.service.BatchService;
@@ -26,22 +28,31 @@ public class AttendanceServiceImpl implements AttendanceService {
         Attendance attendance = new Attendance();
         attendance.setStudentId(attendanceCreateRequest.getStudentId());
         attendance.setStatus(attendanceCreateRequest.isStatus());
+        attendance.setMode(attendanceCreateRequest.isMode());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
         attendance.setDate(attendanceCreateRequest.getDate());
         return attendanceRepository.save(attendance);
     }
 
+    @Override
+    public Attendance getByAttendanceId(String attendenceId) {
+        Optional<Attendance> attendance = attendanceRepository.findById(attendenceId);
+        if (attendance.isPresent()) {
+            return attendance.get();
+        }
+        throw new BatchMasterException("Attendance not present with this id.");
+    }
+
 
     @Override
-    public Attendance updateAttendance(String attendanceID) {
-        Optional<Attendance> attendanceOptional = attendanceRepository.findById(attendanceID);
-        if (attendanceOptional.isPresent()) {
-            Attendance attendance = attendanceOptional.get();
-            attendance.setStatus(!attendanceOptional.get().isStatus());
-            return attendanceRepository.save(attendance);
-        } else {
-            throw new RuntimeException("Attendance record not found with ID: " + attendanceID);
-        }
+    public Attendance updateAttendance(AttendanceUpdateRequest attendanceUpdateRequest) {
+        Attendance attendance = getByAttendanceId(attendanceUpdateRequest.getAttendanceId());
+        attendance.setStudentId(attendanceUpdateRequest.getStudentId());
+        attendance.setStatus(attendanceUpdateRequest.isStatus());
+        attendance.setMode(attendanceUpdateRequest.isMode());
+        attendance.setBatchId(attendanceUpdateRequest.getBatchId());
+        attendance.setDate(attendanceUpdateRequest.getDate());
+        return attendanceRepository.save(attendance);
     }
 
     @Override
@@ -67,7 +78,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public List<Attendance> createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date) {
         List<Attendance> attendances = new ArrayList<>();
-List<String> presents= new ArrayList<>(presentStudentIds);
+        List<String> presents = new ArrayList<>(presentStudentIds);
         // Mark present students
         for (String studentId : presents) {
 
@@ -78,7 +89,7 @@ List<String> presents= new ArrayList<>(presentStudentIds);
             attendance.setDate(date);
             attendances.add(attendance);
         }
-List<String> absents = new ArrayList<>(absentStudentIds);
+        List<String> absents = new ArrayList<>(absentStudentIds);
         // Mark absent students
         for (String studentId : absents) {
             Attendance attendance = new Attendance();

@@ -4,7 +4,7 @@ package com.example.batchMaster.service.impl;
 import com.example.batchMaster.exception.BatchMasterException;
 import com.example.batchMaster.model.BatchSubject;
 import com.example.batchMaster.model.request.SubjectCreateRequest;
-import com.example.batchMaster.model.updateRequest.SubjectUpdateRequest;
+import com.example.batchMaster.model.updateRequest.BatchSubjectUpdateRequest;
 import com.example.batchMaster.repository.BatchSubjectRepository;
 import com.example.batchMaster.service.BatchSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,43 +15,40 @@ import java.util.Optional;
 
 @Service
 public class BatchSubjectServiceImpl implements BatchSubjectService {
-@Autowired
-private BatchSubjectRepository batchSubjectRepository;
+    @Autowired
+    private BatchSubjectRepository batchSubjectRepository;
 
     @Override
     public BatchSubject createCourse(SubjectCreateRequest subjectCreateRequest) {
-     BatchSubject batchSubject = new BatchSubject() ;
-     batchSubject.setSubjectName(subjectCreateRequest.getSubjectName());
-     batchSubject.setBatchId(subjectCreateRequest.getBatchId());
-     batchSubject.setStatus(subjectCreateRequest.isStatus());
-     batchSubject.setListOfTopics(subjectCreateRequest.getListOfTopics());
+        BatchSubject batchSubject = new BatchSubject();
+        batchSubject.setSubjectName(subjectCreateRequest.getSubjectName());
+        batchSubject.setBatchId(subjectCreateRequest.getBatchId());
+        batchSubject.setStatus(subjectCreateRequest.isStatus());
+        batchSubject.setListOfTopics(subjectCreateRequest.getListOfTopics());
         return batchSubjectRepository.save(batchSubject);
     }
 
     @Override
-    public BatchSubject updateSubject(SubjectUpdateRequest subjectUpdateRequest) {
+    public BatchSubject updateSubject(BatchSubjectUpdateRequest subjectUpdateRequest) {
         getSubjectById(subjectUpdateRequest.getSubjectId());
-        BatchSubject batchSubject = new BatchSubject() ;
+        BatchSubject batchSubject = new BatchSubject();
         batchSubject.setSubjectId(subjectUpdateRequest.getSubjectId());
-         batchSubject.setSubjectName(subjectUpdateRequest.getSubjectName());
-         batchSubject.setBatchId(subjectUpdateRequest.getBatchId());
-         batchSubject.setListOfTopics(subjectUpdateRequest.getListOfTopics());
-         batchSubject.setStatus(subjectUpdateRequest.isStatus());
+        batchSubject.setSubjectName(subjectUpdateRequest.getSubjectName());
+        batchSubject.setBatchId(subjectUpdateRequest.getBatchId());
+        batchSubject.setListOfTopics(subjectUpdateRequest.getListOfTopics());
+        batchSubject.setStatus(subjectUpdateRequest.isStatus());
         return batchSubjectRepository.save(batchSubject);
     }
 
     @Override
     public BatchSubject getSubjectById(String SubjectId) {
-        Optional<BatchSubject> subject= batchSubjectRepository.findById(SubjectId);
-        if(subject.isPresent())
-        {
+        Optional<BatchSubject> subject = batchSubjectRepository.findById(SubjectId);
+        if (subject.isPresent()) {
             return subject.get();
         }
 
-        throw  new BatchMasterException("Subject is not present");
+        throw new BatchMasterException("Subject is not present");
     }
-
-
 
 
     @Override
@@ -75,7 +72,7 @@ private BatchSubjectRepository batchSubjectRepository;
 
     @Override
     public BatchSubject getBySubjectNameAndBatchId(String subjectName, String batchId) {
-        return batchSubjectRepository.findBySubjectNameAndBatchId(subjectName,batchId);
+        return batchSubjectRepository.findBySubjectNameAndBatchId(subjectName, batchId);
     }
 
     @Override
@@ -88,41 +85,39 @@ private BatchSubjectRepository batchSubjectRepository;
         return batchSubjectRepository.findAllByBatchIdAndStatusFalse(batchId);
     }
 
-        @Override
-        public BatchSubject addTopic(String subjectId, String topic) {
-            Optional<BatchSubject> optionalSubject = batchSubjectRepository.findById(subjectId);
+    @Override
+    public BatchSubject addTopic(String subjectId, String topic) {
+        Optional<BatchSubject> optionalSubject = batchSubjectRepository.findById(subjectId);
 
-            if (optionalSubject.isPresent()) {
-                BatchSubject batchSubject = optionalSubject.get();
+        if (optionalSubject.isPresent()) {
+            BatchSubject batchSubject = optionalSubject.get();
 
-                if (!batchSubject.getListOfTopics().contains(topic)) {
-                    batchSubject.getListOfTopics().add(topic);
-                    return batchSubjectRepository.save(batchSubject); // Save updated subject
-                }
-                throw new RuntimeException("Topic already exists in the subject");
+            if (!batchSubject.getListOfTopics().contains(topic)) {
+                batchSubject.getListOfTopics().add(topic);
+                return batchSubjectRepository.save(batchSubject); // Save updated subject
             }
-
-            throw new RuntimeException("Subject not found");
+            throw new RuntimeException("Topic already exists in the subject");
         }
 
-        @Override
-        public BatchSubject removeTopic(String subjectId, String topic) {
-            Optional<BatchSubject> optionalSubject = batchSubjectRepository.findById(subjectId);
+        throw new RuntimeException("Subject not found");
+    }
 
-            if (optionalSubject.isPresent()) {
-                BatchSubject batchSubject = optionalSubject.get();
+    @Override
+    public BatchSubject removeTopic(String subjectId, String topic) {
+        Optional<BatchSubject> optionalSubject = batchSubjectRepository.findById(subjectId);
 
-                if (batchSubject.getListOfTopics().contains(topic)) {
-                    batchSubject.getListOfTopics().remove(topic);
-                    return batchSubjectRepository.save(batchSubject); // Save updated subject
-                }
-                throw new RuntimeException("Topic not found in the subject");
+        if (optionalSubject.isPresent()) {
+            BatchSubject batchSubject = optionalSubject.get();
+
+            if (batchSubject.getListOfTopics().contains(topic)) {
+                batchSubject.getListOfTopics().remove(topic);
+                return batchSubjectRepository.save(batchSubject); // Save updated subject
             }
-
-            throw new RuntimeException("Subject not found");
+            throw new RuntimeException("Topic not found in the subject");
         }
 
-
+        throw new RuntimeException("Subject not found");
+    }
 
 
 }

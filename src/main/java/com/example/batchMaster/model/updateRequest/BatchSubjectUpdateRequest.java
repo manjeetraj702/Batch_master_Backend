@@ -5,10 +5,11 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
+
 @Getter
 @Setter
 
-public class SubjectUpdateRequest {
+public class BatchSubjectUpdateRequest {
 
     @Id
     private String subjectId;

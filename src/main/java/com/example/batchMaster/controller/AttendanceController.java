@@ -4,6 +4,7 @@ import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.model.request.AttendanceCreateRequest;
 import com.example.batchMaster.model.request.BatchAttendanceRequest;
+import com.example.batchMaster.model.updateRequest.AttendanceUpdateRequest;
 import com.example.batchMaster.service.AttendanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,8 @@ public class AttendanceController {
 
     // Update an attendance record
     @PutMapping("/update")
-    public ApiResponse<Attendance> updateAttendance(@RequestParam String attendanceId) {
-        Attendance attendance = attendanceService.updateAttendance(attendanceId);
+    public ApiResponse<Attendance> updateAttendance(@RequestBody AttendanceUpdateRequest attendanceUpdateRequest) {
+        Attendance attendance = attendanceService.updateAttendance(attendanceUpdateRequest);
         return new ApiResponse<>(attendance, HttpStatus.OK);
     }
 

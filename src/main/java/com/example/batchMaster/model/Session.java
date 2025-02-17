@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.List;
 
 @Document(collection = "sessions")
 @Data
@@ -27,9 +28,9 @@ public class Session {
     private String branchId;
     private String day;
     private String type;
-    private int onlineStudents;
-    private int offlineStudents;
-    private int absentStudents;
+    private List<String> onlineStudentsIds;
+    private List<String> offlineStudentsIds;
+    private List<String> absentStudentsIds;
     private int week;
     @CreatedDate
     @Indexed

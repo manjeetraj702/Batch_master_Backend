@@ -1,6 +1,7 @@
 package com.example.batchMaster.service.impl;
 
 import com.example.batchMaster.model.Session;
+import com.example.batchMaster.model.request.AttendanceCreateRequest;
 import com.example.batchMaster.model.request.SessionCreateRequest;
 import com.example.batchMaster.model.updateRequest.SessionUpdateRequest;
 import com.example.batchMaster.repository.SessionRepository;
@@ -41,17 +42,39 @@ public class SessionServiceImpl implements SessionService {
         session.setSessionLink(sessionCreateRequest.getSessionLink());
         session.setDate(sessionCreateRequest.getDate());
         session.setBatchId(sessionCreateRequest.getBatchId());
-        session.setOnlineStudents(sessionCreateRequest.getOnlineStudents());
-        session.setOfflineStudents(sessionCreateRequest.getOfflineStudents());
-        session.setAbsentStudents(sessionCreateRequest.getAbsentStudents());
+        session.setOnlineStudentsIds(sessionCreateRequest.getOnlineStudentsIds());
+        session.setOfflineStudentsIds(sessionCreateRequest.getOfflineStudentsIds());
+        session.setAbsentStudentsIds(sessionCreateRequest.getAbsentStudentsIds());
         session.setBranchId(sessionCreateRequest.getBranchId());
         session.setDay(sessionCreateRequest.getDay());
         session.setWeek(sessionCreateRequest.getWeek());
         session.setCreatedAt(Instant.now());
 
+        // Save session first
+        session = sessionRepository.save(session);
 
-        return sessionRepository.save(session);
+        // Process attendance
+        processAttendance(sessionCreateRequest.getOnlineStudentsIds(), sessionCreateRequest, true, false);
+        processAttendance(sessionCreateRequest.getOfflineStudentsIds(), sessionCreateRequest, true, true);
+        processAttendance(sessionCreateRequest.getAbsentStudentsIds(), sessionCreateRequest, false, null);
+
+        return session;
     }
+
+    private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, Boolean mode) {
+        for (String studentId : studentIds) {
+            AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
+            attendanceRequest.setStatus(status);
+            attendanceRequest.setMode(mode); // Can be null for absent students
+            attendanceRequest.setDate(request.getDate());
+            attendanceRequest.setStudentId(studentId);
+            attendanceRequest.setBatchId(request.getBatchId());
+
+            // Save attendance
+            attendanceService.createAttendance(attendanceRequest);
+        }
+    }
+
 
     @Override
     public Session updateSession(SessionUpdateRequest updatedSession) {
@@ -65,9 +88,9 @@ public class SessionServiceImpl implements SessionService {
             existingSession.setSessionLink(updatedSession.getSessionLink());
             existingSession.setDate(updatedSession.getDate());
             existingSession.setBatchId(updatedSession.getBatchId());
-            existingSession.setOnlineStudents(updatedSession.getOnlineStudents());
-            existingSession.setOfflineStudents(updatedSession.getOfflineStudents());
-            existingSession.setAbsentStudents(updatedSession.getAbsentStudents());
+            existingSession.setOnlineStudentsIds(updatedSession.getOnlineStudentsIds());
+            existingSession.setOfflineStudentsIds(updatedSession.getOfflineStudentsIds());
+            existingSession.setAbsentStudentsIds(updatedSession.getAbsentStudentsIds());
             existingSession.setBranchId(updatedSession.getBranchId());
             return sessionRepository.save(existingSession);
         }

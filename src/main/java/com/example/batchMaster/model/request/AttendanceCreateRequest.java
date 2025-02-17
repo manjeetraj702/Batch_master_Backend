@@ -15,5 +15,6 @@ public class AttendanceCreateRequest {
     private String batchId;
     private String date;
     private String studentId;
+    private boolean mode;
     private boolean status;
 }

@@ -2,6 +2,7 @@ package com.example.batchMaster.service;
 
 import com.example.batchMaster.model.Attendance;
 import com.example.batchMaster.model.request.AttendanceCreateRequest;
+import com.example.batchMaster.model.updateRequest.AttendanceUpdateRequest;
 
 import java.util.List;
 
@@ -9,15 +10,18 @@ import java.util.List;
 public interface AttendanceService {
     Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest);
 
-    Attendance updateAttendance(String attendanceId);
+    Attendance getByAttendanceId(String attendenceId);
 
-     List<Attendance> getAttendanceByStudentId(String studentId);
+    Attendance updateAttendance(AttendanceUpdateRequest attendanceUpdateRequest);
+
+    List<Attendance> getAttendanceByStudentId(String studentId);
 
     List<Attendance> getAttendanceByBatchId(String batchId);
 
-     List<Attendance> getAttendanceByBatchIdAndDate(String batchId,String date);
+    List<Attendance> getAttendanceByBatchIdAndDate(String batchId, String date);
 
-     List<Attendance> getAttendanceByStudentIdAndDate(String studentId,String date);
+    List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date);
+
     List<Attendance> createAttendanceForBatch(List<String> absentStudentIds, List<String> presentStudentIds, String batchId, String date);
 
 }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,8 +24,8 @@ public class SessionUpdateRequest {
     private String branchId;
     private String day;
     private String type;
-    private int onlineStudents;
-    private int offlineStudents;
-    private int absentStudents;
+    private List<String> onlineStudentsIds;
+    private List<String> offlineStudentsIds;
+    private List<String> absentStudentsIds;
     private int week;
 }
