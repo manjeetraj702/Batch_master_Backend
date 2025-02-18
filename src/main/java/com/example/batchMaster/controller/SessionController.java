@@ -20,21 +20,21 @@ public class SessionController {
     private SessionService sessionService;
 
     // Create a new session
-    @PostMapping("/create")
+    @PostMapping("/createSession")
     public ApiResponse<Session> createSession(@RequestBody SessionCreateRequest session) {
         Session createdSession = sessionService.createSession(session);
         return new ApiResponse<>(createdSession, HttpStatus.ACCEPTED);
     }
 
     // Update session
-    @PutMapping("/update")
+    @PutMapping("/updateSession")
     public ApiResponse<Session> updateSession(@RequestBody SessionUpdateRequest updatedSession) {
         Session session = sessionService.updateSession(updatedSession);
         return new ApiResponse<>(session, HttpStatus.OK);
     }
 
     // Get sessions by batch ID
-    @GetMapping("/batch")
+    @GetMapping("/getSessionsByBatchId")
     public ApiResponse<List<Session>> getSessionsByBatchId(@RequestParam String batchId) {
         List<Session> sessions = sessionService.getSessionsByBatchId(batchId);
         return new ApiResponse<>(sessions, HttpStatus.OK);
@@ -97,7 +97,7 @@ public class SessionController {
         return new ApiResponse<>(sessions, HttpStatus.OK);
     }
 
-    // Get all sessions by batch and subject
+    // Get all sessions by batchId and subject
     @GetMapping("/getAllSessionsByBatchAndSubject")
     public ApiResponse<List<Session>> getAllSessionsOfAllBatchesByBatchIdAndSubject(
             @RequestParam String batchId, @RequestParam String subject) {

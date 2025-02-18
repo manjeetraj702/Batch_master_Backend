@@ -31,6 +31,6 @@ public interface SessionService {
 
     List<Session> getSessionsByDate(String date);
 
-    List<Session> getAllSessionsByBatchIdAndSubject(String batchId,String subject);
+    List<Session> getAllSessionsByBatchIdAndSubject(String batchId, String subject);
 
 }

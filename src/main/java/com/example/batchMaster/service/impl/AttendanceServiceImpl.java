@@ -31,7 +31,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setSessionId(attendanceCreateRequest.getSessionId());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
         attendance.setDate(attendanceCreateRequest.getDate());
-        attendance.setSubject(attendance.getSubject());
+        attendance.setSubject(attendanceCreateRequest.getSubject());
         return attendanceRepository.save(attendance);
     }
 
