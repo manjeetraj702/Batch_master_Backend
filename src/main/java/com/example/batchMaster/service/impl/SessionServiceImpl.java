@@ -52,14 +52,14 @@ public class SessionServiceImpl implements SessionService {
         session = sessionRepository.save(session);
 
         // Process attendance
-        processAttendance(sessionCreateRequest.getOnlineStudentsIds(), sessionCreateRequest, true, false, session.getSessionId());
-        processAttendance(sessionCreateRequest.getOfflineStudentsIds(), sessionCreateRequest, true, true, session.getSessionId());
-        processAttendance(sessionCreateRequest.getAbsentStudentsIds(), sessionCreateRequest, false, null, session.getSessionId());
+        processAttendance(sessionCreateRequest.getOnlineStudentsIds(), sessionCreateRequest, true, "online", session.getSessionId());
+        processAttendance(sessionCreateRequest.getOfflineStudentsIds(), sessionCreateRequest, true, "offline", session.getSessionId());
+        processAttendance(sessionCreateRequest.getAbsentStudentsIds(), sessionCreateRequest, false, "not present", session.getSessionId());
 
         return session;
     }
 
-    private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, Boolean mode, String sessionId) {
+    private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, String mode, String sessionId) {
         for (String studentId : studentIds) {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
@@ -100,16 +100,16 @@ public class SessionServiceImpl implements SessionService {
             session = sessionRepository.save(session);
 
             // Process attendance
-            UpdateAttendance(updatedSession.getOnlineStudentsIds(), updatedSession, true, false, session.getSessionId());
-            UpdateAttendance(updatedSession.getOfflineStudentsIds(), updatedSession, true, true, session.getSessionId());
-            UpdateAttendance(updatedSession.getAbsentStudentsIds(), updatedSession, false, null, session.getSessionId());
+            UpdateAttendance(updatedSession.getOnlineStudentsIds(), updatedSession, true, "online", session.getSessionId());
+            UpdateAttendance(updatedSession.getOfflineStudentsIds(), updatedSession, true, "offline", session.getSessionId());
+            UpdateAttendance(updatedSession.getAbsentStudentsIds(), updatedSession, false, "not present", session.getSessionId());
 
             return session;
         }
         throw new RuntimeException("Session not found with ID: " + updatedSession.getBatchId());
     }
 
-    private void UpdateAttendance(List<String> studentIds, SessionUpdateRequest request, boolean status, Boolean mode, String sessionId) {
+    private void UpdateAttendance(List<String> studentIds, SessionUpdateRequest request, boolean status, String mode, String sessionId) {
         for (String studentId : studentIds) {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);

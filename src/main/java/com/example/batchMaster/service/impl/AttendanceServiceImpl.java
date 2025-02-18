@@ -27,10 +27,11 @@ public class AttendanceServiceImpl implements AttendanceService {
         Attendance attendance = new Attendance();
         attendance.setStudentId(attendanceCreateRequest.getStudentId());
         attendance.setStatus(attendanceCreateRequest.isStatus());
-        attendance.setMode(attendanceCreateRequest.isMode());
+        attendance.setMode(attendanceCreateRequest.getMode());
         attendance.setSessionId(attendanceCreateRequest.getSessionId());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
         attendance.setDate(attendanceCreateRequest.getDate());
+        attendance.setSubject(attendance.getSubject());
         return attendanceRepository.save(attendance);
     }
 
@@ -49,9 +50,10 @@ public class AttendanceServiceImpl implements AttendanceService {
         Attendance attendance = getByAttendanceId(attendanceUpdateRequest.getAttendanceId());
         attendance.setStudentId(attendanceUpdateRequest.getStudentId());
         attendance.setStatus(attendanceUpdateRequest.isStatus());
-        attendance.setMode(attendanceUpdateRequest.isMode());
+        attendance.setMode(attendanceUpdateRequest.getMode());
         attendance.setBatchId(attendanceUpdateRequest.getBatchId());
         attendance.setDate(attendanceUpdateRequest.getDate());
+        attendance.setSubject(attendanceUpdateRequest.getSubject());
         return attendanceRepository.save(attendance);
     }
 

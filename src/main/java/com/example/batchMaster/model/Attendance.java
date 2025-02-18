@@ -19,6 +19,7 @@ public class Attendance {
     private String date;
     private String studentId;
     private String sessionId;
-    private boolean mode;
+    private String subject;
+    private String mode;
     private boolean status;
 }
