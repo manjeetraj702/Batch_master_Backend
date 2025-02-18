@@ -98,7 +98,7 @@ public class SessionController {
     }
 
     // Get all sessions by batch and subject
-    @GetMapping("/getAllSessionsBySubjectAndTopic")
+    @GetMapping("/getAllSessionsByBatchAndSubject")
     public ApiResponse<List<Session>> getAllSessionsOfAllBatchesByBatchIdAndSubject(
             @RequestParam String batchId, @RequestParam String subject) {
         List<Session> sessions = sessionService.getAllSessionsByBatchIdAndSubject(batchId, subject);
