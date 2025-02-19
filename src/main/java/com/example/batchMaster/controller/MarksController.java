@@ -23,14 +23,14 @@ public class MarksController {
     }
 
     // Create Marks
-    @PostMapping("/create")
+    @PostMapping("/createMarks")
     public ApiResponse<Marks> createMarks(@RequestBody MarksCreateRequest marksCreateRequest) {
         Marks marks = marksService.createMarks(marksCreateRequest);
         return new ApiResponse<>(marks, HttpStatus.CREATED);
     }
 
     // Update Marks by ID
-    @PutMapping("/update")
+    @PutMapping("/updateMarks")
     public ApiResponse<Marks> updateMarks(@RequestParam(name = "marksId") String marksId,
                                           @RequestBody Marks updatedMarks) {
         Marks marks = marksService.updateMarks(marksId, updatedMarks);
@@ -45,12 +45,12 @@ public class MarksController {
     }
 
     // Get Marks by Topic ID, Batch ID & Subject ID
-    @GetMapping("/getMarksByTopicIdAndBatchId")
-    public ApiResponse<List<Marks>> getMarksByTopicIdAndBatchId(
-            @RequestParam(name = "topicId") String topicId,
-            @RequestParam(name = "batchId") String batchId,
-            @RequestParam(name = "subjectId") String subjectId) {
-        List<Marks> marksList = marksService.getMarksBySubjectTopicAndBatchId(subjectId, topicId, batchId);
+    @GetMapping("/getMarksBySubjectTopicAndBatchId")
+    public ApiResponse<List<Marks>> getMarksBySubjectTopicAndBatchId(
+            @RequestParam(name = "subject") String subject,
+            @RequestParam(name = "topic") String topic,
+            @RequestParam(name = "batchId") String batchId) {
+        List<Marks> marksList = marksService.getMarksBySubjectTopicAndBatchId(subject, topic, batchId);
         return new ApiResponse<>(marksList, HttpStatus.OK);
     }
 

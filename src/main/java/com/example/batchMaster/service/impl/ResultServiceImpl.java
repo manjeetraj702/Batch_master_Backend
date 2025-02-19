@@ -26,7 +26,7 @@ public class ResultServiceImpl implements ResultService {
         Result newResult = new Result();
         newResult.setBatchId(resultCreateRequest.getBatchId());
         newResult.setDate(resultCreateRequest.getDate());
-        newResult.setSubjectId(resultCreateRequest.getSubject());
+        newResult.setSubject(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
         newResult.setStudentAndMarksList(resultCreateRequest.getStudentAndMarksList());
         Result result = resultRepository.save(newResult);
@@ -62,7 +62,7 @@ public class ResultServiceImpl implements ResultService {
         Result newResult = existingResult;
         newResult.setBatchId(resultUpdateRequest.getBatchId());
         newResult.setDate(resultUpdateRequest.getDate());
-        newResult.setSubjectId(resultUpdateRequest.getSubjectId());
+        newResult.setSubject(resultUpdateRequest.getSubject());
         newResult.setTopic(resultUpdateRequest.getTopic());
         newResult.setStudentAndMarksList(resultUpdateRequest.getStudentAndMarksList());
         marksServiceImpl.deleteMarksByResultId(newResult.getResultId());
@@ -71,7 +71,7 @@ public class ResultServiceImpl implements ResultService {
         for (StudentMarksRequest studentMarksRequest : resultUpdateRequest.getStudentAndMarksList()) {
             MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
             marksCreateRequest.setBatchId(resultUpdateRequest.getBatchId());
-            marksCreateRequest.setSubject(resultUpdateRequest.getSubjectId());
+            marksCreateRequest.setSubject(resultUpdateRequest.getSubject());
             marksCreateRequest.setTopic(resultUpdateRequest.getTopic());
             marksCreateRequest.setStudentId(studentMarksRequest.getStudentId());
             marksCreateRequest.setMarksObtained(studentMarksRequest.getStudentMarks());
@@ -103,13 +103,13 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public Result getResultByBatchSubjectTopic(String batchId, String subjectId, String topic) {
-        return resultRepository.findByBatchIdAndSubjectIdAndTopic(batchId, subjectId, topic);
+    public Result getResultByBatchSubjectTopic(String batchId, String subject, String topic) {
+        return resultRepository.findByBatchIdAndSubjectAndTopic(batchId, subject, topic);
     }
 
     @Override
     public List<Result> getResultsByBatchIdAndSubjectId(String batchId, String subjectId) {
-        return resultRepository.findByBatchIdAndSubjectId(batchId, subjectId);
+        return resultRepository.findByBatchIdAndSubject(batchId, subjectId);
     }
 
 }

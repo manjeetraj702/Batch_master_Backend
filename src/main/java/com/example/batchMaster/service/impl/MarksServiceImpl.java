@@ -52,7 +52,9 @@ public class MarksServiceImpl implements MarksService {
 
     @Override
     public List<Marks> getMarksBySubjectTopicAndBatchId(String subject, String topic, String batchId) {
-        return marksRepository.findAllBySubjectAndTopicAndBatchId(subject, topic, batchId);
+        List<Marks> marks = marksRepository.findAllBySubjectAndTopicAndBatchId(subject, topic, batchId);
+        System.out.println(marks);
+        return marks;
     }
 
     @Override

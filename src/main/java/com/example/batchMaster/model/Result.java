@@ -21,7 +21,7 @@ public class Result {
     private String batchId;
     private List<String> listOfTopperIds;
     private String date;
-    private String subjectId;
+    private String subject;
     private String topic;
     private float totalMarks;
     private List<StudentMarksRequest> studentAndMarksList;

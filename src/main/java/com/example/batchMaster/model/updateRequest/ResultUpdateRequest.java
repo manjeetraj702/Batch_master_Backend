@@ -22,7 +22,7 @@ public class ResultUpdateRequest {
 
     private String date;
 
-    private String subjectId;
+    private String subject;
 
     private String topic;
 
