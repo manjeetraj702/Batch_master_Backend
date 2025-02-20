@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class SessionServiceImpl implements SessionService {
         session.setMentor(sessionCreateRequest.getMentor());
         session.setType(sessionCreateRequest.getType());
         session.setSessionLink(sessionCreateRequest.getSessionLink());
-        session.setDate(sessionCreateRequest.getDate());
+        session.setDate(new Date());
         session.setBatchId(sessionCreateRequest.getBatchId());
         session.setOnlineStudentsIds(sessionCreateRequest.getOnlineStudentsIds());
         session.setOfflineStudentsIds(sessionCreateRequest.getOfflineStudentsIds());
@@ -64,7 +65,6 @@ public class SessionServiceImpl implements SessionService {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
             attendanceRequest.setMode(mode); // Can be null for absent students
-            attendanceRequest.setDate(request.getDate());
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);
@@ -86,7 +86,6 @@ public class SessionServiceImpl implements SessionService {
             session.setMentor(updatedSession.getMentor());
             session.setType(updatedSession.getType());
             session.setSessionLink(updatedSession.getSessionLink());
-            session.setDate(updatedSession.getDate());
             session.setBatchId(updatedSession.getBatchId());
             session.setOnlineStudentsIds(updatedSession.getOnlineStudentsIds());
             session.setOfflineStudentsIds(updatedSession.getOfflineStudentsIds());
@@ -114,7 +113,7 @@ public class SessionServiceImpl implements SessionService {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
             attendanceRequest.setMode(mode); // Can be null for absent students
-            attendanceRequest.setDate(request.getDate());
+            
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);

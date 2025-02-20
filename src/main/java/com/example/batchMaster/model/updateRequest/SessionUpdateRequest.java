@@ -19,7 +19,6 @@ public class SessionUpdateRequest {
     private String topic;
     private String mentor;
     private String sessionLink;
-    private String date;
     private String batchId;
     private String branchId;
     private String day;

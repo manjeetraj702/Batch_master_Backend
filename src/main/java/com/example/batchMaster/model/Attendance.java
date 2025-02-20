@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class Attendance {
     @Id
     private String attendanceId;
     private String batchId;
-    private String date;
+    private Date date;
     private String studentId;
     private String sessionId;
     private String subject;

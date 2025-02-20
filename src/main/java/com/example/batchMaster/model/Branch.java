@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -17,7 +19,7 @@ public class Branch {
     @Id
     private String branchId;
     private String branchName;
-    private String startingDate;
+    private Date startingDate;
     private Address address;
     private boolean branchStatus = true;
 

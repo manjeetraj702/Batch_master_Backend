@@ -15,7 +15,6 @@ public class BranchUpdateRequest {
 
     private String branchId;
     private String branchName;
-    private String startingDate;
     private Address address;
 
 }

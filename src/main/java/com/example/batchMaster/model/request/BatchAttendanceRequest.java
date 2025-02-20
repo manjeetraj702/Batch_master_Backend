@@ -11,5 +11,4 @@ public class BatchAttendanceRequest {
     private List<String> absentStudentIds;
     private List<String> presentStudentIds;
     private String batchId;
-    private String date;
 }

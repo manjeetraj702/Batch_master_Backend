@@ -15,7 +15,6 @@ public class ResultCreateRequest {
 
     private String batchId;
 
-    private String date;
 
     private String subject;
 

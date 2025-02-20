@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class ResultServiceImpl implements ResultService {
     public Result createResult(ResultCreateRequest resultCreateRequest) {
         Result newResult = new Result();
         newResult.setBatchId(resultCreateRequest.getBatchId());
-        newResult.setDate(resultCreateRequest.getDate());
+        newResult.setDate(new Date());
         newResult.setSubject(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
         newResult.setStudentAndMarksList(resultCreateRequest.getStudentAndMarksList());

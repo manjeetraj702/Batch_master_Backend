@@ -15,7 +15,6 @@ public class BatchUpdateBranch {
     private String batchId;
     private String branchId;
     private String batchName;
-    private String startingDate;
     private String batchTime;
     private boolean status = true;
 }

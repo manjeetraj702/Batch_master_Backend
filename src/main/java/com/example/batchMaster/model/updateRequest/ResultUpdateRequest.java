@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public class ResultUpdateRequest {
 
 //    private List<String> listOfTopperIds;
 
-    private String date;
+    private Date date;
 
     private String subject;
 

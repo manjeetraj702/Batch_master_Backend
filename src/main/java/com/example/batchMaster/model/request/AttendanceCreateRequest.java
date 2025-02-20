@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class AttendanceCreateRequest {
     private String batchId;
-    private String date;
     private String studentId;
     private String sessionId;
     private String subject;

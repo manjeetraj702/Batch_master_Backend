@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AttendanceUpdateRequest {
     private String attendanceId;
     private String batchId;
-    private String date;
     private String studentId;
     private String sessionId;
     private String subject;

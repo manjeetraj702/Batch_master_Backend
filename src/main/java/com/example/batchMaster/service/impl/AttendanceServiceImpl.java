@@ -10,6 +10,7 @@ import com.example.batchMaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setMode(attendanceCreateRequest.getMode());
         attendance.setSessionId(attendanceCreateRequest.getSessionId());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
-        attendance.setDate(attendanceCreateRequest.getDate());
+        attendance.setDate(new Date());
         attendance.setSubject(attendanceCreateRequest.getSubject());
         return attendanceRepository.save(attendance);
     }
@@ -52,7 +53,6 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setStatus(attendanceUpdateRequest.isStatus());
         attendance.setMode(attendanceUpdateRequest.getMode());
         attendance.setBatchId(attendanceUpdateRequest.getBatchId());
-        attendance.setDate(attendanceUpdateRequest.getDate());
         attendance.setSubject(attendanceUpdateRequest.getSubject());
         return attendanceRepository.save(attendance);
     }

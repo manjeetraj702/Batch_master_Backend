@@ -11,6 +11,7 @@ import com.example.batchMaster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,6 @@ class StudentServiceImpl implements StudentService {
 
     @Autowired
     MarksRepository marksRepository;
-
 
 
     @Override
@@ -88,8 +88,6 @@ class StudentServiceImpl implements StudentService {
     }
 
 
-
-
     @Override
     public Student changeStudentStatus(String studentId) {
         Student student = getStudentById(studentId);
@@ -106,12 +104,11 @@ class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(String studentId) {
         Optional<Student> student = studentRepository.findById(studentId);
-        if(student.isPresent())
-        {
+        if (student.isPresent()) {
             return student.get();
         }
 
-        throw  new BatchMasterException("Student is not present");
+        throw new BatchMasterException("Student is not present");
     }
 
     @Override

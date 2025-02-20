@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "sessions")
@@ -23,7 +24,7 @@ public class Session {
     private String topic;
     private String mentor;
     private String sessionLink;
-    private String date;
+    private Date date;
     private String batchId;
     private String branchId;
     private String day;

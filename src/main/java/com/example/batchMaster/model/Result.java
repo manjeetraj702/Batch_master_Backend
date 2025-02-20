@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "results")
@@ -20,7 +21,7 @@ public class Result {
     private String resultId;
     private String batchId;
     private List<String> listOfTopperIds;
-    private String date;
+    private Date date;
     private String subject;
     private String topic;
     private float totalMarks;

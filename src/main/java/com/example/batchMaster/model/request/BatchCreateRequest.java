@@ -14,7 +14,6 @@ public class BatchCreateRequest {
 
     private String branchId;
     private String batchName;
-    private String startingDate;
     private String batchTime;
     private boolean status = true;
 }

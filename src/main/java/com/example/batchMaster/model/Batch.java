@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -19,7 +21,7 @@ public class Batch {
     private String batchId;
     private String branchId;
     private String batchName;
-    private String startingDate;
+    private Date startingDate;
     private String batchTime;
     private boolean status = true;
 }
