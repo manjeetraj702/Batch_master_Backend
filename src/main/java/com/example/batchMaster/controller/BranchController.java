@@ -30,6 +30,7 @@ public class BranchController {
         return new ApiResponse<>(branch, HttpStatus.CREATED);
     }
 
+
     // Update an existing branch
     @PutMapping("/update")
     public ApiResponse<Branch> updateBranch(@RequestBody BranchUpdateRequest branchUpdateRequest) {
