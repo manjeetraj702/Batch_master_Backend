@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -38,11 +37,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance getByAttendanceId(String attendenceId) {
-        Optional<Attendance> attendance = attendanceRepository.findById(attendenceId);
-        if (attendance.isPresent()) {
-            return attendance.get();
-        }
-        throw new BatchMasterException("Attendance not present with this id.");
+        return attendanceRepository.findById(attendenceId).orElseThrow(() -> new BatchMasterException("Attendance not present with this id."));
+
     }
 
 

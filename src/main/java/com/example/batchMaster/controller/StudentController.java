@@ -104,4 +104,10 @@ public class StudentController {
         List<Student> students = studentService.getAllStudents();
         return new ApiResponse<>(students, HttpStatus.OK);
     }
+
+    @GetMapping("getStudentByEmailId")
+    public ApiResponse<Student> getStudentByEmailId(String emailId) {
+        Student student = studentService.getStudentByEmailId(emailId);
+        return new ApiResponse<>(student, HttpStatus.OK);
+    }
 }

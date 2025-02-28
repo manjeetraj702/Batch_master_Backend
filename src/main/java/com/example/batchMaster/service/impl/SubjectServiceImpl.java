@@ -1,5 +1,6 @@
 package com.example.batchMaster.service.impl;
 
+import com.example.batchMaster.exception.BatchMasterException;
 import com.example.batchMaster.model.Subject;
 import com.example.batchMaster.repository.SubjectRepository;
 import com.example.batchMaster.service.SubjectService;
@@ -22,7 +23,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject createNewSubject(String subjectName, List<String> listOfTopics) {
         Optional<Subject> subject = subjectRepository.findBySubjectName(subjectName);
-        if(subject.isPresent()) {
+        if (subject.isPresent()) {
             throw new RuntimeException("Subject already available with same name.");
         }
         Subject newSubject = new Subject();
@@ -48,17 +49,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject getSubjectById(String subjectId) {
-        Optional<Subject> subject = subjectRepository.findById(subjectId);
-        if(subject.isPresent()) {
-            return subject.get();
-        }
-        throw new RuntimeException("Subject not found");
+        return subjectRepository.findById(subjectId).orElseThrow(() -> new BatchMasterException("Student with this Id not present"));
     }
 
     @Override
     public Boolean deleteSubject(String subjectId) {
         Optional<Subject> subject = subjectRepository.findById(subjectId);
-        if(subject.isPresent()){
+        if (subject.isPresent()) {
             subjectRepository.delete(subject.get());
             return true;
         }

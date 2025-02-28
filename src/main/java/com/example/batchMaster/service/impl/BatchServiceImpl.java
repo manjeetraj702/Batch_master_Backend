@@ -4,11 +4,11 @@ import com.example.batchMaster.exception.BatchNotFoundException;
 import com.example.batchMaster.model.Batch;
 import com.example.batchMaster.model.request.BatchCreateRequest;
 import com.example.batchMaster.repository.BatchRepository;
-import com.example.batchMaster.service.*;
+import com.example.batchMaster.service.BatchService;
+import com.example.batchMaster.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -74,11 +74,8 @@ public class BatchServiceImpl implements BatchService {
 
     @Override
     public Batch getBatchById(String batchId) {
-        Optional<Batch> preBatch = batchRepository.findById(batchId);
-        if (preBatch.isEmpty()) {
-            throw new BatchNotFoundException("Batch with ID " + batchId + " not found");
-        }
-        return preBatch.get();
+        return batchRepository.findById(batchId).orElseThrow(() -> new BatchNotFoundException("Batch with ID " + batchId + " not found"));
+
     }
 
     @Override

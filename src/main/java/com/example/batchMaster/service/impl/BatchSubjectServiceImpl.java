@@ -42,12 +42,7 @@ public class BatchSubjectServiceImpl implements BatchSubjectService {
 
     @Override
     public BatchSubject getSubjectById(String SubjectId) {
-        Optional<BatchSubject> subject = batchSubjectRepository.findById(SubjectId);
-        if (subject.isPresent()) {
-            return subject.get();
-        }
-
-        throw new BatchMasterException("Subject is not present");
+        return batchSubjectRepository.findById(SubjectId).orElseThrow(() -> new BatchMasterException("Subject is not present"));
     }
 
 
