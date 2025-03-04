@@ -46,6 +46,7 @@ class StudentServiceImpl implements StudentService {
         student.setAdmissionDate(studentCreateRequest.getAdmissionDate());
         student.setImgUrl(studentCreateRequest.getImgUrl());
         student.setStudyMode(studentCreateRequest.isStudyMode());
+        student.setBranchId(studentCreateRequest.getBranchId());
         student.setBatchId("Cage-00");
 
         return studentRepository.save(student);

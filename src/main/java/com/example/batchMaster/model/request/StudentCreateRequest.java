@@ -18,6 +18,7 @@ public class StudentCreateRequest {
     private String degree;
     private String course;
     private Address address;
+    private String batchId;
     private String branchId;
     private String admissionDate;
     private boolean studyMode;
