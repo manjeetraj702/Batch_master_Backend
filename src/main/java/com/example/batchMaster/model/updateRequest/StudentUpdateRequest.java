@@ -27,5 +27,6 @@ public class StudentUpdateRequest {
     private String course;
     private Address address;
     private String branchId;
+    private String batchId;
     private String admissionDate;
 }

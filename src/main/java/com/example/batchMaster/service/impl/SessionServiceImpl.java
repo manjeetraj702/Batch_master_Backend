@@ -9,6 +9,7 @@ import com.example.batchMaster.service.AttendanceService;
 import com.example.batchMaster.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class SessionServiceImpl implements SessionService {
     private AttendanceServiceImpl attendanceServiceImpl;
 
     @Override
+    @Transactional
     public Session createSession(SessionCreateRequest sessionCreateRequest) {
         if (sessionCreateRequest == null) {
             throw new IllegalArgumentException("Session request cannot be null");
@@ -76,6 +78,7 @@ public class SessionServiceImpl implements SessionService {
 
 
     @Override
+    @Transactional
     public Session updateSession(SessionUpdateRequest updatedSession) {
         Optional<Session> existingSessionOpt = sessionRepository.findById(updatedSession.getSessionId());
 
@@ -113,7 +116,7 @@ public class SessionServiceImpl implements SessionService {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
             attendanceRequest.setMode(mode); // Can be null for absent students
-            
+
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);

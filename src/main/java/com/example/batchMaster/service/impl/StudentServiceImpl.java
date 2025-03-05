@@ -84,6 +84,7 @@ class StudentServiceImpl implements StudentService {
         if (studentUpdateRequest.getDegree() != null) {
             existingStudent.setDegree(studentUpdateRequest.getDegree());
         }
+        existingStudent.setBatchId(studentUpdateRequest.getBatchId());
 
         return studentRepository.save(existingStudent); // Save updated student
     }

@@ -9,6 +9,7 @@ import com.example.batchMaster.repository.ResultRepository;
 import com.example.batchMaster.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class ResultServiceImpl implements ResultService {
     private MarksServiceImpl marksServiceImpl;
 
     @Override
+    @Transactional
     public Result createResult(ResultCreateRequest resultCreateRequest) {
         Result newResult = new Result();
         newResult.setBatchId(resultCreateRequest.getBatchId());
@@ -57,6 +59,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+    @Transactional
     public Result updateResult(ResultUpdateRequest resultUpdateRequest) {
         Result existingResult = getResultsByResultId(resultUpdateRequest.getResultId());
 
