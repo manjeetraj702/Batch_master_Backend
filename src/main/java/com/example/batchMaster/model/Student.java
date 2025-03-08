@@ -28,7 +28,7 @@ public class Student {
     private String batchId = "Cage-00";
     private String branchId;
     private String admissionDate;
-    private boolean activeStatus;
+    private boolean activeStatus = true;
     private boolean studyMode;
 }
 
