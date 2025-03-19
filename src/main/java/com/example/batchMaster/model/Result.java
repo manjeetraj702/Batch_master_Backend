@@ -20,7 +20,7 @@ public class Result {
     @Id
     private String resultId;
     private String batchId;
-    private List<String> listOfTopperIds;
+    private List<String> listOfTopperName;
     private Date date;
     private String subject;
     private String topic;

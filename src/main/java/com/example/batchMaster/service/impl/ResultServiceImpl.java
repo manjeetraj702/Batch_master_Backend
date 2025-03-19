@@ -53,8 +53,9 @@ public class ResultServiceImpl implements ResultService {
                 topperMarks = studentMarksRequest.getStudentMarks();
 
             }
-            result.setTopperList(topperList);
         }
+        result.setListOfTopperName(topperList);
+
         return resultRepository.save(result);
     }
 
@@ -90,8 +91,9 @@ public class ResultServiceImpl implements ResultService {
                 topperMarks = studentMarksRequest.getStudentMarks();
 
             }
-            existingResult.setTopperList(topperList);
+
         }
+        existingResult.setListOfTopperName(topperList);
         return resultRepository.save(existingResult);
     }
 
