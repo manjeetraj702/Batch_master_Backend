@@ -13,5 +13,5 @@ public class StudentMarksRequest {
     private String studentId;
     private float studentMarks;
     private String studentName;
-    private boolean isPresent;
+    private boolean present;
 }

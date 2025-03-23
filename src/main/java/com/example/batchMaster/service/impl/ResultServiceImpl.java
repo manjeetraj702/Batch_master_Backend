@@ -31,6 +31,7 @@ public class ResultServiceImpl implements ResultService {
         newResult.setDate(new Date());
         newResult.setSubject(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
+        newResult.setTotalMarks(resultCreateRequest.getTotalMarks());
         newResult.setStudentAndMarksList(resultCreateRequest.getStudentAndMarksList());
         Result result = resultRepository.save(newResult);
         float topperMarks = 0;
@@ -69,6 +70,8 @@ public class ResultServiceImpl implements ResultService {
         newResult.setDate(resultUpdateRequest.getDate());
         newResult.setSubject(resultUpdateRequest.getSubject());
         newResult.setTopic(resultUpdateRequest.getTopic());
+        newResult.setTotalMarks(resultUpdateRequest.getTotalMarks());
+
         newResult.setStudentAndMarksList(resultUpdateRequest.getStudentAndMarksList());
         marksServiceImpl.deleteMarksByResultId(newResult.getResultId());
         float topperMarks = 0;
