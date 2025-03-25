@@ -14,8 +14,7 @@ import lombok.Setter;
 public class StudentUpdateRequest {
 
     @NotBlank(message = "id name is required")
-    private String Id;
-
+    private String studentId;
     private String studentName;
     private String fatherName;
     private String mobileNumber;
