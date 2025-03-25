@@ -60,7 +60,7 @@ class StudentServiceImpl implements StudentService {
 
     @Override
     public Student updateStudent(StudentUpdateRequest studentUpdateRequest) {
-        Student existingStudent = getStudentById(studentUpdateRequest.getId());
+        Student existingStudent = getStudentById(studentUpdateRequest.getStudentId());
 
 
         if (studentUpdateRequest.getStudentName() != null) {
