@@ -77,6 +77,7 @@ public class SessionServiceImpl implements SessionService {
             attendanceRequest.setMode(mode);
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
+            attendanceRequest.setSubject(request.getSubject());
             attendanceRequest.setSessionId(sessionId);
 
             attendanceService.createAttendance(attendanceRequest);
@@ -123,7 +124,7 @@ public class SessionServiceImpl implements SessionService {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
             attendanceRequest.setMode(mode); // Can be null for absent students
-
+            attendanceRequest.setSubject(request.getSubject());
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);
