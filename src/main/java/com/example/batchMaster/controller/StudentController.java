@@ -3,12 +3,14 @@ package com.example.batchMaster.controller;
 import com.example.batchMaster.base.ApiResponse;
 import com.example.batchMaster.model.Marks;
 import com.example.batchMaster.model.Student;
+import com.example.batchMaster.model.request.ImageUpdateRequest;
 import com.example.batchMaster.model.request.StudentCreateRequest;
 import com.example.batchMaster.model.updateRequest.StudentUpdateRequest;
 import com.example.batchMaster.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -109,5 +111,16 @@ public class StudentController {
     public ApiResponse<Student> getStudentByEmailId(String emailId) {
         Student student = studentService.getStudentByEmailId(emailId);
         return new ApiResponse<>(student, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateImage")
+    public ResponseEntity<String> updateStudentImage(@RequestBody ImageUpdateRequest request) {
+        boolean updated = studentService.updateStudentImage(request.getStudentId(), request.getImgUrl());
+        if (updated) {
+            return ResponseEntity.ok("Image updated successfully for student ID: " + request.getStudentId());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Student not found with ID: " + request.getStudentId());
+        }
     }
 }

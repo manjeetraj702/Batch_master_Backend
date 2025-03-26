@@ -63,15 +63,22 @@ public class SessionServiceImpl implements SessionService {
     }
 
     private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, String mode, String sessionId) {
+        System.out.println("Processing attendance for mode: " + mode + ", sessionId: " + sessionId);
+
+        if (studentIds == null || studentIds.isEmpty()) {
+            System.out.println("No students for mode: " + mode);
+            return;
+        }
+
         for (String studentId : studentIds) {
+            System.out.println("Processing attendance for student: " + studentId);
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
-            attendanceRequest.setMode(mode); // Can be null for absent students
+            attendanceRequest.setMode(mode);
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);
 
-            // Save attendance
             attendanceService.createAttendance(attendanceRequest);
         }
     }

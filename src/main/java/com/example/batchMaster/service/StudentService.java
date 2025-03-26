@@ -35,5 +35,7 @@ public interface StudentService {
     List<Student> getAllStudents();
 
     Student getStudentByEmailId(String emailId);
+
+    boolean updateStudentImage(String studentId, String imgUrl);
 }
 

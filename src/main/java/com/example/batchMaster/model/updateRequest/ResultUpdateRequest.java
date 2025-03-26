@@ -19,7 +19,6 @@ public class ResultUpdateRequest {
 
     private String batchId;
 
-//    private List<String> listOfTopperIds;
 
     private Date date;
 
