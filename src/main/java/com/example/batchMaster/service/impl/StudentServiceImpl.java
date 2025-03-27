@@ -47,6 +47,9 @@ class StudentServiceImpl implements StudentService {
         student.setImgUrl(studentCreateRequest.getImgUrl());
         student.setStudyMode(studentCreateRequest.isStudyMode());
         student.setBatchId(studentCreateRequest.getBatchId());
+        if (studentCreateRequest.getBatchId() != null) {
+            student.setBatchId(studentCreateRequest.getBatchId());
+        }
 
         return studentRepository.save(student);
     }
