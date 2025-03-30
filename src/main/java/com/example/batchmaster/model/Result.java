@@ -1,0 +1,29 @@
+package com.example.batchmaster.model;
+
+import com.example.batchmaster.model.request.StudentMarksRequest;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
+import java.util.List;
+
+@Document(collection = "results")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Result {
+    @Id
+    private String resultId;
+    private String batchId;
+    private List<String> listOfTopperName;
+    private Date date;
+    private String subject;
+    private String topic;
+    private float totalMarks;
+    private List<StudentMarksRequest> studentAndMarksList;
+}

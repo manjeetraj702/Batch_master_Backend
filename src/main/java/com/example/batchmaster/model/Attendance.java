@@ -1,0 +1,27 @@
+package com.example.batchmaster.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Document
+public class Attendance {
+    @Id
+    private String attendanceId;
+    private String batchId;
+    private Date date;
+    private String studentId;
+    private String sessionId;
+    private String subject;
+    private String mode;
+    private boolean status;
+}

@@ -1,0 +1,22 @@
+package com.example.batchmaster.service;
+
+import com.example.batchmaster.model.Subject;
+
+import java.util.List;
+
+public interface SubjectService {
+    Subject createNewSubject(String subjectName, List<String> listOfTopics);
+
+    Subject updateSubject(String subjectId, String subjectNewName, List<String> listofTopics);
+
+    Subject getSubjectById(String subjectId);
+
+    Boolean deleteSubject(String subjectId);
+
+    List<Subject> getAllSubjects();
+
+    Subject addTopicsInSubject(String subjectId, String topic);
+
+    Subject removeTopicsFromSubject(String subjectId, String topic);
+
+}
