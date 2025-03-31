@@ -15,8 +15,12 @@ import java.util.Optional;
 
 @Service
 public class BatchSubjectServiceImpl implements BatchSubjectService {
+    private final BatchSubjectRepository batchSubjectRepository;
+
     @Autowired
-    private BatchSubjectRepository batchSubjectRepository;
+    public BatchSubjectServiceImpl(BatchSubjectRepository batchSubjectRepository) {
+        this.batchSubjectRepository = batchSubjectRepository;
+    }
 
     @Override
     public BatchSubject createCourse(SubjectCreateRequest subjectCreateRequest) {
@@ -41,14 +45,14 @@ public class BatchSubjectServiceImpl implements BatchSubjectService {
     }
 
     @Override
-    public BatchSubject getSubjectById(String SubjectId) {
-        return batchSubjectRepository.findById(SubjectId).orElseThrow(() -> new BatchMasterException("Subject is not present"));
+    public BatchSubject getSubjectById(String subjectId) {
+        return batchSubjectRepository.findById(subjectId).orElseThrow(() -> new BatchMasterException("Subject is not present"));
     }
 
 
     @Override
-    public BatchSubject changeSubjectStatus(String SubjectId) {
-        BatchSubject batchSubject = getSubjectById(SubjectId);
+    public BatchSubject changeSubjectStatus(String subjectId) {
+        BatchSubject batchSubject = getSubjectById(subjectId);
         batchSubject.setStatus(!batchSubject.isStatus());
 
         return batchSubjectRepository.save(batchSubject);
@@ -91,10 +95,10 @@ public class BatchSubjectServiceImpl implements BatchSubjectService {
                 batchSubject.getListOfTopics().add(topic);
                 return batchSubjectRepository.save(batchSubject); // Save updated subject
             }
-            throw new RuntimeException("Topic already exists in the subject");
+            throw new BatchMasterException("Topic already exists in the subject");
         }
 
-        throw new RuntimeException("Subject not found");
+        throw new BatchMasterException("Subject not found");
     }
 
     @Override
@@ -108,10 +112,10 @@ public class BatchSubjectServiceImpl implements BatchSubjectService {
                 batchSubject.getListOfTopics().remove(topic);
                 return batchSubjectRepository.save(batchSubject); // Save updated subject
             }
-            throw new RuntimeException("Topic not found in the subject");
+            throw new BatchMasterException("Topic not found in the subject");
         }
 
-        throw new RuntimeException("Subject not found");
+        throw new BatchMasterException("Subject not found");
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.batchmaster.service.impl;
 
+import com.example.batchmaster.exception.BatchMasterException;
 import com.example.batchmaster.model.Session;
 import com.example.batchmaster.model.request.AttendanceCreateRequest;
 import com.example.batchmaster.model.request.SessionCreateRequest;
@@ -7,7 +8,7 @@ import com.example.batchmaster.model.updaterequest.SessionUpdateRequest;
 import com.example.batchmaster.repository.SessionRepository;
 import com.example.batchmaster.service.AttendanceService;
 import com.example.batchmaster.service.SessionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,17 +17,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class SessionServiceImpl implements SessionService {
 
-    @Autowired
-    private SessionRepository sessionRepository;
-    @Autowired
-    private AttendanceService attendanceService;
+    private final SessionRepository sessionRepository;
+    private final AttendanceService attendanceService;
 
-
-    @Autowired
-    private AttendanceServiceImpl attendanceServiceImpl;
+    public SessionServiceImpl(SessionRepository sessionRepository, AttendanceService attendanceService, AttendanceServiceImpl attendanceServiceImpl) {
+        this.sessionRepository = sessionRepository;
+        this.attendanceService = attendanceService;
+    }
 
     @Override
     @Transactional
@@ -63,15 +64,13 @@ public class SessionServiceImpl implements SessionService {
     }
 
     private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, String mode, String sessionId) {
-        System.out.println("Processing attendance for mode: " + mode + ", sessionId: " + sessionId);
 
         if (studentIds == null || studentIds.isEmpty()) {
-            System.out.println("No students for mode: " + mode);
             return;
         }
 
         for (String studentId : studentIds) {
-            System.out.println("Processing attendance for student: " + studentId);
+            log.info("Processing attendance for student: " + studentId);
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
             attendanceRequest.setMode(mode);
@@ -110,16 +109,16 @@ public class SessionServiceImpl implements SessionService {
             session = sessionRepository.save(session);
 
             // Process attendance
-            UpdateAttendance(updatedSession.getOnlineStudentsIds(), updatedSession, true, "online", session.getSessionId());
-            UpdateAttendance(updatedSession.getOfflineStudentsIds(), updatedSession, true, "offline", session.getSessionId());
-            UpdateAttendance(updatedSession.getAbsentStudentsIds(), updatedSession, false, "not present", session.getSessionId());
+            updateAttendance(updatedSession.getOnlineStudentsIds(), updatedSession, true, "online", session.getSessionId());
+            updateAttendance(updatedSession.getOfflineStudentsIds(), updatedSession, true, "offline", session.getSessionId());
+            updateAttendance(updatedSession.getAbsentStudentsIds(), updatedSession, false, "not present", session.getSessionId());
 
             return session;
         }
-        throw new RuntimeException("Session not found with ID: " + updatedSession.getBatchId());
+        throw new BatchMasterException("Session not found with ID: " + updatedSession.getBatchId());
     }
 
-    private void UpdateAttendance(List<String> studentIds, SessionUpdateRequest request, boolean status, String mode, String sessionId) {
+    private void updateAttendance(List<String> studentIds, SessionUpdateRequest request, boolean status, String mode, String sessionId) {
         for (String studentId : studentIds) {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
@@ -155,7 +154,7 @@ public class SessionServiceImpl implements SessionService {
             sessionRepository.deleteById(sessionId);
             return true;
         } else {
-            throw new RuntimeException("Session not found with ID: " + sessionId);
+            throw new BatchMasterException("Session not found with ID: " + sessionId);
         }
     }
 

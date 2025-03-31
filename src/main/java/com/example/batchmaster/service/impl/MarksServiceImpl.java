@@ -1,9 +1,11 @@
 package com.example.batchmaster.service.impl;
 
+import com.example.batchmaster.exception.BatchMasterException;
 import com.example.batchmaster.model.Marks;
 import com.example.batchmaster.model.request.MarksCreateRequest;
 import com.example.batchmaster.repository.MarksRepository;
 import com.example.batchmaster.service.MarksService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MarksServiceImpl implements MarksService {
 
+    private final MarksRepository marksRepository;
+
     @Autowired
-    private MarksRepository marksRepository;
+    public MarksServiceImpl(MarksRepository marksRepository) {
+        this.marksRepository = marksRepository;
+    }
 
     @Override
     public Marks createMarks(MarksCreateRequest marksCreateRequest) {
@@ -42,7 +49,7 @@ public class MarksServiceImpl implements MarksService {
             marks.setMarksObtained(updatedMarks.getMarksObtained());
             return marksRepository.save(marks);
         }
-        throw new RuntimeException("Marks record not found with ID: " + marksId);
+        throw new BatchMasterException("Marks record not found with ID: " + marksId);
     }
 
     @Override
@@ -53,7 +60,7 @@ public class MarksServiceImpl implements MarksService {
     @Override
     public List<Marks> getMarksBySubjectTopicAndBatchId(String subject, String topic, String batchId) {
         List<Marks> marks = marksRepository.findAllBySubjectAndTopicAndBatchId(subject, topic, batchId);
-        System.out.println(marks);
+        log.info("Marks: " + marks);
         return marks;
     }
 

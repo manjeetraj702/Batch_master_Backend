@@ -8,6 +8,7 @@ class BatchMasterApplicationTests {
 
     @Test
     void contextLoads() {
+        // Test if the Spring application context loads successfully
     }
 
 }

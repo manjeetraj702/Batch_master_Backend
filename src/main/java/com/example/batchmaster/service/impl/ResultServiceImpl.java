@@ -7,7 +7,6 @@ import com.example.batchmaster.model.request.StudentMarksRequest;
 import com.example.batchmaster.model.updaterequest.ResultUpdateRequest;
 import com.example.batchmaster.repository.ResultRepository;
 import com.example.batchmaster.service.ResultService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +17,13 @@ import java.util.List;
 @Service
 public class ResultServiceImpl implements ResultService {
 
-    @Autowired
-    private ResultRepository resultRepository;
-    @Autowired
-    private MarksServiceImpl marksServiceImpl;
+    private final ResultRepository resultRepository;
+    private final MarksServiceImpl marksServiceImpl;
+
+    public ResultServiceImpl(ResultRepository resultRepository, MarksServiceImpl marksServiceImpl) {
+        this.resultRepository = resultRepository;
+        this.marksServiceImpl = marksServiceImpl;
+    }
 
     @Override
     @Transactional

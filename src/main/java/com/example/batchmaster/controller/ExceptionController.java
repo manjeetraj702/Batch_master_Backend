@@ -2,6 +2,8 @@ package com.example.batchmaster.controller;
 
 import com.example.batchmaster.base.ApiResponse;
 import com.example.batchmaster.exception.BatchMasterException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +18,10 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     public ApiResponse<Object> generalExceptionHandler(Exception e) {
         // Log the exception for debugging purposes
-        System.err.println("Unhandled exception occurred: " + e.getMessage());
+// Log the exception for debugging purposes
+        Logger logger = LoggerFactory.getLogger(ExceptionController.class);
+        logger.error("Unhandled exception occurred: " + e.getMessage(), e);
+        e.printStackTrace();
         ApiResponse<Object> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         response.setErrorMessage(e.getMessage());

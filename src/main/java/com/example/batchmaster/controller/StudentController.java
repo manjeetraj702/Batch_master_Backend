@@ -20,8 +20,12 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class StudentController {
 
+    private final StudentService studentService;
+
     @Autowired
-    private StudentService studentService;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     // Create a new student
     @PostMapping("/create")

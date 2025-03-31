@@ -7,7 +7,6 @@ import com.example.batchmaster.model.request.BranchCreateRequest;
 import com.example.batchmaster.model.updaterequest.BranchUpdateRequest;
 import com.example.batchmaster.repository.BranchRepository;
 import com.example.batchmaster.service.BranchService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,8 +15,11 @@ import java.util.List;
 @Service
 public class BranchServiceImpl implements BranchService {
 
-    @Autowired
-    BranchRepository branchRepository;
+    private final BranchRepository branchRepository;
+
+    public BranchServiceImpl(BranchRepository branchRepository) {
+        this.branchRepository = branchRepository;
+    }
 
     @Override
     public Branch createBranch(BranchCreateRequest branchCreateRequest) {

@@ -16,8 +16,12 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class SessionController {
 
+    private final SessionService sessionService;
+
     @Autowired
-    private SessionService sessionService;
+    public SessionController(SessionService sessionService) {
+        this.sessionService = sessionService;
+    }
 
     // Create a new session
     @PostMapping("/createSession")

@@ -13,9 +13,12 @@ import java.util.List;
 @RequestMapping("/api/v1/subjects")
 @CrossOrigin(origins = "*")
 public class SubjectController {
+    private final SubjectService subjectService;
 
     @Autowired
-    private SubjectService subjectService;
+    public SubjectController(SubjectService subjectService) {
+        this.subjectService = subjectService;
+    }
 
     // Create a new subject
     @PostMapping("/create")

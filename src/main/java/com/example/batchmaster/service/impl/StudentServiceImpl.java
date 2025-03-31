@@ -81,6 +81,10 @@ class StudentServiceImpl implements StudentService {
         if (studentUpdateRequest.getParentsPhoneNo() != null) {
             existingStudent.setParentsPhoneNo(studentUpdateRequest.getParentsPhoneNo());
         }
+        Optional<Student> existingStudent2 = studentRepository.findByEmail(studentUpdateRequest.getEmail());
+        if (existingStudent2.isPresent() && !existingStudent2.get().getStudentId().equals(studentUpdateRequest.getStudentId())) {
+            throw new IllegalArgumentException("A student with this email already exists.");
+        }
         if (studentUpdateRequest.getEmail() != null) {
             existingStudent.setEmail(studentUpdateRequest.getEmail());
         }

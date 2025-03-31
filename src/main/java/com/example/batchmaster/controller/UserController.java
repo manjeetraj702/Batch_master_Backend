@@ -5,9 +5,14 @@ import com.example.batchmaster.model.User;
 import com.example.batchmaster.model.request.UserCreateRequest;
 import com.example.batchmaster.model.updaterequest.UserUpdateRequest;
 import com.example.batchmaster.service.UserService;
+import com.example.batchmaster.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +22,16 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserController {
 
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+    }
 
     // Create a new user
     @PostMapping("/create")
@@ -27,22 +40,32 @@ public class UserController {
         return new ApiResponse<>(user, HttpStatus.CREATED);
     }
 
+    // User Login
     @PostMapping("/login")
-    public ApiResponse<User> login(String email, String password) {
-        User user = userService.login(email, password);
-        return new ApiResponse<>(user, HttpStatus.OK);
+    public ApiResponse<String> login(@RequestParam String email, @RequestParam String password) throws AuthenticationException {
+        System.out.println("hello");
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            System.out.println(email);
+            final UserDetails userDetails = userService.loadUserByUsername(email);
+            System.out.println(userDetails.getUsername());// Make sure this is implemented correctly
+            final String jwt = jwtUtil.generateToken(userDetails);
+            return new ApiResponse<>(jwt, HttpStatus.OK);
+        } catch (AuthenticationException e) {
+            return new ApiResponse<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     // Update an existing user
-    @PutMapping("/update/userId")
-    public ApiResponse<User> updateUser(@RequestParam String userId, @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+    @PutMapping("/update/{userId}")
+    public ApiResponse<User> updateUser(@PathVariable String userId, @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
         User updatedUser = userService.updateUser(userId, userUpdateRequest);
         return new ApiResponse<>(updatedUser, HttpStatus.OK);
     }
 
-    // Get user details by  ID
-    @GetMapping("/userId")
-    public ApiResponse<User> getUserById(@RequestParam String userId) {
+    // Get user details by ID
+    @GetMapping("/get/{userId}")
+    public ApiResponse<User> getUserById(@PathVariable String userId) {
         User user = userService.getUserById(userId);
         return new ApiResponse<>(user, HttpStatus.OK);
     }
@@ -50,8 +73,9 @@ public class UserController {
     // Get all users
     @GetMapping("/getAllUsers")
     public ApiResponse<List<User>> getAllUsers() {
+
         List<User> users = userService.getAllUsers();
+        System.out.println(":hey");
         return new ApiResponse<>(users, HttpStatus.OK);
     }
-
 }

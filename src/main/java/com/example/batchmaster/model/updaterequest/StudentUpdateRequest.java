@@ -1,6 +1,7 @@
 package com.example.batchmaster.model.updaterequest;
 
 import com.example.batchmaster.model.Address;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,8 @@ public class StudentUpdateRequest {
     private String fatherName;
     private String mobileNumber;
     private String parentsPhoneNo;
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Invalid email format")
     private String email;
     private String dob;
     private String imgUrl;
