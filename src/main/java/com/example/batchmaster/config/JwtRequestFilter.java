@@ -1,6 +1,6 @@
 package com.example.batchmaster.config;
 
-import com.example.batchmaster.service.CustomUserDetailsService;
+import com.example.batchmaster.service.impl.UserDetailService;
 import com.example.batchmaster.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,14 +20,14 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserDetailService userDetailService;
 
     @Autowired
     private JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+            throws IOException, ServletException {
 
         final String authorizationHeader = request.getHeader("Authorization");
 
@@ -41,14 +41,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }

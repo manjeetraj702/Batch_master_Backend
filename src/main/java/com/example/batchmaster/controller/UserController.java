@@ -5,6 +5,7 @@ import com.example.batchmaster.model.User;
 import com.example.batchmaster.model.request.UserCreateRequest;
 import com.example.batchmaster.model.updaterequest.UserUpdateRequest;
 import com.example.batchmaster.service.UserService;
+import com.example.batchmaster.service.impl.UserDetailService;
 import com.example.batchmaster.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,14 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final UserDetailService userDetailService;
 
     @Autowired
-    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserDetailService userDetailService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.userDetailService = userDetailService;
     }
 
     // Create a new user
@@ -47,7 +50,7 @@ public class UserController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             System.out.println(email);
-            final UserDetails userDetails = userService.loadUserByUsername(email);
+            final UserDetails userDetails = userDetailService.loadUserByUsername(email);
             System.out.println(userDetails.getUsername());// Make sure this is implemented correctly
             final String jwt = jwtUtil.generateToken(userDetails);
             return new ApiResponse<>(jwt, HttpStatus.OK);

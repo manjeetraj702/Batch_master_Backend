@@ -1,33 +1,40 @@
-package com.example.batchmaster.service;
+package com.example.batchmaster.service.impl;
 
 import com.example.batchmaster.model.User;
 import com.example.batchmaster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
-                user.getPassword(),  // Already encoded in the database
-                Collections.emptyList()  // Add roles/authorities if needed
+                user.getPassword(),
+                new ArrayList<>()
         );
     }
 }

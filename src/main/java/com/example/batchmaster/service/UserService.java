@@ -3,8 +3,6 @@ package com.example.batchmaster.service;
 import com.example.batchmaster.model.User;
 import com.example.batchmaster.model.request.UserCreateRequest;
 import com.example.batchmaster.model.updaterequest.UserUpdateRequest;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -19,6 +17,5 @@ public interface UserService {
 
     User login(String email, String password);
 
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
 }

@@ -6,28 +6,22 @@ import com.example.batchmaster.model.updaterequest.UserUpdateRequest;
 import com.example.batchmaster.repository.UserRepository;
 import com.example.batchmaster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder; // Injected via constructor
     }
-
 
     @Override
     public User createUser(UserCreateRequest userCreateRequest) {
@@ -70,20 +64,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("Invalid email or password");
         }
         return user;
-    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                Collections.emptyList() // You can add roles or authorities here if needed
-        );
     }
 
 

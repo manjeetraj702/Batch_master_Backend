@@ -17,7 +17,6 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ApiResponse<Object> generalExceptionHandler(Exception e) {
-        // Log the exception for debugging purposes
 // Log the exception for debugging purposes
         Logger logger = LoggerFactory.getLogger(ExceptionController.class);
         logger.error("Unhandled exception occurred: " + e.getMessage(), e);

@@ -24,7 +24,7 @@ public class SubjectServiceImpl implements SubjectService {
     public Subject createNewSubject(String subjectName, List<String> listOfTopics) {
         Optional<Subject> subject = subjectRepository.findBySubjectName(subjectName);
         if (subject.isPresent()) {
-            throw new RuntimeException("Subject already available with same name.");
+            throw new BatchMasterException("Subject already available with same name.");
         }
         Subject newSubject = new Subject();
         newSubject.setSubjectName(subjectName);
@@ -42,7 +42,7 @@ public class SubjectServiceImpl implements SubjectService {
             subject1.setListOfTopics(listOfTopics);
             return subjectRepository.save(subject1);
         } else {
-            throw new RuntimeException("Subject not found");
+            throw new BatchMasterException("Subject not found");
         }
     }
 
@@ -59,7 +59,7 @@ public class SubjectServiceImpl implements SubjectService {
             subjectRepository.delete(subject.get());
             return true;
         }
-        throw new RuntimeException("Subject not found");
+        throw new BatchMasterException("Subject not found");
     }
 
     @Override
