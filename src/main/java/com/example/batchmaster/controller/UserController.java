@@ -78,7 +78,6 @@ public class UserController {
     public ApiResponse<List<User>> getAllUsers() {
 
         List<User> users = userService.getAllUsers();
-        System.out.println(":hey");
         return new ApiResponse<>(users, HttpStatus.OK);
     }
 }
