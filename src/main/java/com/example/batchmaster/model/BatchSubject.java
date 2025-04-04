@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,5 +22,5 @@ public class BatchSubject {
     private String subjectName;
     private String batchId;
     private boolean status;
-    private List<String> listOfTopics;
+    private Set<String> listOfTopics;
 }

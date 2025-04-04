@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,6 +16,6 @@ public class BatchSubjectUpdateRequest {
     private String subjectName;
     private String batchId;
     private boolean status;
-    private List<String> listOfTopics;
+    private Set<String> listOfTopics;
 
 }

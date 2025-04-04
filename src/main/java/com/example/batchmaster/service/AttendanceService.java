@@ -4,25 +4,39 @@ import com.example.batchmaster.model.Attendance;
 import com.example.batchmaster.model.request.AttendanceCreateRequest;
 import com.example.batchmaster.model.updaterequest.AttendanceUpdateRequest;
 
+import java.util.Date;
 import java.util.List;
-
+import java.util.Optional;
 
 public interface AttendanceService {
+
     Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest);
 
-    Attendance getByAttendanceId(String attendenceId);
+    Optional<Attendance> getByAttendanceId(String attendanceId);
 
     Attendance updateAttendance(AttendanceUpdateRequest attendanceUpdateRequest);
 
-    List<Attendance> getAttendanceByStudentId(String studentId);
+    // For Student
+    List<Attendance> getAttendanceByStudentId(String studentId, int page, int size);
 
-    List<Attendance> getAttendanceByBatchId(String batchId);
+    List<Attendance> getAttendanceByStudentIdAndDate(String studentId, Date date);
 
-    List<Attendance> getAttendanceByBatchIdAndDate(String batchId, String date);
+    List<Attendance> getAttendanceByStudentIdFromDate(String studentId, Date fromDate);
 
-    List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date);
+    List<Attendance> getAttendanceByStudentIdBetweenDates(String studentId, Date startDate, Date endDate);
 
+    // For Batch
+    List<Attendance> getAttendanceByBatchId(String batchId, int page, int size);
+
+    List<Attendance> getAttendanceByBatchIdAndDate(String batchId, Date date);
+
+    List<Attendance> getAttendanceByBatchIdFromDate(String batchId, Date fromDate);
+
+    List<Attendance> getAttendanceByBatchIdBetweenDates(String batchId, Date startDate, Date endDate);
+
+    // For Session
+    List<Attendance> getAttendanceBySessionId(String sessionId, int page, int size);
+
+    // Deletion
     void deleteAttendanceBySessionId(String sessionId);
-
-    List<Attendance> getAttendanceBySessionId(String sessionId);
 }

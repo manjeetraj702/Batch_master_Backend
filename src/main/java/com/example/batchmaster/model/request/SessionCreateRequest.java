@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -23,9 +23,9 @@ public class SessionCreateRequest {
     private String branchId;
     private String day;
     private String type;
-    private List<String> onlineStudentsIds;
-    private List<String> offlineStudentsIds;
-    private List<String> absentStudentsIds;
+    private Set<String> onlineStudentsIds;
+    private Set<String> offlineStudentsIds;
+    private Set<String> absentStudentsIds;
     private int week;
 
 

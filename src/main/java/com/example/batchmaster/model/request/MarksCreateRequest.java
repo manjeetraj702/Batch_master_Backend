@@ -3,6 +3,8 @@ package com.example.batchmaster.model.request;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "marks")
 @Data
 @AllArgsConstructor
@@ -18,4 +20,5 @@ public class MarksCreateRequest {
     private String topic;
     private float totalMarks;
     private float marksObtained;
+    private Date date;
 }

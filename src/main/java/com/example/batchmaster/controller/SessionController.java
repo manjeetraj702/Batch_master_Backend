@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,7 @@ public class SessionController {
 
     // Get sessions by date
     @GetMapping("/getSessionsByDate")
-    public ApiResponse<List<Session>> getSessionsByDate(@RequestParam String date) {
+    public ApiResponse<List<Session>> getSessionsByDate(@RequestParam Date date) {
         List<Session> sessions = sessionService.getSessionsByDate(date);
         return new ApiResponse<>(sessions, HttpStatus.OK);
     }
@@ -78,14 +79,7 @@ public class SessionController {
         Session session = sessionService.getLastSessionByBatchId(batchId);
         return new ApiResponse<>(session, HttpStatus.OK);
     }
-
-    // Get last session for each batch by branch ID
-    @GetMapping("/getLastSessionForEachBatch")
-    public ApiResponse<List<Session>> getLastSessionForEachBatch(@RequestParam String branchId) {
-        List<Session> sessions = sessionService.getAllLastSessionsOfAllBatchesByBranchId(branchId);
-        return new ApiResponse<>(sessions, HttpStatus.OK);
-    }
-
+    
     // Get all sessions of all batches by branch ID
     @GetMapping("/getAllSessionsOfAllBatchesByBranchId")
     public ApiResponse<List<Session>> getAllSessionsOfAllBatchesByBranchId(@RequestParam String branchId) {

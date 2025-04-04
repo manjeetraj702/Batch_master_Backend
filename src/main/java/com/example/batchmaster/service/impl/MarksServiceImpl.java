@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +31,10 @@ public class MarksServiceImpl implements MarksService {
         marks.setStudentId(marksCreateRequest.getStudentId());
         marks.setSubject(marksCreateRequest.getSubject());
         marks.setTopic(marksCreateRequest.getTopic());
-        marks.setResultId(marks.getResultId());
+        marks.setResultId(marksCreateRequest.getResultId());
         marks.setTotalMarks(marksCreateRequest.getTotalMarks());
         marks.setMarksObtained(marksCreateRequest.getMarksObtained());
+        marks.setDate(marksCreateRequest.getDate());  // Setting the date
         return marksRepository.save(marks);
     }
 
@@ -47,6 +49,7 @@ public class MarksServiceImpl implements MarksService {
             marks.setTopic(updatedMarks.getTopic());
             marks.setTotalMarks(updatedMarks.getTotalMarks());
             marks.setMarksObtained(updatedMarks.getMarksObtained());
+            marks.setDate(updatedMarks.getDate());  // Update date if modified
             return marksRepository.save(marks);
         }
         throw new BatchMasterException("Marks record not found with ID: " + marksId);
@@ -71,8 +74,44 @@ public class MarksServiceImpl implements MarksService {
 
     @Override
     public List<Marks> getMarksByResultId(String resultId) {
-
         return marksRepository.findAllByResultId(resultId);
+    }
+
+    // New Optimized Methods
+    @Override
+    public List<Marks> getMarksByBatchId(String batchId) {
+        return marksRepository.findAllByBatchId(batchId);
+    }
+
+    @Override
+    public List<Marks> getMarksByBatchIdAndSubject(String batchId, String subject) {
+        return marksRepository.findAllByBatchIdAndSubject(batchId, subject);
+    }
+
+    @Override
+    public List<Marks> getMarksByBatchIdAndTopic(String batchId, String topic) {
+        return marksRepository.findAllByBatchIdAndTopic(batchId, topic);
+    }
+
+
+    @Override
+    public List<Marks> getMarksByBatchIdAndDate(String batchId, Date date) {
+        return marksRepository.findAllByBatchIdAndDate(batchId, date);
+    }
+
+    @Override
+    public List<Marks> getMarksByBatchIdAndDateBetween(String batchId, Date startDate, Date endDate) {
+        return marksRepository.findAllByBatchIdAndDateBetween(batchId, startDate, endDate);
+    }
+
+    @Override
+    public List<Marks> getMarksByBatchIdAndSubjectAndDate(String batchId, String subject, Date date) {
+        return marksRepository.findAllByBatchIdAndSubjectAndDate(batchId, subject, date);
+    }
+
+    @Override
+    public List<Marks> getMarksByBatchIdAndSubjectAndTopicAndDate(String batchId, String subject, String topic, Date date) {
+        return marksRepository.findAllByBatchIdAndSubjectAndTopicAndDate(batchId, subject, topic, date);
     }
 
 

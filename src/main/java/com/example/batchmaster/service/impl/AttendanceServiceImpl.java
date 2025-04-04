@@ -8,10 +8,13 @@ import com.example.batchmaster.repository.AttendanceRepository;
 import com.example.batchmaster.service.AttendanceService;
 import com.example.batchmaster.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -26,7 +29,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance createAttendance(AttendanceCreateRequest attendanceCreateRequest) {
-
         batchService.getBatchById(attendanceCreateRequest.getBatchId());
         Attendance attendance = new Attendance();
         attendance.setStudentId(attendanceCreateRequest.getStudentId());
@@ -40,15 +42,14 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public Attendance getByAttendanceId(String attendenceId) {
-        return attendanceRepository.findById(attendenceId).orElseThrow(() -> new BatchMasterException("Attendance not present with this id."));
-
+    public Optional<Attendance> getByAttendanceId(String attendanceId) {
+        return attendanceRepository.findById(attendanceId);
     }
-
 
     @Override
     public Attendance updateAttendance(AttendanceUpdateRequest attendanceUpdateRequest) {
-        Attendance attendance = getByAttendanceId(attendanceUpdateRequest.getAttendanceId());
+        Attendance attendance = getByAttendanceId(attendanceUpdateRequest.getAttendanceId())
+                .orElseThrow(() -> new BatchMasterException("Attendance not present with this id."));
         attendance.setStudentId(attendanceUpdateRequest.getStudentId());
         attendance.setStatus(attendanceUpdateRequest.isStatus());
         attendance.setMode(attendanceUpdateRequest.getMode());
@@ -58,34 +59,54 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> getAttendanceByStudentId(String studentId) {
-        return attendanceRepository.findByStudentId(studentId);
+    public List<Attendance> getAttendanceByStudentId(String studentId, int page, int size) {
+        return attendanceRepository.findByStudentId(studentId, PageRequest.of(page, size));
     }
 
     @Override
-    public List<Attendance> getAttendanceByBatchId(String batchId) {
-        return attendanceRepository.findByBatchId(batchId);
-    }
-
-    @Override
-    public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, String date) {
-        return attendanceRepository.findByBatchIdAndDate(batchId, date);
-    }
-
-    @Override
-    public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, String date) {
+    public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, Date date) {
         return attendanceRepository.findByStudentIdAndDate(studentId, date);
     }
 
     @Override
-    public List<Attendance> getAttendanceBySessionId(String sessionId) {
-        return attendanceRepository.findAllBySessionId(sessionId);
+    public List<Attendance> getAttendanceByStudentIdFromDate(String studentId, Date fromDate) {
+        return attendanceRepository.findByStudentIdAndDateGreaterThanEqual(studentId, fromDate);
     }
 
     @Override
+    public List<Attendance> getAttendanceByStudentIdBetweenDates(String studentId, Date startDate, Date endDate) {
+        return attendanceRepository.findByStudentIdAndDateBetween(studentId, startDate, endDate);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBatchId(String batchId, int page, int size) {
+        return attendanceRepository.findByBatchId(batchId, PageRequest.of(page, size));
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, Date date) {
+        return attendanceRepository.findByBatchIdAndDate(batchId, date);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBatchIdFromDate(String batchId, Date fromDate) {
+        return attendanceRepository.findByBatchIdAndDateGreaterThanEqual(batchId, fromDate);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBatchIdBetweenDates(String batchId, Date startDate, Date endDate) {
+        return attendanceRepository.findByBatchIdAndDateBetween(batchId, startDate, endDate);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceBySessionId(String sessionId, int page, int size) {
+        return attendanceRepository.findBySessionId(sessionId, PageRequest.of(page, size));
+    }
+
+    @Override
+    @Transactional
     public void deleteAttendanceBySessionId(String sessionId) {
         attendanceRepository.deleteAllBySessionId(sessionId);
     }
-
 
 }

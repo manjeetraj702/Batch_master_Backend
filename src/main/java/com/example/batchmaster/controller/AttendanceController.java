@@ -8,7 +8,9 @@ import com.example.batchmaster.service.AttendanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -29,46 +31,109 @@ public class AttendanceController {
     }
 
     // Update an attendance record
-    @PutMapping("/update")
+    @PutMapping
     public ApiResponse<Attendance> updateAttendance(@RequestBody AttendanceUpdateRequest attendanceUpdateRequest) {
         Attendance attendance = attendanceService.updateAttendance(attendanceUpdateRequest);
         return new ApiResponse<>(attendance, HttpStatus.OK);
     }
 
-    // Get attendance records by student ID
-    @GetMapping("/getAttendanceByStudentId")
-    public ApiResponse<List<Attendance>> getAttendanceByStudentId(@RequestParam String studentId) {
-        List<Attendance> attendanceList = attendanceService.getAttendanceByStudentId(studentId);
+    // Get attendance by ID
+    @GetMapping("/{attendanceId}")
+    public ApiResponse<Optional<Attendance>> getByAttendanceId(@PathVariable String attendanceId) {
+        Optional<Attendance> attendance = attendanceService.getByAttendanceId(attendanceId);
+        return new ApiResponse<>(attendance, HttpStatus.OK);
+    }
+
+    // Get attendance records by student ID with pagination
+    @GetMapping("/student/{studentId}")
+    public ApiResponse<List<Attendance>> getAttendanceByStudentIdWithPagination(
+            @PathVariable String studentId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByStudentId(studentId, page, size);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
-    // Get attendance records by batch ID
-    @GetMapping("/getAttendanceByBatchId")
-    public ApiResponse<List<Attendance>> getAttendanceByBatchId(@RequestParam String batchId) {
-        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchId(batchId);
+    // Get attendance records by batch ID with pagination
+    @GetMapping("/batch/{batchId}")
+    public ApiResponse<List<Attendance>> getAttendanceByBatchIdWithPagination(
+            @PathVariable String batchId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchId(batchId, page, size);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
-    // Get attendance by batch ID and date
-    @GetMapping("/getAttendanceByBatchIdAndDate")
-    public ApiResponse<List<Attendance>> getAttendanceByBatchIdAndDate(
-            @RequestParam String batchId, @RequestParam String date) {
-        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdAndDate(batchId, date);
+    // Get attendance by student ID between dates
+    @GetMapping("/student/{studentId}/between")
+    public ApiResponse<List<Attendance>> getAttendanceByStudentIdBetweenDates(
+            @PathVariable String studentId,
+            @RequestParam Date startDate,
+            @RequestParam Date endDate) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdBetweenDates(studentId, startDate, endDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by batch ID between dates
+    @GetMapping("/batch/{batchId}/between")
+    public ApiResponse<List<Attendance>> getAttendanceByBatchIdBetweenDates(
+            @PathVariable String batchId,
+            @RequestParam Date startDate,
+            @RequestParam Date endDate) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdBetweenDates(batchId, startDate, endDate);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Delete attendance by session ID
+    @DeleteMapping("/session/{sessionId}")
+    public ApiResponse<Void> deleteAttendanceBySessionId(@PathVariable String sessionId) {
+        attendanceService.deleteAttendanceBySessionId(sessionId);
+        return new ApiResponse<>(null, HttpStatus.NO_CONTENT);
     }
 
     // Get attendance by student ID and date
-    @GetMapping("/getAttendanceByStudentIdAndDate")
+    @GetMapping("/student/{studentId}/date")
     public ApiResponse<List<Attendance>> getAttendanceByStudentIdAndDate(
-            @RequestParam String studentId, @RequestParam String date) {
+            @PathVariable String studentId,
+            @RequestParam Date date) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdAndDate(studentId, date);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 
-    //Get attendance by session Id
-    @GetMapping("/getAttendanceBySessionId")
-    public ApiResponse<List<Attendance>> getAttendanceBySessionId(@RequestParam String sessionId) {
-        List<Attendance> attendanceList = attendanceService.getAttendanceBySessionId(sessionId);
+    // Get attendance by student ID from date
+    @GetMapping("/student/{studentId}/from")
+    public ApiResponse<List<Attendance>> getAttendanceByStudentIdFromDate(
+            @PathVariable String studentId,
+            @RequestParam Date fromDate) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdFromDate(studentId, fromDate);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by batch ID and date
+    @GetMapping("/batch/{batchId}/date")
+    public ApiResponse<List<Attendance>> getAttendanceByBatchIdAndDate(
+            @PathVariable String batchId,
+            @RequestParam Date date) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdAndDate(batchId, date);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by batch ID from date
+    @GetMapping("/batch/{batchId}/from")
+    public ApiResponse<List<Attendance>> getAttendanceByBatchIdFromDate(
+            @PathVariable String batchId,
+            @RequestParam Date fromDate) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdFromDate(batchId, fromDate);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by session ID with pagination
+    @GetMapping("/session/{sessionId}")
+    public ApiResponse<List<Attendance>> getAttendanceBySessionIdWithPagination(
+            @PathVariable String sessionId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceBySessionId(sessionId, page, size);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
 }

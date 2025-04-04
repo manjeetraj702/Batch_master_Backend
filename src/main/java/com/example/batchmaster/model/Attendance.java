@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -13,14 +15,25 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "attendances")
+@CompoundIndex(name = "batch_date_index", def = "{'batchId': 1, 'date': 1}")
+@CompoundIndex(name = "student_date_index", def = "{'studentId': 1, 'date': 1}")
+@CompoundIndex(name = "session_subject_index", def = "{'sessionId': 1, 'subject': 1}")
 public class Attendance {
     @Id
     private String attendanceId;
+
+    @Indexed
     private String batchId;
-    private Date date;
+
+    @Indexed
     private String studentId;
+
+    @Indexed
     private String sessionId;
+
+    private Date date;
+
     private String subject;
     private String mode;
     private boolean status;

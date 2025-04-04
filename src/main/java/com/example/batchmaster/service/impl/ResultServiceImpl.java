@@ -66,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
     @Override
     @Transactional
     public Result updateResult(ResultUpdateRequest resultUpdateRequest) {
-        Result existingResult = getResultsByResultId(resultUpdateRequest.getResultId());
+        Result existingResult = getResultByResultId(resultUpdateRequest.getResultId());
 
         Result newResult = existingResult;
         newResult.setBatchId(resultUpdateRequest.getBatchId());
@@ -105,13 +105,33 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public Result getResultsByResultId(String resultId) {
+    public List<Result> getResultsByBatchIdAndDate(String batchId, Date date) {
+        return resultRepository.findByBatchIdAndDate(batchId, date);
+    }
+
+    @Override
+    public List<Result> getResultsByBatchIdBetweenDates(String batchId, Date startDate, Date endDate) {
+        return resultRepository.findByBatchIdAndDateBetween(batchId, startDate, endDate);
+    }
+
+    @Override
+    public List<Result> getResultsBySubject(String subject) {
+        return resultRepository.findBySubject(subject);
+    }
+
+    @Override
+    public List<Result> getResultsByTopic(String topic) {
+        return resultRepository.findByTopic(topic);
+    }
+
+    @Override
+    public Result getResultByResultId(String resultId) {
         return resultRepository.findById(resultId)
                 .orElseThrow(() -> new RuntimeException("Result not found with ID: " + resultId));
     }
 
     @Override
-    public List<Result> getResultByBatchId(String batchId) {
+    public List<Result> getResultsByBatchId(String batchId) {
         return resultRepository.findAllByBatchId(batchId);
     }
 
@@ -121,8 +141,8 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<Result> getResultsByBatchIdAndSubjectId(String batchId, String subjectId) {
-        return resultRepository.findByBatchIdAndSubject(batchId, subjectId);
+    public List<Result> getResultsByBatchIdAndSubject(String batchId, String subject) {
+        return resultRepository.findByBatchIdAndSubject(batchId, subject);
     }
 
 }

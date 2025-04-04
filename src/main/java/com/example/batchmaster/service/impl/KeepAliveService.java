@@ -13,9 +13,9 @@ public class KeepAliveService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${app.url}")
-    private String appUrl; // URL of your Render app
+    private String appUrl;
 
-    @Scheduled(fixedRate = 240000) // Ping every 4 minutes (240000 ms)
+    @Scheduled(fixedRate = 240000)
     public void pingApplication() {
         try {
             String url = appUrl + "/ping"; // Your backend's health-check endpoint

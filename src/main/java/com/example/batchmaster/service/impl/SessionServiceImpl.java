@@ -16,6 +16,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -63,7 +64,7 @@ public class SessionServiceImpl implements SessionService {
         return session;
     }
 
-    private void processAttendance(List<String> studentIds, SessionCreateRequest request, boolean status, String mode, String sessionId) {
+    private void processAttendance(Set<String> studentIds, SessionCreateRequest request, boolean status, String mode, String sessionId) {
 
         if (studentIds == null || studentIds.isEmpty()) {
             return;
@@ -118,17 +119,24 @@ public class SessionServiceImpl implements SessionService {
         throw new BatchMasterException("Session not found with ID: " + updatedSession.getBatchId());
     }
 
-    private void updateAttendance(List<String> studentIds, SessionUpdateRequest request, boolean status, String mode, String sessionId) {
+    private void updateAttendance(Set<String> studentIds, SessionUpdateRequest request, boolean status, String mode, String sessionId) {
+
+        if (studentIds == null || studentIds.isEmpty()) {
+            return;
+        }
+
+        // Delete existing attendance entries for this session
+        attendanceService.deleteAttendanceBySessionId(sessionId);
+
         for (String studentId : studentIds) {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
             attendanceRequest.setStatus(status);
-            attendanceRequest.setMode(mode); // Can be null for absent students
+            attendanceRequest.setMode(mode);
             attendanceRequest.setSubject(request.getSubject());
             attendanceRequest.setStudentId(studentId);
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);
 
-            // Save attendance
             attendanceService.createAttendance(attendanceRequest);
         }
     }
@@ -178,18 +186,48 @@ public class SessionServiceImpl implements SessionService {
 
 
     @Override
-    public List<Session> getAllLastSessionsOfAllBatchesByBranchId(String branchId) {
-        return sessionRepository.findLastSessionForEachBatchByBranchId(branchId);
-    }
-
-    @Override
-    public List<Session> getSessionsByDate(String date) {
+    public List<Session> getSessionsByDate(Date date) {
         return sessionRepository.findAllByDate(date);
     }
 
     @Override
     public List<Session> getAllSessionsByBatchIdAndSubject(String batchId, String subject) {
         return sessionRepository.findAllByBatchIdAndSubject(batchId, subject);
+    }
+
+    @Override
+    public List<Session> getSessionsByBatchIdAndDate(String batchId, Date date) {
+        return sessionRepository.findAllByBatchIdAndDate(batchId, date);
+    }
+
+    @Override
+    public List<Session> getSessionsByBatchIdAndDateAfter(String batchId, Date fromDate) {
+        return sessionRepository.findAllByBatchIdAndDateAfter(batchId, fromDate);
+    }
+
+    @Override
+    public List<Session> getSessionsByBatchIdAndDateBefore(String batchId, Date toDate) {
+        return sessionRepository.findAllByBatchIdAndDateBefore(batchId, toDate);
+    }
+
+    @Override
+    public List<Session> getSessionsByBatchIdAndDateBetween(String batchId, Date startDate, Date endDate) {
+        return sessionRepository.findAllByBatchIdAndDateBetween(batchId, startDate, endDate);
+    }
+
+    @Override
+    public List<Session> getSessionsByDateAfter(Date fromDate) {
+        return sessionRepository.findAllByDateAfter(fromDate);
+    }
+
+    @Override
+    public List<Session> getSessionsByDateBefore(Date toDate) {
+        return sessionRepository.findAllByDateBefore(toDate);
+    }
+
+    @Override
+    public List<Session> getSessionsByDateBetween(Date startDate, Date endDate) {
+        return sessionRepository.findAllByDateBetween(startDate, endDate);
     }
 
 

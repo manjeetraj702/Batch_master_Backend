@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,5 +16,5 @@ public class SubjectCreateRequest {
     private String subjectName;
     private String batchId;
     private boolean status;
-    private List<String> listOfTopics;
+    private Set<String> listOfTopics;
 }

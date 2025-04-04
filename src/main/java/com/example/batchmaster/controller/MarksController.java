@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -44,7 +45,7 @@ public class MarksController {
         return new ApiResponse<>(marksList, HttpStatus.OK);
     }
 
-    // Get Marks by Topic ID, Batch ID & Subject ID
+    // Get Marks by Subject, Topic, and Batch ID
     @GetMapping("/getMarksBySubjectTopicAndBatchId")
     public ApiResponse<List<Marks>> getMarksBySubjectTopicAndBatchId(
             @RequestParam(name = "subject") String subject,
@@ -54,10 +55,54 @@ public class MarksController {
         return new ApiResponse<>(marksList, HttpStatus.OK);
     }
 
+    // Get Marks by Result ID
     @GetMapping("/getMarksByResultId")
     public ApiResponse<List<Marks>> getMarksByResultId(@RequestParam(name = "resultId") String resultId) {
         List<Marks> marksList = marksService.getMarksByResultId(resultId);
         return new ApiResponse<>(marksList, HttpStatus.OK);
     }
 
+    // New Filter Endpoints
+
+    @GetMapping("/getMarksByBatchId")
+    public ApiResponse<List<Marks>> getMarksByBatchId(@RequestParam(name = "batchId") String batchId) {
+        List<Marks> marksList = marksService.getMarksByBatchId(batchId);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getMarksByBatchIdAndSubject")
+    public ApiResponse<List<Marks>> getMarksByBatchIdAndSubject(@RequestParam String batchId, @RequestParam String subject) {
+        List<Marks> marksList = marksService.getMarksByBatchIdAndSubject(batchId, subject);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getMarksByBatchIdAndTopic")
+    public ApiResponse<List<Marks>> getMarksByBatchIdAndTopic(@RequestParam String batchId, @RequestParam String topic) {
+        List<Marks> marksList = marksService.getMarksByBatchIdAndTopic(batchId, topic);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getMarksByBatchIdAndDate")
+    public ApiResponse<List<Marks>> getMarksByBatchIdAndDate(@RequestParam String batchId, @RequestParam Date date) {
+        List<Marks> marksList = marksService.getMarksByBatchIdAndDate(batchId, date);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getMarksByBatchIdAndDateBetween")
+    public ApiResponse<List<Marks>> getMarksByBatchIdAndDateBetween(@RequestParam String batchId, @RequestParam Date startDate, @RequestParam Date endDate) {
+        List<Marks> marksList = marksService.getMarksByBatchIdAndDateBetween(batchId, startDate, endDate);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getMarksByBatchIdSubjectAndDate")
+    public ApiResponse<List<Marks>> getMarksByBatchIdSubjectAndDate(@RequestParam String batchId, @RequestParam String subject, @RequestParam Date date) {
+        List<Marks> marksList = marksService.getMarksByBatchIdAndSubjectAndDate(batchId, subject, date);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getMarksByBatchIdSubjectTopicAndDate")
+    public ApiResponse<List<Marks>> getMarksByBatchIdSubjectTopicAndDate(@RequestParam String batchId, @RequestParam String subject, @RequestParam String topic, @RequestParam Date date) {
+        List<Marks> marksList = marksService.getMarksByBatchIdAndSubjectAndTopicAndDate(batchId, subject, topic, date);
+        return new ApiResponse<>(marksList, HttpStatus.OK);
+    }
 }
