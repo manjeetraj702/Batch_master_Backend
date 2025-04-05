@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 @Document(collection = "results")
@@ -26,7 +26,7 @@ public class Result {
     private String batchId;
 
     @Indexed
-    private Date date;
+    private Instant date;
 
     @Indexed
     private String subject;

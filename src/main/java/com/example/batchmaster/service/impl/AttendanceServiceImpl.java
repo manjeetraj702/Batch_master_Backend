@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +36,9 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setStatus(attendanceCreateRequest.isStatus());
         attendance.setMode(attendanceCreateRequest.getMode());
         attendance.setSessionId(attendanceCreateRequest.getSessionId());
+        attendance.setBranchId(attendanceCreateRequest.getBranchId());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
-        attendance.setDate(new Date());
+        attendance.setDate(Instant.now());
         attendance.setSubject(attendanceCreateRequest.getSubject());
         return attendanceRepository.save(attendance);
     }

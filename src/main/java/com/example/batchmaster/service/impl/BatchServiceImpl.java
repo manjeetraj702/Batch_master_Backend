@@ -9,7 +9,7 @@ import com.example.batchmaster.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public class BatchServiceImpl implements BatchService {
         // Create a new Batch instance
         Batch newBatch = new Batch();
         newBatch.setBranchId(batchCreateRequest.getBranchId());
-        newBatch.setStartingDate(new Date());
+        newBatch.setStartingDate(Instant.now());
         newBatch.setBatchTime(batchCreateRequest.getBatchTime());
         newBatch.setBatchName(batchCreateRequest.getBatchName());
 

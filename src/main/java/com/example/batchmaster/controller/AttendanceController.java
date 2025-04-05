@@ -31,7 +31,7 @@ public class AttendanceController {
     }
 
     // Update an attendance record
-    @PutMapping
+    @PutMapping("/update")
     public ApiResponse<Attendance> updateAttendance(@RequestBody AttendanceUpdateRequest attendanceUpdateRequest) {
         Attendance attendance = attendanceService.updateAttendance(attendanceUpdateRequest);
         return new ApiResponse<>(attendance, HttpStatus.OK);

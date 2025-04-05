@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.Set;
 
 @Document(collection = "sessions")
@@ -35,7 +34,7 @@ public class Session {
     private String sessionLink;
 
     @Indexed
-    private Date date; // Keeping Date as requested
+    private Instant date; // Keeping Date as requested
 
     @Indexed
     private String batchId;

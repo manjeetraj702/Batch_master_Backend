@@ -18,5 +18,6 @@ public class AttendanceUpdateRequest {
     private String sessionId;
     private String subject;
     private String mode;
+    private String branchId;
     private boolean status;
 }

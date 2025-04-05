@@ -25,7 +25,7 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
     private final AttendanceService attendanceService;
 
-    public SessionServiceImpl(SessionRepository sessionRepository, AttendanceService attendanceService, AttendanceServiceImpl attendanceServiceImpl) {
+    public SessionServiceImpl(SessionRepository sessionRepository, AttendanceService attendanceService) {
         this.sessionRepository = sessionRepository;
         this.attendanceService = attendanceService;
     }
@@ -43,12 +43,12 @@ public class SessionServiceImpl implements SessionService {
         session.setMentor(sessionCreateRequest.getMentor());
         session.setType(sessionCreateRequest.getType());
         session.setSessionLink(sessionCreateRequest.getSessionLink());
-        session.setDate(new Date());
+        session.setDate(Instant.now());
+        session.setBranchId(sessionCreateRequest.getBranchId());
         session.setBatchId(sessionCreateRequest.getBatchId());
         session.setOnlineStudentsIds(sessionCreateRequest.getOnlineStudentsIds());
         session.setOfflineStudentsIds(sessionCreateRequest.getOfflineStudentsIds());
         session.setAbsentStudentsIds(sessionCreateRequest.getAbsentStudentsIds());
-        session.setBranchId(sessionCreateRequest.getBranchId());
         session.setDay(sessionCreateRequest.getDay());
         session.setWeek(sessionCreateRequest.getWeek());
         session.setCreatedAt(Instant.now());
@@ -79,6 +79,7 @@ public class SessionServiceImpl implements SessionService {
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSubject(request.getSubject());
             attendanceRequest.setSessionId(sessionId);
+            attendanceRequest.setBranchId(request.getBranchId());
 
             attendanceService.createAttendance(attendanceRequest);
         }
@@ -134,6 +135,7 @@ public class SessionServiceImpl implements SessionService {
             attendanceRequest.setMode(mode);
             attendanceRequest.setSubject(request.getSubject());
             attendanceRequest.setStudentId(studentId);
+            attendanceRequest.setBranchId(request.getBranchId());
             attendanceRequest.setBatchId(request.getBatchId());
             attendanceRequest.setSessionId(sessionId);
 

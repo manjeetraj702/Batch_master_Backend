@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Document(collection = "marks")
 @Data
@@ -39,5 +39,5 @@ public class Marks {
     private double marksObtained;
 
     @Indexed
-    private Date date;  // Keeping Date type as requested
+    private Instant date;  // Keeping Date type as requested
 }

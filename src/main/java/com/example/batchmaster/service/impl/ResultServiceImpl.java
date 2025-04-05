@@ -10,6 +10,7 @@ import com.example.batchmaster.service.ResultService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ResultServiceImpl implements ResultService {
     public Result createResult(ResultCreateRequest resultCreateRequest) {
         Result newResult = new Result();
         newResult.setBatchId(resultCreateRequest.getBatchId());
-        newResult.setDate(new Date());
+        newResult.setDate(Instant.now());
         newResult.setSubject(resultCreateRequest.getSubject());
         newResult.setTopic(resultCreateRequest.getTopic());
         newResult.setTotalMarks(resultCreateRequest.getTotalMarks());

@@ -17,5 +17,6 @@ public class AttendanceCreateRequest {
     private String sessionId;
     private String subject;
     private String mode;
+    private String branchId;
     private boolean status;
 }

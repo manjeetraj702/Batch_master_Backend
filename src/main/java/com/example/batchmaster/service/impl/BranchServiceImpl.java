@@ -9,7 +9,7 @@ import com.example.batchmaster.repository.BranchRepository;
 import com.example.batchmaster.service.BranchService;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -34,7 +34,7 @@ public class BranchServiceImpl implements BranchService {
         Branch newBranch = new Branch();
         newBranch.setBranchName(branchCreateRequest.getBranchName());
         newBranch.setAddress(branchCreateRequest.getAddress());
-        newBranch.setStartingDate(new Date());
+        newBranch.setStartingDate(Instant.now());
         newBranch.setBranchStatus(branchCreateRequest.isBranchStatus());
 
         return branchRepository.save(newBranch);
@@ -50,7 +50,7 @@ public class BranchServiceImpl implements BranchService {
                 .orElseThrow(() -> new BatchMasterException("Branch with ID '" + branchUpdateRequest.getBranchId() + "' not found"));
 
         branch.setBranchName(branchUpdateRequest.getBranchName());
-        branch.setStartingDate(new Date());
+        branch.setStartingDate(Instant.now());
         branch.setAddress(branchUpdateRequest.getAddress());
 
         return branchRepository.save(branch);
