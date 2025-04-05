@@ -8,7 +8,7 @@ import com.example.batchmaster.service.AttendanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +68,8 @@ public class AttendanceController {
     @GetMapping("/student/{studentId}/between")
     public ApiResponse<List<Attendance>> getAttendanceByStudentIdBetweenDates(
             @PathVariable String studentId,
-            @RequestParam Date startDate,
-            @RequestParam Date endDate) {
+            @RequestParam Instant startDate,
+            @RequestParam Instant endDate) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdBetweenDates(studentId, startDate, endDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -78,8 +78,8 @@ public class AttendanceController {
     @GetMapping("/batch/{batchId}/between")
     public ApiResponse<List<Attendance>> getAttendanceByBatchIdBetweenDates(
             @PathVariable String batchId,
-            @RequestParam Date startDate,
-            @RequestParam Date endDate) {
+            @RequestParam Instant startDate,
+            @RequestParam Instant endDate) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdBetweenDates(batchId, startDate, endDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -95,7 +95,7 @@ public class AttendanceController {
     @GetMapping("/student/{studentId}/date")
     public ApiResponse<List<Attendance>> getAttendanceByStudentIdAndDate(
             @PathVariable String studentId,
-            @RequestParam Date date) {
+            @RequestParam Instant date) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdAndDate(studentId, date);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -104,7 +104,7 @@ public class AttendanceController {
     @GetMapping("/student/{studentId}/from")
     public ApiResponse<List<Attendance>> getAttendanceByStudentIdFromDate(
             @PathVariable String studentId,
-            @RequestParam Date fromDate) {
+            @RequestParam Instant fromDate) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByStudentIdFromDate(studentId, fromDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -113,7 +113,7 @@ public class AttendanceController {
     @GetMapping("/batch/{batchId}/date")
     public ApiResponse<List<Attendance>> getAttendanceByBatchIdAndDate(
             @PathVariable String batchId,
-            @RequestParam Date date) {
+            @RequestParam Instant date) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdAndDate(batchId, date);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -122,7 +122,7 @@ public class AttendanceController {
     @GetMapping("/batch/{batchId}/from")
     public ApiResponse<List<Attendance>> getAttendanceByBatchIdFromDate(
             @PathVariable String batchId,
-            @RequestParam Date fromDate) {
+            @RequestParam Instant fromDate) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByBatchIdFromDate(batchId, fromDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -151,7 +151,7 @@ public class AttendanceController {
     @GetMapping("/branch/{branchId}/date")
     public ApiResponse<List<Attendance>> getAttendanceByBranchIdAndDate(
             @PathVariable String branchId,
-            @RequestParam Date date) {
+            @RequestParam Instant date) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByBranchIdAndDate(branchId, date);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -160,7 +160,7 @@ public class AttendanceController {
     @GetMapping("/branch/{branchId}/from")
     public ApiResponse<List<Attendance>> getAttendanceByBranchIdFromDate(
             @PathVariable String branchId,
-            @RequestParam Date fromDate) {
+            @RequestParam Instant fromDate) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByBranchIdFromDate(branchId, fromDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
@@ -169,8 +169,8 @@ public class AttendanceController {
     @GetMapping("/branch/{branchId}/between")
     public ApiResponse<List<Attendance>> getAttendanceByBranchIdBetweenDates(
             @PathVariable String branchId,
-            @RequestParam Date startDate,
-            @RequestParam Date endDate) {
+            @RequestParam Instant startDate,
+            @RequestParam Instant endDate) {
         List<Attendance> attendanceList = attendanceService.getAttendanceByBranchIdBetweenDates(branchId, startDate, endDate);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }

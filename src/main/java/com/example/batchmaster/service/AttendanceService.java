@@ -4,7 +4,7 @@ import com.example.batchmaster.model.Attendance;
 import com.example.batchmaster.model.request.AttendanceCreateRequest;
 import com.example.batchmaster.model.updaterequest.AttendanceUpdateRequest;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,20 +19,20 @@ public interface AttendanceService {
     // For Student
     List<Attendance> getAttendanceByStudentId(String studentId, int page, int size);
 
-    List<Attendance> getAttendanceByStudentIdAndDate(String studentId, Date date);
+    List<Attendance> getAttendanceByStudentIdAndDate(String studentId, Instant date);
 
-    List<Attendance> getAttendanceByStudentIdFromDate(String studentId, Date fromDate);
+    List<Attendance> getAttendanceByStudentIdFromDate(String studentId, Instant fromDate);
 
-    List<Attendance> getAttendanceByStudentIdBetweenDates(String studentId, Date startDate, Date endDate);
+    List<Attendance> getAttendanceByStudentIdBetweenDates(String studentId, Instant startDate, Instant endDate);
 
     // For Batch
     List<Attendance> getAttendanceByBatchId(String batchId, int page, int size);
 
-    List<Attendance> getAttendanceByBatchIdAndDate(String batchId, Date date);
+    List<Attendance> getAttendanceByBatchIdAndDate(String batchId, Instant date);
 
-    List<Attendance> getAttendanceByBatchIdFromDate(String batchId, Date fromDate);
+    List<Attendance> getAttendanceByBatchIdFromDate(String batchId, Instant fromDate);
 
-    List<Attendance> getAttendanceByBatchIdBetweenDates(String batchId, Date startDate, Date endDate);
+    List<Attendance> getAttendanceByBatchIdBetweenDates(String batchId, Instant startDate, Instant endDate);
 
     // For Session
     List<Attendance> getAttendanceBySessionId(String sessionId, int page, int size);
@@ -43,9 +43,9 @@ public interface AttendanceService {
     // For Branch
     List<Attendance> getAttendanceByBranchId(String branchId, int page, int size);
 
-    List<Attendance> getAttendanceByBranchIdAndDate(String branchId, Date date);
+    List<Attendance> getAttendanceByBranchIdAndDate(String branchId, Instant date);
 
-    List<Attendance> getAttendanceByBranchIdFromDate(String branchId, Date fromDate);
+    List<Attendance> getAttendanceByBranchIdFromDate(String branchId, Instant fromDate);
 
-    List<Attendance> getAttendanceByBranchIdBetweenDates(String branchId, Date startDate, Date endDate);
-}}
+    List<Attendance> getAttendanceByBranchIdBetweenDates(String branchId, Instant startDate, Instant endDate);
+}

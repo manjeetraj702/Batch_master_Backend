@@ -66,17 +66,17 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, Date date) {
+    public List<Attendance> getAttendanceByStudentIdAndDate(String studentId, Instant date) {
         return attendanceRepository.findByStudentIdAndDate(studentId, date);
     }
 
     @Override
-    public List<Attendance> getAttendanceByStudentIdFromDate(String studentId, Date fromDate) {
+    public List<Attendance> getAttendanceByStudentIdFromDate(String studentId, Instant fromDate) {
         return attendanceRepository.findByStudentIdAndDateGreaterThanEqual(studentId, fromDate);
     }
 
     @Override
-    public List<Attendance> getAttendanceByStudentIdBetweenDates(String studentId, Date startDate, Date endDate) {
+    public List<Attendance> getAttendanceByStudentIdBetweenDates(String studentId, Instant startDate, Instant endDate) {
         return attendanceRepository.findByStudentIdAndDateBetween(studentId, startDate, endDate);
     }
 
@@ -86,17 +86,17 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, Date date) {
+    public List<Attendance> getAttendanceByBatchIdAndDate(String batchId, Instant date) {
         return attendanceRepository.findByBatchIdAndDate(batchId, date);
     }
 
     @Override
-    public List<Attendance> getAttendanceByBatchIdFromDate(String batchId, Date fromDate) {
+    public List<Attendance> getAttendanceByBatchIdFromDate(String batchId, Instant fromDate) {
         return attendanceRepository.findByBatchIdAndDateGreaterThanEqual(batchId, fromDate);
     }
 
     @Override
-    public List<Attendance> getAttendanceByBatchIdBetweenDates(String batchId, Date startDate, Date endDate) {
+    public List<Attendance> getAttendanceByBatchIdBetweenDates(String batchId, Instant startDate, Instant endDate) {
         return attendanceRepository.findByBatchIdAndDateBetween(batchId, startDate, endDate);
     }
 
@@ -119,17 +119,17 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> getAttendanceByBranchIdAndDate(String branchId, Date date) {
+    public List<Attendance> getAttendanceByBranchIdAndDate(String branchId, Instant date) {
         return attendanceRepository.findByBranchIdAndDate(branchId, date);
     }
 
     @Override
-    public List<Attendance> getAttendanceByBranchIdFromDate(String branchId, Date fromDate) {
+    public List<Attendance> getAttendanceByBranchIdFromDate(String branchId, Instant fromDate) {
         return attendanceRepository.findByBranchIdAndDateGreaterThanEqual(branchId, fromDate);
     }
 
     @Override
-    public List<Attendance> getAttendanceByBranchIdBetweenDates(String branchId, Date startDate, Date endDate) {
+    public List<Attendance> getAttendanceByBranchIdBetweenDates(String branchId, Instant startDate, Instant endDate) {
         return attendanceRepository.findByBranchIdAndDateBetween(branchId, startDate, endDate);
     }
 }

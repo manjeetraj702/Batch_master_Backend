@@ -39,6 +39,7 @@ public class Attendance {
     private String sessionId;
 
 
+    @Indexed
     private Instant date;
 
     private String subject;
