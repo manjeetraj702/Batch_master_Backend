@@ -111,4 +111,25 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendanceRepository.deleteAllBySessionId(sessionId);
     }
 
+    // For Branch
+
+    @Override
+    public List<Attendance> getAttendanceByBranchId(String branchId, int page, int size) {
+        return attendanceRepository.findByBranchId(branchId, PageRequest.of(page, size));
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBranchIdAndDate(String branchId, Date date) {
+        return attendanceRepository.findByBranchIdAndDate(branchId, date);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBranchIdFromDate(String branchId, Date fromDate) {
+        return attendanceRepository.findByBranchIdAndDateGreaterThanEqual(branchId, fromDate);
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByBranchIdBetweenDates(String branchId, Date startDate, Date endDate) {
+        return attendanceRepository.findByBranchIdAndDateBetween(branchId, startDate, endDate);
+    }
 }

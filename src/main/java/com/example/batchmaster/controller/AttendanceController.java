@@ -136,4 +136,42 @@ public class AttendanceController {
         List<Attendance> attendanceList = attendanceService.getAttendanceBySessionId(sessionId, page, size);
         return new ApiResponse<>(attendanceList, HttpStatus.OK);
     }
+
+    // Get attendance by branch ID with pagination
+    @GetMapping("/branch/{branchId}")
+    public ApiResponse<List<Attendance>> getAttendanceByBranchIdWithPagination(
+            @PathVariable String branchId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBranchId(branchId, page, size);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by branch ID and date
+    @GetMapping("/branch/{branchId}/date")
+    public ApiResponse<List<Attendance>> getAttendanceByBranchIdAndDate(
+            @PathVariable String branchId,
+            @RequestParam Date date) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBranchIdAndDate(branchId, date);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by branch ID from date
+    @GetMapping("/branch/{branchId}/from")
+    public ApiResponse<List<Attendance>> getAttendanceByBranchIdFromDate(
+            @PathVariable String branchId,
+            @RequestParam Date fromDate) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBranchIdFromDate(branchId, fromDate);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
+
+    // Get attendance by branch ID between dates
+    @GetMapping("/branch/{branchId}/between")
+    public ApiResponse<List<Attendance>> getAttendanceByBranchIdBetweenDates(
+            @PathVariable String branchId,
+            @RequestParam Date startDate,
+            @RequestParam Date endDate) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByBranchIdBetweenDates(branchId, startDate, endDate);
+        return new ApiResponse<>(attendanceList, HttpStatus.OK);
+    }
 }

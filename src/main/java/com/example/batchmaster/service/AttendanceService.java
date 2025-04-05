@@ -39,4 +39,13 @@ public interface AttendanceService {
 
     // Deletion
     void deleteAttendanceBySessionId(String sessionId);
-}
+
+    // For Branch
+    List<Attendance> getAttendanceByBranchId(String branchId, int page, int size);
+
+    List<Attendance> getAttendanceByBranchIdAndDate(String branchId, Date date);
+
+    List<Attendance> getAttendanceByBranchIdFromDate(String branchId, Date fromDate);
+
+    List<Attendance> getAttendanceByBranchIdBetweenDates(String branchId, Date startDate, Date endDate);
+}}

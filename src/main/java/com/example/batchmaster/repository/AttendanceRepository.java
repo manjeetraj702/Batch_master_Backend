@@ -39,5 +39,18 @@ public interface AttendanceRepository extends MongoRepository<Attendance, String
     List<Attendance> findBySessionId(String sessionId, Pageable pageable);
 
     // Delete attendance by sessionId
+// Delete attendance by sessionId
     void deleteAllBySessionId(String sessionId);
+
+    // Get attendance by branchId with pagination
+    List<Attendance> findByBranchId(String branchId, Pageable pageable);
+
+    // Get attendance by branchId and exact date
+    List<Attendance> findByBranchIdAndDate(String branchId, Date date);
+
+    // Get attendance by branchId from a specific date onward
+    List<Attendance> findByBranchIdAndDateGreaterThanEqual(String branchId, Date fromDate);
+
+    // Get attendance by branchId between two dates
+    List<Attendance> findByBranchIdAndDateBetween(String branchId, Date startDate, Date endDate);
 }
