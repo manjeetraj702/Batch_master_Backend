@@ -6,17 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class BatchUpdateBranch {
+public class BatchUpdateRequest {
 
     private String batchId;
     private String branchId;
     private String batchName;
-    private Instant batchTime;
+    private String batchTime;
     private boolean status = true;
 }

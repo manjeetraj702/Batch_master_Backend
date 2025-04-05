@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -16,6 +14,6 @@ public class BatchCreateRequest {
 
     private String branchId;
     private String batchName;
-    private Instant batchTime;
+    private String batchTime;
     private boolean status = true;
 }

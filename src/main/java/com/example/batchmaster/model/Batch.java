@@ -22,6 +22,6 @@ public class Batch {
     private String branchId;
     private String batchName;
     private Instant startingDate;
-    private Instant batchTime;
+    private String batchTime;
     private boolean status = true;
 }
