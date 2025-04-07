@@ -1,5 +1,6 @@
 package com.example.batchmaster.service.impl;
 
+import com.example.batchmaster.exception.BatchMasterException;
 import com.example.batchmaster.model.User;
 import com.example.batchmaster.model.request.UserCreateRequest;
 import com.example.batchmaster.model.updaterequest.UserUpdateRequest;
@@ -26,7 +27,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserCreateRequest userCreateRequest) {
         if (userCreateRequest == null) {
-            throw new IllegalArgumentException("UserCreateRequest cannot be null");
+            throw new BatchMasterException("UserCreateRequest cannot be null");
+        }
+
+        // Check if a user with the same email already exists
+        if (userRepository.findByEmail(userCreateRequest.getEmail()) != null) {
+            throw new BatchMasterException("User with email '" + userCreateRequest.getEmail() + "' already exists");
         }
         User user = new User();
         user.setUsername(userCreateRequest.getUsername());
@@ -60,8 +66,8 @@ public class UserServiceImpl implements UserService {
     public User login(String email, String password) {
         User user = userRepository.findByEmail(email);
         System.out.println(user.getUsername());
-        if (user == null || !passwordEncoder.matches(password, user.getPassword())) { // Use matches() for comparing
-            throw new IllegalArgumentException("Invalid email or password");
+        if (!passwordEncoder.matches(password, user.getPassword())) { // Use matches() for comparing
+            throw new BatchMasterException("Invalid email or password");
         }
         return user;
     }
