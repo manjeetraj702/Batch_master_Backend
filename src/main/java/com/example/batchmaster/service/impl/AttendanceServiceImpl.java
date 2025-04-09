@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +37,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setSessionId(attendanceCreateRequest.getSessionId());
         attendance.setBranchId(attendanceCreateRequest.getBranchId());
         attendance.setBatchId(attendanceCreateRequest.getBatchId());
-        attendance.setDate(Instant.now());
+        attendance.setDate(attendanceCreateRequest.getDate());
         attendance.setSubject(attendanceCreateRequest.getSubject());
         return attendanceRepository.save(attendance);
     }
@@ -48,10 +47,12 @@ public class AttendanceServiceImpl implements AttendanceService {
         return attendanceRepository.findById(attendanceId);
     }
 
+    @Transactional
     @Override
     public Attendance updateAttendance(AttendanceUpdateRequest attendanceUpdateRequest) {
         Attendance attendance = getByAttendanceId(attendanceUpdateRequest.getAttendanceId())
                 .orElseThrow(() -> new BatchMasterException("Attendance not present with this id."));
+        attendance.setDate(attendanceUpdateRequest.getDate());
         attendance.setStudentId(attendanceUpdateRequest.getStudentId());
         attendance.setStatus(attendanceUpdateRequest.isStatus());
         attendance.setMode(attendanceUpdateRequest.getMode());

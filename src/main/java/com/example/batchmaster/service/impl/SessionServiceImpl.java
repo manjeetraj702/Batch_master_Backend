@@ -80,6 +80,7 @@ public class SessionServiceImpl implements SessionService {
             attendanceRequest.setSubject(request.getSubject());
             attendanceRequest.setSessionId(sessionId);
             attendanceRequest.setBranchId(request.getBranchId());
+            attendanceRequest.setDate(Instant.now());
 
             attendanceService.createAttendance(attendanceRequest);
         }
@@ -125,12 +126,15 @@ public class SessionServiceImpl implements SessionService {
         if (studentIds == null || studentIds.isEmpty()) {
             return;
         }
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new BatchMasterException("Session not found with ID: " + sessionId));
 
         // Delete existing attendance entries for this session
         attendanceService.deleteAttendanceBySessionId(sessionId);
 
         for (String studentId : studentIds) {
             AttendanceCreateRequest attendanceRequest = new AttendanceCreateRequest();
+            attendanceRequest.setDate(session.getDate());
             attendanceRequest.setStatus(status);
             attendanceRequest.setMode(mode);
             attendanceRequest.setSubject(request.getSubject());

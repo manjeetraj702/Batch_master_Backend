@@ -34,7 +34,7 @@ public class MarksServiceImpl implements MarksService {
         marks.setResultId(marksCreateRequest.getResultId());
         marks.setTotalMarks(marksCreateRequest.getTotalMarks());
         marks.setMarksObtained(marksCreateRequest.getMarksObtained());
-        marks.setDate(marksCreateRequest.getDate());  // Setting the date
+        marks.setDate(marksCreateRequest.getDate());
         return marksRepository.save(marks);
     }
 

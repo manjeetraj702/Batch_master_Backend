@@ -42,6 +42,7 @@ public class ResultServiceImpl implements ResultService {
         for (StudentMarksRequest studentMarksRequest : resultCreateRequest.getStudentAndMarksList()) {
             MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
             marksCreateRequest.setResultId(result.getResultId());
+            marksCreateRequest.setDate(result.getDate());
             marksCreateRequest.setBatchId(resultCreateRequest.getBatchId());
             marksCreateRequest.setSubject(resultCreateRequest.getSubject());
             marksCreateRequest.setTopic(resultCreateRequest.getTopic());
@@ -82,6 +83,7 @@ public class ResultServiceImpl implements ResultService {
         List<String> topperList = new ArrayList<>();
         for (StudentMarksRequest studentMarksRequest : resultUpdateRequest.getStudentAndMarksList()) {
             MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
+            marksCreateRequest.setDate(resultUpdateRequest.getDate());
             marksCreateRequest.setResultId(resultUpdateRequest.getResultId());
             marksCreateRequest.setBatchId(resultUpdateRequest.getBatchId());
             marksCreateRequest.setSubject(resultUpdateRequest.getSubject());
