@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling  // Enables scheduling support
+@EnableScheduling
 public class BatchMasterApplication {
 
     public static void main(String[] args) {

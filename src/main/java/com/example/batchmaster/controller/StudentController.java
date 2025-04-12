@@ -7,7 +7,6 @@ import com.example.batchmaster.model.request.ImageUpdateRequest;
 import com.example.batchmaster.model.request.StudentCreateRequest;
 import com.example.batchmaster.model.updaterequest.StudentUpdateRequest;
 import com.example.batchmaster.service.StudentService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class StudentController {
 
     // Create a new student
     @PostMapping("/create")
-    public ApiResponse<Student> createStudent(@Valid @RequestBody StudentCreateRequest studentCreateRequest) {
+    public ApiResponse<Student> createStudent(@RequestBody StudentCreateRequest studentCreateRequest) {
         Student student = studentService.createStudent(studentCreateRequest);
         return new ApiResponse<>(student, HttpStatus.CREATED);
     }
@@ -43,7 +42,7 @@ public class StudentController {
 
     // Update student details
     @PutMapping("/update")
-    public ApiResponse<Student> updateStudent(@Valid @RequestBody StudentUpdateRequest studentUpdateRequest) {
+    public ApiResponse<Student> updateStudent(@RequestBody StudentUpdateRequest studentUpdateRequest) {
         Student student = studentService.updateStudent(studentUpdateRequest);
         return new ApiResponse<>(student, HttpStatus.OK);
     }
