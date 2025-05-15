@@ -14,5 +14,7 @@ public interface BatchRepository extends MongoRepository<Batch, String> {
     Optional<Batch> findByBatchName(String batchName);
 
 
+    void deleteByBatchName(String s);
+
     List<Batch> findAllByBranchId(String branchId);
 }

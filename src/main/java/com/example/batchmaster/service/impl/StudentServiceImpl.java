@@ -180,6 +180,8 @@ class StudentServiceImpl implements StudentService {
         return studentRepository.findByEmail(emailId).orElseThrow(() -> new BatchMasterException("Sudent not found with emailId"));
     }
 
+    //for image only
+
     @Override
     public boolean updateStudentImage(String studentId, String imgUrl) {
         Optional<Student> studentOptional = studentRepository.findById(studentId);

@@ -3,7 +3,9 @@ package com.example.batchmaster.controller;
 import com.example.batchmaster.base.ApiResponse;
 import com.example.batchmaster.model.Batch;
 import com.example.batchmaster.model.request.BatchCreateRequest;
+import com.example.batchmaster.repository.BatchRepository;
 import com.example.batchmaster.service.BatchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping("/api/v1/batches")
 @CrossOrigin("*")
 public class BatchController {
+    @Autowired
+    private BatchRepository batchRepository;
 
     private final BatchService batchService;
 
@@ -67,5 +71,11 @@ public class BatchController {
     public ApiResponse<List<Batch>> getAllBatches() {
         List<Batch> batches = batchService.getAllBatches();
         return new ApiResponse<>(batches, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/byName")
+    public boolean delete(String name) {
+        batchRepository.deleteByBatchName(name);
+        return true;
     }
 }
