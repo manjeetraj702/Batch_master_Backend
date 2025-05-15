@@ -21,6 +21,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final BatchService batchService;
 
+    //for fix
     @Autowired
     public AttendanceServiceImpl(AttendanceRepository attendanceRepository, BatchService batchService) {
         this.attendanceRepository = attendanceRepository;
