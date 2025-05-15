@@ -19,5 +19,4 @@ management for various use cases.
 - **Integration Support**: Provides APIs that can be easily integrated with external systems to automate workflows.
 - **Scalable Architecture**: Designed to handle a growing amount of data and concurrent requests in a performant way.
 
-// ## Getting Started
-with manjeet Raj
+
