@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.util.List;
 
 @NoArgsConstructor
@@ -18,9 +17,6 @@ public class ResultUpdateRequest {
     private String resultId;
 
     private String batchId;
-
-
-    private Instant date;
 
     private String subject;
 

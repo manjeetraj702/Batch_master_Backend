@@ -72,7 +72,6 @@ public class ResultServiceImpl implements ResultService {
             Result existingResult = getResultByResultId(resultUpdateRequest.getResultId());
 
             existingResult.setBatchId(resultUpdateRequest.getBatchId());
-            existingResult.setDate(resultUpdateRequest.getDate());
             existingResult.setSubject(resultUpdateRequest.getSubject());
             existingResult.setTopic(resultUpdateRequest.getTopic());
             existingResult.setTotalMarks(resultUpdateRequest.getTotalMarks());
@@ -86,7 +85,7 @@ public class ResultServiceImpl implements ResultService {
             for (StudentMarksRequest studentMarksRequest : resultUpdateRequest.getStudentAndMarksList()) {
                 MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
                 marksCreateRequest.setResultId(resultUpdateRequest.getResultId());
-                marksCreateRequest.setDate(resultUpdateRequest.getDate());
+                marksCreateRequest.setDate(existingResult.getDate());
                 marksCreateRequest.setBatchId(resultUpdateRequest.getBatchId());
                 marksCreateRequest.setSubject(resultUpdateRequest.getSubject());
                 marksCreateRequest.setTopic(resultUpdateRequest.getTopic());
