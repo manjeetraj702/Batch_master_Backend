@@ -68,44 +68,51 @@ public class ResultServiceImpl implements ResultService {
     @Override
     @Transactional
     public Result updateResult(ResultUpdateRequest resultUpdateRequest) {
-        Result existingResult = getResultByResultId(resultUpdateRequest.getResultId());
+        try {
+            Result existingResult = getResultByResultId(resultUpdateRequest.getResultId());
 
-        Result newResult = existingResult;
-        newResult.setBatchId(resultUpdateRequest.getBatchId());
-        newResult.setDate(resultUpdateRequest.getDate());
-        newResult.setSubject(resultUpdateRequest.getSubject());
-        newResult.setTopic(resultUpdateRequest.getTopic());
-        newResult.setTotalMarks(resultUpdateRequest.getTotalMarks());
+            existingResult.setBatchId(resultUpdateRequest.getBatchId());
+            existingResult.setDate(resultUpdateRequest.getDate());
+            existingResult.setSubject(resultUpdateRequest.getSubject());
+            existingResult.setTopic(resultUpdateRequest.getTopic());
+            existingResult.setTotalMarks(resultUpdateRequest.getTotalMarks());
 
-        newResult.setStudentAndMarksList(resultUpdateRequest.getStudentAndMarksList());
-        marksServiceImpl.deleteMarksByResultId(newResult.getResultId());
-        float topperMarks = 0;
-        List<String> topperList = new ArrayList<>();
-        for (StudentMarksRequest studentMarksRequest : resultUpdateRequest.getStudentAndMarksList()) {
-            MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
-            marksCreateRequest.setDate(resultUpdateRequest.getDate());
-            marksCreateRequest.setResultId(resultUpdateRequest.getResultId());
-            marksCreateRequest.setBatchId(resultUpdateRequest.getBatchId());
-            marksCreateRequest.setSubject(resultUpdateRequest.getSubject());
-            marksCreateRequest.setTopic(resultUpdateRequest.getTopic());
-            marksCreateRequest.setStudentId(studentMarksRequest.getStudentId());
-            marksCreateRequest.setMarksObtained(studentMarksRequest.getStudentMarks());
-            marksCreateRequest.setTotalMarks(resultUpdateRequest.getTotalMarks());
-            marksServiceImpl.createMarks(marksCreateRequest);
+            existingResult.setStudentAndMarksList(resultUpdateRequest.getStudentAndMarksList());
 
-            if (studentMarksRequest.getStudentMarks() == topperMarks) {
-                topperList.add(studentMarksRequest.getStudentName());
-            } else if (topperMarks < studentMarksRequest.getStudentMarks()) {
-                topperList = new ArrayList<>();
-                topperList.add(studentMarksRequest.getStudentName());
-                topperMarks = studentMarksRequest.getStudentMarks();
+            marksServiceImpl.deleteMarksByResultId(existingResult.getResultId());
 
+            float topperMarks = 0;
+            List<String> topperList = new ArrayList<>();
+            for (StudentMarksRequest studentMarksRequest : resultUpdateRequest.getStudentAndMarksList()) {
+                MarksCreateRequest marksCreateRequest = new MarksCreateRequest();
+                marksCreateRequest.setResultId(resultUpdateRequest.getResultId());
+                marksCreateRequest.setDate(resultUpdateRequest.getDate());
+                marksCreateRequest.setBatchId(resultUpdateRequest.getBatchId());
+                marksCreateRequest.setSubject(resultUpdateRequest.getSubject());
+                marksCreateRequest.setTopic(resultUpdateRequest.getTopic());
+                marksCreateRequest.setStudentId(studentMarksRequest.getStudentId());
+                marksCreateRequest.setMarksObtained(studentMarksRequest.getStudentMarks());
+                marksCreateRequest.setTotalMarks(resultUpdateRequest.getTotalMarks());
+
+                marksServiceImpl.createMarks(marksCreateRequest);
+
+                if (studentMarksRequest.getStudentMarks() == topperMarks) {
+                    topperList.add(studentMarksRequest.getStudentName());
+                } else if (studentMarksRequest.getStudentMarks() > topperMarks) {
+                    topperList = new ArrayList<>();
+                    topperList.add(studentMarksRequest.getStudentName());
+                    topperMarks = studentMarksRequest.getStudentMarks();
+                }
             }
 
+            existingResult.setListOfTopperName(topperList);
+            return resultRepository.save(existingResult);
+        } catch (Exception e) {
+            e.printStackTrace();  // Log full error
+            throw new RuntimeException("Failed to update result: " + e.getMessage(), e);
         }
-        existingResult.setListOfTopperName(topperList);
-        return resultRepository.save(existingResult);
     }
+
 
     @Override
     public List<Result> getResultsByBatchIdAndDate(String batchId, Date date) {
