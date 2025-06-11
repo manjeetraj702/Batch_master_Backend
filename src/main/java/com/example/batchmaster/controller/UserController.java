@@ -80,4 +80,9 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return new ApiResponse<>(users, HttpStatus.OK);
     }
+
+    @PutMapping("/updatePassword")
+    public void updatePassword(@RequestParam String email, @RequestParam String password) {
+        userService.updatePassword(email, password);
+    }
 }

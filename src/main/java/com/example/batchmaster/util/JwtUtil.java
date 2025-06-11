@@ -42,11 +42,18 @@ public class JwtUtil {
         return createToken(claims, userDetails.getUsername());
     }
 
+
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+        long twoYearsInMillis = 1000L * 60 * 60 * 24 * 365 * 2;
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + twoYearsInMillis))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
     }
+
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);

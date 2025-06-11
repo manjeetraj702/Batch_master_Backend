@@ -72,5 +72,15 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void updatePassword(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new BatchMasterException("Invalid email");
+        }
+        user.setPassword(passwordEncoder.encode(password)); // Encode password here
+        userRepository.save(user);
+    }
+
 
 }
