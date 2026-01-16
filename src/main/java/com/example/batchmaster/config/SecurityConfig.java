@@ -50,16 +50,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())// Enable CORS configuration
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/v1/users/login",
-                                "/api/v1/users/create",
-                                "/ping",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/api/v1/users/updatePassword"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers(
+                                        "/api/v1/users/login",
+//                                "/api/v1/subjects/create",
+                                        "/api/v1/users/create",
+                                        "/ping",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/api/v1/users/updatePassword"
+                                ).permitAll()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
